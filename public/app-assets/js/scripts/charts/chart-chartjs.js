@@ -34,7 +34,7 @@ $(window).on("load", function () {
     responsive: true,
     maintainAspectRatio: false,
     legend: {
-      position: 'top',
+      display: false,
     },
     hover: {
       mode: 'label'
@@ -61,37 +61,18 @@ $(window).on("load", function () {
     },
     title: {
       display: true,
-      text: 'World population per region (in millions)'
+      text: 'Rata-rata Nilai Peserta Ujian',
+      fontSize: 20
     }
   };
 
   // Chart Data
   var linechartData = {
-    labels: [1500, 1600, 1700, 1750, 1800, 1850, 1900, 1950, 1999, 2050],
+    labels: [['Ujian Akhir Semester MANAJEMEN KEPEMIMPINAN', 'Tahun Akademik 2019/2020 Genap'], 'UTS - Ekonomi Makro (1072)'],
     datasets: [{
       label: "Africa",
-      data: [86, 114, 106, 106, 107, 111, 133, 221, 783, 2478],
+      data: [0, 0],
       borderColor: $primary,
-      fill: false
-    }, {
-      data: [282, 350, 411, 502, 635, 809, 947, 1402, 3700, 5267],
-      label: "Asia",
-      borderColor: $success,
-      fill: false
-    }, {
-      data: [168, 170, 178, 190, 203, 276, 408, 547, 675, 734],
-      label: "Europe",
-      borderColor: $danger,
-      fill: false
-    }, {
-      data: [40, 20, 10, 16, 24, 38, 74, 167, 508, 784],
-      label: "Latin America",
-      borderColor: $warning,
-      fill: false
-    }, {
-      data: [6, 3, 2, 2, 7, 26, 82, 172, 312, 433],
-      label: "North America",
-      borderColor: $label_color,
       fill: false
     }]
   };

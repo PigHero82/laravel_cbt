@@ -13,9 +13,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('index');
-});
+Route::view('', 'sitemap');
 
-Route::view('/portal/peserta', 'peserta')->name('master-data.peserta');
-Route::view('/mata-kuliah', 'mata-kuliah')->name('mata-kuliah');
+Route::namespace('admin')->name('admin.')->prefix('admin')->group(function() {
+    Route::view('', 'index')->name('index');
+    Route::namespace('portal')->name('portal.')->prefix('portal')->group(function() {
+        Route::view('peserta', 'peserta')->name('peserta');
+        Route::view('mata-kuliah', 'mata-kuliah')->name('mata-kuliah');
+    });
+});

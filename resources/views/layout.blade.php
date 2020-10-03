@@ -89,9 +89,9 @@
             <ul class="nav navbar-nav flex-row">
                 <li class="nav-item mr-auto"><a class="navbar-brand" href="
                     @if (request()->is('admin*'))
-                        {{ route('admin.index') }}
+                        {{-- {{ route('admin.index') }} --}}#
                     @elseif (request()->is('dosen*'))
-                        {{ route('dosen.index') }}
+                        {{-- {{ route('dosen.index') }} --}}#
                     @elseif (request()->is('pimpinan*'))
                         #
                     @elseif (request()->is('penelitian*'))

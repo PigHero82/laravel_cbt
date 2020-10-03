@@ -95,23 +95,34 @@
             <div class="card">
                 <div class="card-body py-1">
                     <form action="#" method="post">
-                        <div class="d-flex justify-content-between mx-5">
-                            <div class="d-inline">
-                                <label for="">Periode</label>
-                                <select name="" class="form-control">
-                                    <option value="">2019/2020 Genap - Mandiri</option>
-                                </select>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <dl class="row">
+                                    <dt class="col-sm-3">
+                                        <label for="">Periode</label>
+                                    </dt>
+                                    <dd class="col-sm-9">
+                                        <select name="" class="form-control">
+                                            <option value="">2019/2020 Genap - Mandiri</option>
+                                        </select>
+                                    </dd>
+                                </dl>
+                            </div>
+                        
+                            <div class="col-md-6">
+                                <dl class="row">
+                                    <dt class="col-sm-4">
+                                        <label for="">Jenis Ujian</label>
+                                    </dt>
+                                    <dd class="col-sm-8">
+                                        <select name="" class="form-control">
+                                            <option value="">-- Semua --</option>
+                                        </select>
+                                    </dd>
+                                </dl>
                             </div>
 
-                            <div class="d-inline">
-                                <label for="">Jenis Ujian</label>
-                                <select name="" class="form-control">
-                                    <option value="">-- Semua --</option>
-                                </select>
-                            </div>
-
-                            <div class="d-inline">
-                                <label for="" class="text-white">-</label>
+                            <div class="col-12">
                                 <button type="button" class="btn btn-primary form-control">Submit</button>
                             </div>
                         </div>
@@ -121,7 +132,7 @@
             
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">Line Chart</h4>
+                    <h4 class="card-title">Grafik</h4>
                 </div>
                 <div class="card-content">
                     <div class="card-body pl-0">
@@ -136,8 +147,16 @@
             <div class="card">
                 <div class="card-header">
                     <h4 class="card-title"><i class="feather icon-calendar"></i> Jadwal Ujian Terdekat</h4>
+                    <a class="heading-elements-toggle"><i class="fa fa-ellipsis-v font-medium-3"></i></a>
+                    <div class="heading-elements">
+                        <ul class="list-inline mb-0">
+                            <li><a data-action="collapse"><i class="feather icon-chevron-down"></i></a></li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="card-body">
+                <div class="card-content collapse show">
+                    <div class="card-body">
+                    </div>
                 </div>
             </div>
         </div>
