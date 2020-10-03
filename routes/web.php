@@ -16,3 +16,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('index');
 });
+
+Route::view('/portal/peserta', 'peserta')->name('master-data.peserta');
+Route::view('/mata-kuliah', 'mata-kuliah')->name('mata-kuliah');

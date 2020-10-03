@@ -23,11 +23,30 @@
                         <div class="card-body">
                             <div class="avatar bg-rgba-info p-50 m-0 mb-1">
                                 <div class="avatar-content">
-                                    <i class="feather icon-users text-info font-medium-5"></i>
+                                    <i class="feather icon-file-text text-info font-medium-5"></i>
                                 </div>
                             </div>
                             <h2 class="text-bold-700">279</h2>
-                            <p class="mb-0 line-ellipsis">Jumlah Siswa</p>
+                            <p class="mb-0 line-ellipsis text-dark">Ujian Dilaksanakan</p>
+                            <p class="mb-0 line-ellipsis text-dark">Tahun 2020</p>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-xl-3 col-md-4 col-sm-6">
+            <a href="#">
+                <div class="card text-center">
+                    <div class="card-content">
+                        <div class="card-body">
+                            <div class="avatar bg-rgba-success p-50 m-0 mb-1">
+                                <div class="avatar-content">
+                                    <i class="feather icon-user text-success font-medium-5"></i>
+                                </div>
+                            </div>
+                            <h2 class="text-bold-700">4%</h2>
+                            <p class="mb-0 line-ellipsis text-dark">Peserta Lulus</p>
+                            <p class="mb-0 line-ellipsis text-dark">Tahun 2020</p>
                         </div>
                     </div>
                 </div>
@@ -40,11 +59,12 @@
                         <div class="card-body">
                             <div class="avatar bg-rgba-warning p-50 m-0 mb-1">
                                 <div class="avatar-content">
-                                    <i class="feather icon-user text-warning font-medium-5"></i>
+                                    <i class="feather icon-award text-warning font-medium-5"></i>
                                 </div>
                             </div>
-                            <h2 class="text-bold-700">0</h2>
-                            <p class="mb-0 line-ellipsis">Jumlah Guru</p>
+                            <h2 class="text-bold-700">1.54</h2>
+                            <p class="mb-0 line-ellipsis text-dark">Rata-rata Skor</p>
+                            <p class="mb-0 line-ellipsis text-dark">Tahun 2020</p>
                         </div>
                     </div>
                 </div>
@@ -57,28 +77,12 @@
                         <div class="card-body">
                             <div class="avatar bg-rgba-danger p-50 m-0 mb-1">
                                 <div class="avatar-content">
-                                    <i class="feather icon-file-text text-danger font-medium-5"></i>
+                                    <i class="feather icon-info text-danger font-medium-5"></i>
                                 </div>
                             </div>
-                            <h2 class="text-bold-700">90</h2>
-                            <p class="mb-0 line-ellipsis">Jumlah Paket Soal</p>
-                        </div>
-                    </div>
-                </div>
-            </a>
-        </div>
-        <div class="col-xl-3 col-md-4 col-sm-6">
-            <a href="#">
-                <div class="card text-center">
-                    <div class="card-content">
-                        <div class="card-body">
-                            <div class="avatar bg-rgba-primary p-50 m-0 mb-1">
-                                <div class="avatar-content">
-                                    <i class="feather icon-book text-primary font-medium-5"></i>
-                                </div>
-                            </div>
-                            <h2 class="text-bold-700">0</h2>
-                            <p class="mb-0 line-ellipsis">Jumlah Materi</p>
+                            <h2 class="text-bold-700">90%</h2>
+                            <p class="mb-0 line-ellipsis text-dark">Skor 0</p>
+                            <p class="mb-0 line-ellipsis text-dark">Tahun 2020</p>
                         </div>
                     </div>
                 </div>
@@ -86,62 +90,58 @@
         </div>
     </div>
 
-    <!-- general form elements -->
-    <div class="card">
-        <div class="card-header">
-            <h3 class="card-title">Paket Soal</h3>
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body py-1">
+                    <form action="#" method="post">
+                        <div class="d-flex justify-content-between mx-5">
+                            <div class="d-inline">
+                                <label for="">Periode</label>
+                                <select name="" class="form-control">
+                                    <option value="">2019/2020 Genap - Mandiri</option>
+                                </select>
+                            </div>
+
+                            <div class="d-inline">
+                                <label for="">Jenis Ujian</label>
+                                <select name="" class="form-control">
+                                    <option value="">-- Semua --</option>
+                                </select>
+                            </div>
+
+                            <div class="d-inline">
+                                <label for="" class="text-white">-</label>
+                                <button type="button" class="btn btn-primary form-control">Submit</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Line Chart</h4>
+                </div>
+                <div class="card-content">
+                    <div class="card-body pl-0">
+                        <div class="height-300">
+                            <canvas id="line-chart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <!-- /.card-header -->
-        <div class="card-body">
-            <p>Paket Soal yang telah dibuat</p>
-            <table id="myTable" class="table zero-configuration table-striped" style="width:100%">
-                <thead>
-                    <tr>
-                        <th>Nama Paket</th>
-                        <th>Kelas</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>
-                            <a href="#" data-toggle="modal" data-target="#exampleModal">
-                                PDP
-                            </a>
-                        </td>
-                        <td>I</td>
-                        <td>
-                            <a href="#" class="badge badge-success">Tampil</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <a href="#" data-toggle="modal" data-target="#exampleModal">
-                                PPDS Batch 1
-                            </a>
-                        </td>
-                        <td>II</td>
-                        <td>
-                            <a href="#" class="badge badge-success">Tampil</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <a href="#" data-toggle="modal" data-target="#exampleModal">
-                                PKM STIKI Peduli (Tahunan) Batch 1
-                            </a>
-                        </td>
-                        <td>III</td>
-                        <td>
-                            <a href="#" class="badge badge-danger">Tidak Tampil</a>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title"><i class="feather icon-calendar"></i> Jadwal Ujian Terdekat</h4>
+                </div>
+                <div class="card-body">
+                </div>
+            </div>
         </div>
-        <!-- /.card-body -->
     </div>
-    <!-- /.card -->
 
     <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -191,15 +191,10 @@
                 </div>
             </div>
         </div>
-  </div>
+    </div>
 @endsection
 
 @section('js')
-    <!-- BEGIN: Page Vendor JS-->
-    <script src="{{ asset('app-assets/vendors/js/charts/apexcharts.min.js') }}"></script>
-    <!-- END: Page Vendor JS-->
-
-    <!-- BEGIN: Page JS-->
-    <script src="{{ asset('app-assets/js/scripts/cards/card-statistics.js') }}"></script>
-    <!-- END: Page JS-->
+    <script src="{{ asset('app-assets/vendors/js/charts/chart.min.js') }}"></script>
+    <script src="{{ asset('app-assets/js/scripts/charts/chart-chartjs.js') }}"></script>
 @endsection
