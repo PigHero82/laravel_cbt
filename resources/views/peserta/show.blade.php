@@ -23,14 +23,14 @@
                 <ul class="nav nav-pills flex-column mt-md-0 mt-1">
                     <li class="nav-item">
                         <a class="nav-link d-flex py-75 active" id="account-pill-general" data-toggle="pill" href="#account-vertical-general" aria-expanded="true">
-                            <i class="feather icon-globe mr-50 font-medium-3"></i>
-                            General
+                            <i class="feather icon-user mr-50 font-medium-3"></i>
+                            Biodata
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link d-flex py-75" id="account-pill-password" data-toggle="pill" href="#account-vertical-password" aria-expanded="false">
-                            <i class="feather icon-lock mr-50 font-medium-3"></i>
-                            Change Password
+                            <i class="feather icon-calendar mr-50 font-medium-3"></i>
+                            Jadwal
                         </a>
                     </li>
                 </ul>
@@ -107,6 +107,35 @@
                                                         <textarea class="form-control" name="alamat" cols="30" rows="3" placeholder="Alamat" required data-validation-required-message="Kolom alamat tidak boleh kosong">Denpasar, Bali</textarea>
                                                     </div>
                                                 </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <div class="controls">
+                                                        <label for="account-username">Status</label>
+                                                        <select class="form-control" id="basicSelect" required data-validation-required-message="Kolom status tidak boleh kosong">
+                                                            <option>Aktif</option>
+                                                            <option>Tidak aktif</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="controls">
+                                                        <label for="account-username">Sumber Data</label>
+                                                        <input type="text" class="form-control" id="account-username" placeholder="Sumber Data" value="" required data-validation-required-message="Kolom sumber data tidak boleh kosong">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="controls">
+                                                        <label for="account-username">No. Referensi</label>
+                                                        <input type="text" class="form-control" id="account-username" placeholder="No. Referensi" value="" required data-validation-required-message="Kolom no. referensi tidak boleh kosong">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="controls">
+                                                        <label for="account-username">Password</label>
+                                                        <input type="text" class="form-control" id="account-username" placeholder="Password" value="1234" required data-validation-required-message="Kolom password tidak boleh kosong">
+                                                    </div>
+                                                </div>
                                                 <div class="form-group">
                                                     <div class="controls">
                                                         <label for="asal">Wilayah Asal</label>
@@ -114,61 +143,8 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-md-6">
-                                                <div class="row">
-                                                    <div class="col-12">
-                                                        <div class="form-group">
-                                                            <div class="controls">
-                                                                <label for="account-username">Username</label>
-                                                                <input type="text" class="form-control" id="account-username" placeholder="Username" value="hermione007" required data-validation-required-message="This username field is required">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-12">
-                                                <div class="form-group">
-                                                    <div class="controls">
-                                                        <label for="account-username">Username</label>
-                                                        <input type="text" class="form-control" id="account-username" placeholder="Username" value="hermione007" required data-validation-required-message="This username field is required">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-12">
-                                                <div class="form-group">
-                                                    <div class="controls">
-                                                        <label for="account-name">Name</label>
-                                                        <input type="text" class="form-control" id="account-name" placeholder="Name" value="Hermione Granger" required data-validation-required-message="This name field is required">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-12">
-                                                <div class="form-group">
-                                                    <div class="controls">
-                                                        <label for="account-e-mail">E-mail</label>
-                                                        <input type="email" class="form-control" id="account-e-mail" placeholder="Email" value="granger007@hogward.com" required data-validation-required-message="This email field is required">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-12">
-                                                <div class="alert alert-warning alert-dismissible mb-2" role="alert">
-                                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                        <span aria-hidden="true">×</span>
-                                                    </button>
-                                                    <p class="mb-0">
-                                                        Your email is not confirmed. Please check your inbox.
-                                                    </p>
-                                                    <a href="javascript: void(0);">Resend confirmation</a>
-                                                </div>
-                                            </div>
-                                            <div class="col-12">
-                                                <div class="form-group">
-                                                    <label for="account-company">Company</label>
-                                                    <input type="text" class="form-control" id="account-company" placeholder="Company name">
-                                                </div>
-                                            </div>
                                             <div class="col-12 d-flex flex-sm-row flex-column justify-content-end">
                                                 <button type="submit" class="btn btn-primary mr-sm-1 mb-1 mb-sm-0">Save
                                                     changes</button>
