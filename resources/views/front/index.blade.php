@@ -17,7 +17,7 @@
                 <h6 class="filter-heading d-none d-lg-block">Detail Peserta Tes</h6>
                 <div class="card">
                     <div class="card-body">
-                        <img class="img-fluid mb-1" src="{{ asset('app-assets/images/slider/04.jpg') }}" alt="Card image cap">
+                        <img class="img-thumbnail mb-1 mx-auto d-block" src="{{ asset('app-assets/images/portrait/small/avatar-s-20.jpg') }}" alt="Card image cap">
                         <dl class="row">
                             <dt class="col-lg-3">NIM</dt>
                             <dd class="col-lg-9" id="name-text">17101280</dd>                          

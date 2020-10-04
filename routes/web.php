@@ -15,6 +15,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::view('', 'sitemap');
 
+Route::namespace('dosen')->name('dosen.')->prefix('dosen')->group(function() {
+    Route::view('', 'dosen.index')->name('index');
+});
+
 Route::namespace('admin')->name('admin.')->prefix('admin')->group(function() {
     Route::view('', 'index')->name('index');
     Route::namespace('portal')->name('portal.')->prefix('portal')->group(function() {
