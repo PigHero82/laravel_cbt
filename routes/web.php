@@ -18,11 +18,13 @@ Route::view('', 'sitemap');
 Route::namespace('admin')->name('admin.')->prefix('admin')->group(function() {
     Route::view('', 'index')->name('index');
     Route::namespace('portal')->name('portal.')->prefix('portal')->group(function() {
+        Route::view('alur', 'alur')->name('alur');
         Route::namespace('peserta')->name('peserta.')->prefix('peserta')->group(function() {
             Route::view('', 'peserta.index')->name('index');
             Route::view('/123456', 'peserta.show')->name('show');
         });
         Route::view('mata-kuliah', 'mata-kuliah')->name('mata-kuliah');
+        Route::view('pengumuman', 'pengumuman')->name('pengumuman');
     });
 });
 
