@@ -45,10 +45,10 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>123456</td>
-                        <td><a href="#exampleModal" data-toggle="modal">Gus Mang</a></td>
+                        <td>0898841078</td>
+                        <td><a href="{{ route('admin.portal.peserta.show') }}">Tiger Nixon</a></td>
                         <td>L</td>
-                        <td>gusmang@gmail.com</td>
+                        <td>mail@tiger.com</td>
                         <td>2019/2020 Ganjil - Mandiri</td>
                         <td class="text-success"><i class="feather icon-check"></i></td>
                         <td>
@@ -57,10 +57,10 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>123456</td>
-                        <td><a href="#exampleModal" data-toggle="modal">Gus Mang</a></td>
+                        <td>0843098017</td>
+                        <td><a href="{{ route('admin.portal.peserta.show') }}">Garrett Winters</a></td>
                         <td>L</td>
-                        <td>gusmang@gmail.com</td>
+                        <td>mail@garrett.com</td>
                         <td>2019/2020 Ganjil - Mandiri</td>
                         <td class="text-danger"><i class="feather icon-slash"></i></td>
                         <td>
