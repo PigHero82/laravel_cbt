@@ -10,8 +10,8 @@
     <meta name="keywords" content="admin template, Vuexy admin template, dashboard template, flat admin template, responsive admin template, web app">
     <meta name="author" content="PIXINVENT">
     <title>@yield('judul') - CBT</title>
-    <link rel="apple-touch-icon" href="{{ asset('/app-assets/images/ico/apple-icon-120.png') }}">
-    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('/public/app-assets/images/ico/favicon.ico') }}">
+    <link rel="apple-touch-icon" href="{{ asset('logo.jpg') }}">
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('logo.jpg') }}">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600" rel="stylesheet">
 
     <!-- BEGIN: Vendor CSS-->
@@ -102,7 +102,7 @@
                         #
                     @endif
                     ">
-                        <div class="brand-logo"></div>
+                        <img src="{{ asset('logo.jpg') }}" alt="Logo" class="img-fluid" style="max-width: 17%;">
                         <h2 class="brand-text mb-0">Vuexy</h2>
                     </a></li>
                 <li class="nav-item nav-toggle"><a class="nav-link modern-nav-toggle pr-0" data-toggle="collapse"><i class="feather icon-x d-block d-xl-none font-medium-4 primary toggle-icon"></i><i class="toggle-icon feather icon-disc font-medium-4 d-none d-xl-block primary" data-ticon="icon-disc"></i></a></li>

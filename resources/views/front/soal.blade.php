@@ -1,7 +1,7 @@
 @extends('front.layout')
 
 @section('judul')
-    Beranda
+    Tes Bahasa Indonesia
 @endsection
 
 @section('content')
@@ -30,7 +30,7 @@
                     <div class="card-body">
                         <div class="overflow-auto">
                             1.
-                            Apa yang dimaksud dengan abc?
+                            Dibawah ini manakah yang tidak termasuk fungsi dari bahasa Indonesia ?
                             <br>
                             <ul class="list-unstyled mb-0">
                                 <li class=" mr-2">
@@ -41,7 +41,7 @@
                                                 <span class="vs-radio--border"></span>
                                                 <span class="vs-radio--circle"></span>
                                             </span>
-                                            <span class="">A. Active</span>
+                                            <span class="">A. Sebagai alat pemersatu</span>
                                         </div>
                                     </fieldset>
                                 </li>
@@ -53,7 +53,7 @@
                                                 <span class="vs-radio--border"></span>
                                                 <span class="vs-radio--circle"></span>
                                             </span>
-                                            <span class="">B. Active</span>
+                                            <span class="">B. Sebagai kerangka acuan</span>
                                         </div>
                                     </fieldset>
                                 </li>
@@ -65,7 +65,7 @@
                                                 <span class="vs-radio--border"></span>
                                                 <span class="vs-radio--circle"></span>
                                             </span>
-                                            <span class="">C. Active</span>
+                                            <span class="">C. Sebagai pemecah bangsa</span>
                                         </div>
                                     </fieldset>
                                 </li>
@@ -77,7 +77,7 @@
                                                 <span class="vs-radio--border"></span>
                                                 <span class="vs-radio--circle"></span>
                                             </span>
-                                            <span class="">D. Active</span>
+                                            <span class="">D. Sebagai ciri khas suatu bangsa</span>
                                         </div>
                                     </fieldset>
                                 </li>
@@ -89,7 +89,7 @@
                                                 <span class="vs-radio--border"></span>
                                                 <span class="vs-radio--circle"></span>
                                             </span>
-                                            <span class="">E. Active</span>
+                                            <span class="">E. Sebagai dasar negara</span>
                                         </div>
                                     </fieldset>
                                 </li>
