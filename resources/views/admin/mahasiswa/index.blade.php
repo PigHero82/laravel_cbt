@@ -1,7 +1,7 @@
 @extends('layout')
 
 @section('judul')
-    Data Peserta
+    Data Mahasiswa
 @endsection
 
 @section('css')
@@ -34,9 +34,9 @@
             <table id="myTable" class="table zero-configuration table-striped text-center" style="width:100%">
                 <thead>
                     <tr>
-                        <th>Kode Peserta</th>
+                        <th>NIDN</th>
                         <th>Nama</th>
-                        <th>L/P</th>
+                        <th>Jenis Kelamin</th>
                         <th>Email</th>
                         <th>Periode</th>
                         <th>Aktif</th>
@@ -46,8 +46,8 @@
                 <tbody>
                     <tr>
                         <td>0898841078</td>
-                        <td><a href="{{ route('admin.portal.peserta.show') }}">Tiger Nixon</a></td>
-                        <td>L</td>
+                        <td><a href="{{ route('admin.portal.mahasiswa.show') }}">Tiger Nixon</a></td>
+                        <td>Laki-laki</td>
                         <td>mail@tiger.com</td>
                         <td>2019/2020 Ganjil - Mandiri</td>
                         <td class="text-success"><i class="feather icon-check"></i></td>
@@ -58,8 +58,8 @@
                     </tr>
                     <tr>
                         <td>0843098017</td>
-                        <td><a href="{{ route('admin.portal.peserta.show') }}">Garrett Winters</a></td>
-                        <td>L</td>
+                        <td><a href="{{ route('admin.portal.mahasiswa.show') }}">Garrett Winters</a></td>
+                        <td>Laki-laki</td>
                         <td>mail@garrett.com</td>
                         <td>2019/2020 Ganjil - Mandiri</td>
                         <td class="text-danger"><i class="feather icon-slash"></i></td>
