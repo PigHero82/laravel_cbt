@@ -57,7 +57,7 @@
                         <div class="card-body">
                             <div class="avatar bg-rgba-warning p-50 m-0 mb-1">
                                 <div class="avatar-content">
-                                    <i class="feather icon-award text-warning font-medium-5"></i>
+                                    <i class="feather icon-file-text text-warning font-medium-5"></i>
                                 </div>
                             </div>
                             <h2 class="text-bold-700">3</h2>

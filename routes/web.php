@@ -17,6 +17,11 @@ Route::view('', 'sitemap');
 
 Route::namespace('dosen')->name('dosen.')->prefix('dosen')->group(function() {
     Route::view('', 'dosen.index')->name('index');
+    Route::view('mahasiswa', 'dosen.mahasiswa')->name('mahasiswa');
+    Route::namespace('soal')->name('soal.')->prefix('soal')->group(function() {
+        Route::view('', 'dosen.soal')->name('index');
+        Route::view('1', 'dosen.detailsoal')->name('soal');
+    });
 });
 
 Route::namespace('admin')->name('admin.')->prefix('admin')->group(function() {
