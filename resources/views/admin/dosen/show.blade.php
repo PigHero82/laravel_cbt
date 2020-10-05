@@ -1,7 +1,7 @@
 @extends('layout')
 
 @section('judul')
-    Data Peserta
+    Data Dosen
 @endsection
 
 @section('css')
@@ -30,7 +30,7 @@
                     <li class="nav-item">
                         <a class="nav-link d-flex py-75" id="account-pill-password" data-toggle="pill" href="#account-vertical-password" aria-expanded="false">
                             <i class="feather icon-calendar mr-50 font-medium-3"></i>
-                            Jadwal
+                            Kelas
                         </a>
                     </li>
                 </ul>
@@ -63,20 +63,20 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <div class="controls">
-                                                        <label for="periode">Periode</label>
-                                                        <input type="text" class="form-control" name="periode" placeholder="Periode" value="2019/2020 Ganjil - Mandiri" required data-validation-required-message="Kolom periode tidak boleh kosong">
+                                                        <label for="kode-peserta">NIDN</label>
+                                                        <input type="text" class="form-control" name="nidn" placeholder="NIDN" value="0843098017" required data-validation-required-message="Kolom kode peserta tidak boleh kosong">
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <div class="controls">
-                                                        <label for="kode-peserta">Kode Peserta</label>
-                                                        <input type="text" class="form-control" name="kode" placeholder="Kode Peserta" value="0843098017" required data-validation-required-message="Kolom kode peserta tidak boleh kosong">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <div class="controls">
-                                                        <label for="nama-peserta">Nama Peserta</label>
+                                                        <label for="nama-peserta">Nama</label>
                                                         <input type="text" class="form-control" name="nama" placeholder="Nama Peserta" value="Garrett Winters" required data-validation-required-message="Kolom nama peserta tidak boleh kosong">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="controls">
+                                                        <label for="email">Alamat Email</label>
+                                                        <input type="email" class="form-control" name="email" placeholder="Alamat Email" value="mail@garrett.com" required data-validation-required-message="Kolom alamat email tidak boleh kosong">
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
@@ -91,18 +91,6 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <div class="controls">
-                                                        <label for="hp">No. HP</label>
-                                                        <input type="number" class="form-control" name="hp" placeholder="No. HP" value="08999999990" required data-validation-required-message="Kolom no. hp tidak boleh kosong">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <div class="controls">
-                                                        <label for="email">Alamat Email</label>
-                                                        <input type="email" class="form-control" name="email" placeholder="Alamat Email" value="mail@garrett.com" required data-validation-required-message="Kolom alamat email tidak boleh kosong">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <div class="controls">
                                                         <label for="alamat">Alamat</label>
                                                         <textarea class="form-control" name="alamat" cols="30" rows="3" placeholder="Alamat" required data-validation-required-message="Kolom alamat tidak boleh kosong">Denpasar, Bali</textarea>
                                                     </div>
@@ -111,29 +99,29 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <div class="controls">
+                                                        <label for="ktp">No. KTP</label>
+                                                        <input type="number" class="form-control" name="ktp" placeholder="No. KTP" value="08999999990" required data-validation-required-message="Kolom no. ktp tidak boleh kosong">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="controls">
+                                                        <label for="tlp">No. Telepon</label>
+                                                        <input type="number" class="form-control" name="tlp" placeholder="No. Telepon" value="036199990" required data-validation-required-message="Kolom no. tlp tidak boleh kosong">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="controls">
+                                                        <label for="hp">No. HP</label>
+                                                        <input type="number" class="form-control" name="hp" placeholder="No. HP" value="08999999990" required data-validation-required-message="Kolom no. hp tidak boleh kosong">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="controls">
                                                         <label for="account-username">Status</label>
                                                         <select class="form-control" id="basicSelect" required data-validation-required-message="Kolom status tidak boleh kosong">
                                                             <option>Aktif</option>
                                                             <option>Tidak aktif</option>
                                                         </select>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <div class="controls">
-                                                        <label for="account-username">Sumber Data</label>
-                                                        <input type="text" class="form-control" id="account-username" placeholder="Sumber Data" value="" required data-validation-required-message="Kolom sumber data tidak boleh kosong">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <div class="controls">
-                                                        <label for="account-username">No. Referensi</label>
-                                                        <input type="text" class="form-control" id="account-username" placeholder="No. Referensi" value="" required data-validation-required-message="Kolom no. referensi tidak boleh kosong">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <div class="controls">
-                                                        <label for="account-username">Password</label>
-                                                        <input type="text" class="form-control" id="account-username" placeholder="Password" value="1234" required data-validation-required-message="Kolom password tidak boleh kosong">
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
