@@ -1,7 +1,7 @@
 @extends('layout')
 
 @section('judul')
-    Alur Ujian
+    Buat Tes
 @endsection
 
 @section('css')
@@ -20,12 +20,57 @@
             <div class="card-body">
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane active" id="account-vertical-general" aria-labelledby="account-pill-general" aria-expanded="true">
-                        <form novalidate>
+                        <form action="#" method="POST">
                             <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label for="">Nama</label>
+                                            <input type="text" class="form-control" placeholder="Nama Tes" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label for="">Kelas</label>
+                                            <select name="kelas" id="" class="form-control">
+                                                <option value="A">A</option>
+                                                <option value="B">B</option>
+                                                <option value="C">C</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label for="">Durasi</label>
+                                            <input type="number" name="" id="" class="form-control" placeholder="Hitungan menit">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label for="">Waktu Awal</label>
+                                            <input type="time" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label for="">Waktu Akhir</label>
+                                            <input type="time" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="col-12">
                                     <div class="form-group">
                                         <div class="controls">
-                                            <textarea class="form-control" name="alur" id="alur" cols="30" rows="10" placeholder="Alamat" required data-validation-required-message="Kolom alamat tidak boleh kosong"></textarea>
+                                            <label for="">Deskripsi Tes</label>
+                                            <textarea class="form-control" name="alur" id="alur" cols="30" rows="10" placeholder="Alamat"></textarea>
                                         </div>
                                     </div>
                                 </div>

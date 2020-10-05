@@ -23,12 +23,11 @@
                         <div class="card-body">
                             <div class="avatar bg-rgba-info p-50 m-0 mb-1">
                                 <div class="avatar-content">
-                                    <i class="feather icon-file-text text-info font-medium-5"></i>
+                                    <i class="feather icon-users text-info font-medium-5"></i>
                                 </div>
                             </div>
                             <h2 class="text-bold-700">279</h2>
-                            <p class="mb-0 line-ellipsis text-dark">Ujian Dilaksanakan</p>
-                            <p class="mb-0 line-ellipsis text-dark">Tahun 2020</p>
+                            <p class="mb-0 line-ellipsis text-dark">Jumlah Mahasiswa</p>
                         </div>
                     </div>
                 </div>
@@ -44,9 +43,8 @@
                                     <i class="feather icon-user text-success font-medium-5"></i>
                                 </div>
                             </div>
-                            <h2 class="text-bold-700">4%</h2>
-                            <p class="mb-0 line-ellipsis text-dark">Peserta Lulus</p>
-                            <p class="mb-0 line-ellipsis text-dark">Tahun 2020</p>
+                            <h2 class="text-bold-700">40</h2>
+                            <p class="mb-0 line-ellipsis text-dark">Jumlah Dosen</p>
                         </div>
                     </div>
                 </div>
@@ -59,12 +57,11 @@
                         <div class="card-body">
                             <div class="avatar bg-rgba-warning p-50 m-0 mb-1">
                                 <div class="avatar-content">
-                                    <i class="feather icon-award text-warning font-medium-5"></i>
+                                    <i class="feather icon-home text-warning font-medium-5"></i>
                                 </div>
                             </div>
-                            <h2 class="text-bold-700">1.54</h2>
-                            <p class="mb-0 line-ellipsis text-dark">Rata-rata Skor</p>
-                            <p class="mb-0 line-ellipsis text-dark">Tahun 2020</p>
+                            <h2 class="text-bold-700">32</h2>
+                            <p class="mb-0 line-ellipsis text-dark">Jumlah Kelas</p>
                         </div>
                     </div>
                 </div>
@@ -77,12 +74,11 @@
                         <div class="card-body">
                             <div class="avatar bg-rgba-danger p-50 m-0 mb-1">
                                 <div class="avatar-content">
-                                    <i class="feather icon-info text-danger font-medium-5"></i>
+                                    <i class="feather icon-file-text text-danger font-medium-5"></i>
                                 </div>
                             </div>
-                            <h2 class="text-bold-700">90%</h2>
-                            <p class="mb-0 line-ellipsis text-dark">Skor 0</p>
-                            <p class="mb-0 line-ellipsis text-dark">Tahun 2020</p>
+                            <h2 class="text-bold-700">24</h2>
+                            <p class="mb-0 line-ellipsis text-dark">Jumlah Paket Soal</p>
                         </div>
                     </div>
                 </div>
@@ -92,44 +88,6 @@
 
     <div class="row">
         <div class="col-md-8">
-            <div class="card">
-                <div class="card-body py-1">
-                    <form action="#" method="post">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <dl class="row">
-                                    <dt class="col-sm-3">
-                                        <label for="">Periode</label>
-                                    </dt>
-                                    <dd class="col-sm-9">
-                                        <select name="" class="form-control">
-                                            <option value="">2019/2020 Genap - Mandiri</option>
-                                        </select>
-                                    </dd>
-                                </dl>
-                            </div>
-                        
-                            <div class="col-md-6">
-                                <dl class="row">
-                                    <dt class="col-sm-4">
-                                        <label for="">Jenis Ujian</label>
-                                    </dt>
-                                    <dd class="col-sm-8">
-                                        <select name="" class="form-control">
-                                            <option value="">-- Semua --</option>
-                                        </select>
-                                    </dd>
-                                </dl>
-                            </div>
-
-                            <div class="col-12">
-                                <button type="button" class="btn btn-primary form-control">Submit</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            
             <div class="card">
                 <div class="card-header">
                     <h4 class="card-title">Grafik</h4>

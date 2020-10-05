@@ -61,7 +61,7 @@ $(window).on("load", function () {
     },
     title: {
       display: true,
-      text: 'Rata-rata Nilai Peserta Ujian',
+      text: 'Jumlah Peserta Ujian',
       fontSize: 20
     }
   };
