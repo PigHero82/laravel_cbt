@@ -61,7 +61,7 @@
                                 </div>
                             </div>
                             <h2 class="text-bold-700">3</h2>
-                            <p class="mb-0 line-ellipsis text-dark">Jumlah Soal</p>
+                            <p class="mb-0 line-ellipsis text-dark">Jumlah Paket Soal</p>
                         </div>
                     </div>
                 </div>

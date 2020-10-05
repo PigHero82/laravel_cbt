@@ -32,6 +32,7 @@
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane active" id="home" aria-labelledby="home-tab" role="tabpanel">
+                        DA | Pemrograman Web
                         <table class="table table-striped">
                             <tr class="text-center">
                                 <th>NIM</th>
@@ -54,6 +55,7 @@
                         </table>
                     </div>
                     <div class="tab-pane" id="profile" aria-labelledby="profile-tab" role="tabpanel">
+                        C | Bahasa Indonesia
                         <table class="table table-striped">
                             <tr class="text-center">
                                 <th>NIM</th>

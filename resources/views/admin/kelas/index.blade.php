@@ -1,7 +1,7 @@
 @extends('layout')
 
 @section('judul')
-    Data Mahasiswa
+    Data Kelas
 @endsection
 
 @section('css')
@@ -18,7 +18,7 @@
     <div class="card">
         <div class="card-header">
             <div class="d-inline">
-                <h3>Daftar Mahasiswa</h3>
+                <h3>Daftar Kelas</h3>
             </div>
             <div class="d-inline">
                 <button type="button" class="btn btn-success px-1"><i class="feather icon-plus"></i> Tambah</button>
@@ -30,29 +30,28 @@
             <table id="myTable" class="table zero-configuration table-striped" style="width:100%">
                 <thead>
                     <tr>
-                        <th>NIM</th>
-                        <th>Nama</th>
-                        <th>Email</th>
-                        <th>No HP</th>
+                        <th>Kelas</th>
+                        <th>Dosen</th>
+                        <th>Jumlah Mahasiswa</th>
                         <th></th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>0898841078</td>
-                        <td><a href="{{ route('admin.portal.mahasiswa.show') }}">Tiger Nixon</a></td>
-                        <td>mail@tiger.com</td>
-                        <td>081234567890</td>
+                        <td><a href="{{ route('admin.portal.mahasiswa.show') }}">DA | Pemrograman Web</a></td>
+                        <td>I Gusti Ayu Agung Diatri Indradewi, M. T.</td>
+                        <td>31 Orang</td>
                         <td>
+                            <button type="button" class="btn btn-warning px-1"><i class="feather icon-edit-1"></i></button>
                             <button type="button" class="btn btn-danger px-1"><i class="feather icon-trash-2"></i></button>
                         </td>
                     </tr>
                     <tr>
-                        <td>0843098017</td>
-                        <td><a href="{{ route('admin.portal.mahasiswa.show') }}">Garrett Winters</a></td>
-                        <td>mail@garrett.com</td>
-                        <td>081234567890</td>
+                        <td><a href="{{ route('admin.portal.mahasiswa.show') }}">C | Bahasa Indonesia</a></td>
+                        <td>Ida Bagus Nyoman Pascima, M. Cs.</td>
+                        <td>28 Orang</td>
                         <td>
+                            <button type="button" class="btn btn-warning px-1"><i class="feather icon-edit-1"></i></button>
                             <button type="button" class="btn btn-danger px-1"><i class="feather icon-trash-2"></i></button>
                         </td>
                     </tr>

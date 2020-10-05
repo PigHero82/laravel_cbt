@@ -18,14 +18,10 @@
     <div class="card">
         <div class="card-header">
             <div class="d-inline">
-                <select name="" id="" class="form-control">
-                    <option value="">--Semua--</option>
-                </select>
+                <h3>Daftar Dosen</h3>
             </div>
             <div class="d-inline">
                 <button type="button" class="btn btn-success px-1"><i class="feather icon-plus"></i> Tambah</button>
-                <button type="button" class="btn btn-danger px-1"><i class="feather icon-trash"></i> Hapus</button>
-                <button type="button" class="btn btn-warning px-1"><i class="feather icon-check-square"></i> Set Aktif</button>
                 <button type="button" class="btn btn-primary px-1"><i class="feather icon-upload"></i> Upload Excel</button>
             </div>
         </div>
@@ -37,7 +33,8 @@
                         <th>NIDN</th>
                         <th>Nama</th>
                         <th>Jenis Kelamin</th>
-                        <th>Aktif</th>
+                        <th>Email</th>
+                        <th>No HP</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -46,9 +43,9 @@
                         <td>0898841078</td>
                         <td><a href="{{ route('admin.portal.dosen.show') }}">Tiger Nixon</a></td>
                         <td>Laki-laki</td>
-                        <td class="text-success"><i class="feather icon-check"></i></td>
+                        <td>mail@tiger.com</td>
+                        <td>081234567890</td>
                         <td>
-                            <button type="button" class="btn btn-primary px-1"><i class="feather icon-lock"></i></button>
                             <button type="button" class="btn btn-danger px-1"><i class="feather icon-trash-2"></i></button>
                         </td>
                     </tr>
@@ -56,9 +53,9 @@
                         <td>0843098017</td>
                         <td><a href="{{ route('admin.portal.dosen.show') }}">Garrett Winters</a></td>
                         <td>Laki-laki</td>
-                        <td class="text-danger"><i class="feather icon-slash"></i></td>
+                        <td>mail@tiger.com</td>
+                        <td>081234567890</td>
                         <td>
-                            <button type="button" class="btn btn-primary px-1"><i class="feather icon-lock"></i></button>
                             <button type="button" class="btn btn-danger px-1"><i class="feather icon-trash-2"></i></button>
                         </td>
                     </tr>
