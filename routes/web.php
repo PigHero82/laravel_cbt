@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::view('', 'sitemap');
+Route::view('/login', 'login')->name('login');
 
 Route::namespace('dosen')->name('dosen.')->prefix('dosen')->group(function() {
     Route::view('', 'dosen.index')->name('index');
