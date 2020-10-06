@@ -1,7 +1,6 @@
 <div class="main-menu-content">
     <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
         <li class="nav-item {{ (request()->is('admin')) ? 'active' : '' }}"><a href="{{ route('admin.index') }}"><i class="feather icon-home"></i><span class="menu-title">Dashboard</span></a></li>
-        <li class="nav-item"><a href="#"><i class="feather icon-home"></i><span class="menu-title">Dashboard</span></a></li>
         <li class="nav-item"><a href="#"><i class="feather icon-users"></i><span class="menu-title">Mahasiswa</span></a></li>
         <li class="nav-item"><a href="#"><i class="feather icon-file-text"></i><span class="menu-title">Soal</span></a></li>
         <li class="nav-item"><a href="#"><i class="feather icon-printer"></i><span class="menu-title">Cetak Hasil</span></a></li>

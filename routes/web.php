@@ -20,8 +20,9 @@ Route::namespace('dosen')->name('dosen.')->prefix('dosen')->group(function() {
     Route::view('mahasiswa', 'dosen.mahasiswa')->name('mahasiswa');
     Route::view('cetak', 'dosen.cetak')->name('cetak');
     Route::namespace('soal')->name('soal.')->prefix('soal')->group(function() {
-        Route::view('', 'dosen.soal')->name('index');
-        Route::view('1', 'dosen.detailsoal')->name('soal');
+        Route::view('', 'dosen.soal.index')->name('index');
+        Route::view('1', 'dosen.soal.show')->name('show');
+        Route::view('1/1', 'dosen.soal.single')->name('single');
     });
 });
 

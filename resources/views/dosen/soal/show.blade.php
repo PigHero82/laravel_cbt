@@ -62,27 +62,42 @@
                     <div class="card-body">
                         <div class="table-responsive">
                             <table class="table table-striped">
-                                <tr class="text-center">
-                                    <th>Soal</th>
-                                    <th>Jawaban</th>
-                                    <th></th>
-                                </tr>
-                                <tr>
-                                    <td>Apa yang dimaksud dengan karnivora?</td>
-                                    <td class="text-center">E</td>
-                                    <td class="text-center">
-                                        <button class="btn badge badge-lg badge-warning"><i class="feather icon-edit-1"></i></button>
-                                        <button class="btn badge badge-lg badge-danger"><i class="feather icon-trash"></i></button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Apa arti dari kata halusinasi?</td>
-                                    <td class="text-center">A</td>
-                                    <td class="text-center">
-                                        <button class="btn badge badge-lg badge-warning"><i class="feather icon-edit-1"></i></button>
-                                        <button class="btn badge badge-lg badge-danger"><i class="feather icon-trash"></i></button>
-                                    </td>
-                                </tr>
+                                <thead>
+                                    <tr class="text-center">
+                                        <th>Soal</th>
+                                        <th>Jenis</th>
+                                        <th>Jawaban</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Apa yang dimaksud dengan karnivora?</td>
+                                        <td class="text-center">Pilihan Ganda</td>
+                                        <td class="text-center">E</td>
+                                        <td class="text-center">
+                                            <button class="btn badge badge-lg badge-warning"><i class="feather icon-edit-1"></i></button>
+                                            <button class="btn badge badge-lg badge-danger"><i class="feather icon-trash"></i></button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Apa arti dari kata halusinasi?</td>
+                                        <td class="text-center">Esai</td>
+                                        <td class="text-center"></td>
+                                        <td class="text-center">
+                                            <button class="btn badge badge-lg badge-warning"><i class="feather icon-edit-1"></i></button>
+                                            <button class="btn badge badge-lg badge-danger"><i class="feather icon-trash"></i></button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr class="text-center">
+                                        <th>Soal</th>
+                                        <th>Jenis</th>
+                                        <th>Jawaban</th>
+                                        <th></th>
+                                    </tr>
+                                </tfoot>
                             </table>
                         </div>
                     </div>
