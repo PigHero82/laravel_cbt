@@ -28,9 +28,9 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('/app-assets/css/core/menu/menu-types/vertical-menu.css') }}">
     <!-- END: Page CSS-->
 
-    <!-- BEGIN: Custom CSS-->
+    {{-- <!-- BEGIN: Custom CSS-->
     <link rel="stylesheet" type="text/css" href="{{ asset('/css/fontawesome5.css') }}">
-    <!-- END: Custom CSS-->
+    <!-- END: Custom CSS--> --}}
 
     @yield('css')
 
@@ -149,8 +149,7 @@
     <!-- END: Theme JS-->
     
     <!-- BEGIN: Custom JS-->
-    <script src="{{ asset('/js/fontawesome5.js') }}"></script>
-    <!-- END: Custom JS-->
+    {{-- <script src="{{ asset('/js/fontawesome5.js') }}"></script> --}}
     {{-- <script src="{{ asset('/app-assets/js/scripts/datatables/datatable.min.js') }}"></script> --}}
 
     @yield('js')

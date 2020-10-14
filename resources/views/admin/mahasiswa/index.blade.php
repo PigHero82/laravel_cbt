@@ -21,8 +21,8 @@
                 <h3>Daftar Mahasiswa</h3>
             </div>
             <div class="d-inline">
-                <button type="button" class="btn btn-success px-1"><i class="feather icon-plus"></i> Tambah</button>
-                <button type="button" class="btn btn-primary px-1"><i class="feather icon-upload"></i> Upload Excel</button>
+                <button type="button" data-toggle="modal" data-target="#modalTambah" class="btn btn-success px-1"><i class="feather icon-plus"></i> Tambah</button>
+                <button type="button" data-toggle="modal" data-target="#modalExcel" class="btn btn-primary px-1"><i class="feather icon-upload"></i> Upload Excel</button>
             </div>
         </div>
         <!-- /.card-header -->
@@ -63,25 +63,113 @@
     </div>
 
     <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
+    <div class="modal fade" id="modalTambah" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Tambah Mahasiswa</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Nama</label>
+                        <input type="text" name="nama" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label>NIM</label>
+                        <input type="text" name="nim" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Jenis Kelamin</label>
+                        <fieldset>
+                            <div class="vs-radio-con">
+                                <input type="radio" name="vueradio" checked value="1">
+                                <span class="vs-radio">
+                                    <span class="vs-radio--border"></span>
+                                    <span class="vs-radio--circle"></span>
+                                </span>
+                                <span class="">Laki-laki</span>
+                            </div>
+                        </fieldset>
+                        <fieldset>
+                            <div class="vs-radio-con">
+                                <input type="radio" name="vueradio" value="0">
+                                <span class="vs-radio">
+                                    <span class="vs-radio--border"></span>
+                                    <span class="vs-radio--circle"></span>
+                                </span>
+                                <span class="">Perempuan</span>
+                            </div>
+                        </fieldset>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="text" name="email" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label>No HP</label>
+                        <input type="text" name="hp" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Alamat Saat Ini</label>
+                        <textarea name="alamat" cols="30" rows="10" class="form-control"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Alamat Asal</label>
+                        <textarea name="alamatasal" cols="30" rows="10" class="form-control"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Gambar</label>
+                        <input type="file" name="gambar" class="form-control">
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Tambah</button>
+                </div>
+            </div>
         </div>
-        <div class="modal-body">
-          ...
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
-        </div>
-      </div>
     </div>
-  </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="modalExcel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Tambah Mahasiswa</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>File Excel</label>
+                        <input type="file" name="gambar" class="form-control">
+                    </div>
+
+                    <hr>
+                    <p>Sebelum mengunggah pastikan file yang akan anda unggah sudah dalam bentuk Ms. Excel 97-2003 Workbook (.xls) dan format penulisan harus sesuai dengan yang telah ditentukan.</p>
+
+                    <a href="#" class="btn btn-success">Download Format</a>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Tambah</button>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @section('js')

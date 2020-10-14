@@ -1,8 +1,8 @@
 @extends('layout')
 
-@section('indexactive')
-    active
-@endsection
+{{-- @section('css')
+    <link rel="stylesheet" type="text/css" href="{{ asset('/app-assets/vendors/css/tables/datatable/datatables.min.css') }}">
+@endsection --}}
 
 @section('judul')
     Data Soal
@@ -77,3 +77,13 @@
         </div>
     </div>
 @endsection
+
+{{-- @section('js')
+    <script src="{{ asset('app-assets/vendors/js/tables/datatable/datatables.min.js') }}"></script>
+    <script src="{{ asset('app-assets/vendors/js/tables/datatable/datatables.bootstrap4.min.js') }}"></script>
+    <script>
+        $(document).ready( function () {
+            $('.table-striped').DataTable();
+        } );
+    </script>
+@endsection --}}
