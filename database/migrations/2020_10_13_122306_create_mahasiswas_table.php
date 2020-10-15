@@ -18,11 +18,11 @@ class CreateMahasiswasTable extends Migration
             $table->char('nim', 12);
             $table->string('nama');
             $table->boolean('jeniskelamin');
-            $table->string('email');
+            $table->string('email')->nullable();
             $table->char('hp', 13);
             $table->text('alamat');
             $table->text('alamatasal');
-            $table->boolean('status');
+            $table->boolean('status')->default(1);
             $table->timestamps();
         });
     }

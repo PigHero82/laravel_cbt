@@ -30,10 +30,7 @@ Route::namespace('admin')->name('admin.')->prefix('admin')->group(function() {
     Route::view('', 'index')->name('index');
     Route::namespace('portal')->name('portal.')->prefix('portal')->group(function() {
         Route::view('alur', 'alur')->name('alur');
-        Route::namespace('mahasiswa')->name('mahasiswa.')->prefix('mahasiswa')->group(function() {
-            Route::view('', 'admin.mahasiswa.index')->name('index');
-            Route::view('/123456', 'admin.mahasiswa.show')->name('show');
-        });
+        Route::resource('mahasiswa', 'MahasiswaController');
         Route::namespace('dosen')->name('dosen.')->prefix('dosen')->group(function() {
             Route::view('', 'admin.dosen.index')->name('index');
             Route::view('/123456', 'admin.dosen.show')->name('show');

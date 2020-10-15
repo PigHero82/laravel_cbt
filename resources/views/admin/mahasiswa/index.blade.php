@@ -9,10 +9,28 @@
 @endsection
 
 @section('content')
-    @if(session()->get('success'))
-        <div class ="alert alert-success">
-            {{ session()->get('success') }}  
-        </div><br />
+    @if ($message = Session::get('success'))
+    <div class="alert alert-success alert-block">
+        <button type="button" class="close" data-dismiss="alert"><i class="feather icon-x"></i></button>
+        {{ $message }}
+    </div>
+    @endif
+
+    @if ($message = Session::get('danger'))
+    <div class="alert alert-danger alert-block">
+        <button type="button" class="close" data-dismiss="alert"><i class="feather icon-x"></i></button>
+        {{ $message }}
+    </div>
+    @endif
+
+    @if ($errors->any())
+    <div class="alert alert-danger alert-block">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
     @endif
 
     <div class="card">
@@ -40,7 +58,7 @@
                 <tbody>
                     <tr>
                         <td>0898841078</td>
-                        <td><a href="{{ route('admin.portal.mahasiswa.show') }}">Tiger Nixon</a></td>
+                        <td><a href="{{ route('admin.portal.mahasiswa.show', 0) }}">Tiger Nixon</a></td>
                         <td>mail@tiger.com</td>
                         <td>081234567890</td>
                         <td>
@@ -49,7 +67,7 @@
                     </tr>
                     <tr>
                         <td>0843098017</td>
-                        <td><a href="{{ route('admin.portal.mahasiswa.show') }}">Garrett Winters</a></td>
+                        <td><a href="{{ route('admin.portal.mahasiswa.show', 0) }}">Garrett Winters</a></td>
                         <td>mail@garrett.com</td>
                         <td>081234567890</td>
                         <td>
@@ -73,70 +91,73 @@
                     </button>
                 </div>
                 
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label>Nama</label>
-                        <input type="text" name="nama" class="form-control">
+                <form action="{{ route('admin.portal.mahasiswa.store') }}" method="post">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>Nama</label>
+                            <input type="text" name="nama" class="form-control" placeholder="Nama Mahasiswa" required>
+                        </div>
+    
+                        <div class="form-group">
+                            <label>NIM</label>
+                            <input type="text" name="nim" class="form-control" maxlength="12" placeholder="NIM Mahasiswa" required>
+                        </div>
+    
+                        <div class="form-group">
+                            <label>Jenis Kelamin</label>
+                            <fieldset>
+                                <div class="vs-radio-con">
+                                    <input type="radio" name="jeniskelamin" checked value="1">
+                                    <span class="vs-radio">
+                                        <span class="vs-radio--border"></span>
+                                        <span class="vs-radio--circle"></span>
+                                    </span>
+                                    <span class="">Laki-laki</span>
+                                </div>
+                            </fieldset>
+                            <fieldset>
+                                <div class="vs-radio-con">
+                                    <input type="radio" name="jeniskelamin" value="0">
+                                    <span class="vs-radio">
+                                        <span class="vs-radio--border"></span>
+                                        <span class="vs-radio--circle"></span>
+                                    </span>
+                                    <span class="">Perempuan</span>
+                                </div>
+                            </fieldset>
+                        </div>
+    
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" name="email" class="form-control" placeholder="Email Mahasiswa (input dengan email yang valid)" required>
+                        </div>
+    
+                        <div class="form-group">
+                            <label>No HP</label>
+                            <input type="number" name="hp" class="form-control" maxlength="13" placeholder="No HP Mahasiswa (Maksimal diisi 13 digit)" required>
+                        </div>
+    
+                        <div class="form-group">
+                            <label>Alamat Saat Ini</label>
+                            <textarea name="alamat" cols="30" rows="10" class="form-control" placeholder="Alamat Mahasiswa" required></textarea>
+                        </div>
+    
+                        <div class="form-group">
+                            <label>Alamat Asal</label>
+                            <textarea name="alamatasal" cols="30" rows="10" class="form-control" placeholder="Alamat Asal Mahasiswa" required></textarea>
+                        </div>
+    
+                        <div class="form-group">
+                            <label>Gambar</label>
+                            <input type="file" name="gambar" class="form-control-file" placeholder="Gambar Mahasiswa">
+                        </div>
                     </div>
-
-                    <div class="form-group">
-                        <label>NIM</label>
-                        <input type="text" name="nim" class="form-control">
+                    
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Tambah</button>
                     </div>
-
-                    <div class="form-group">
-                        <label>Jenis Kelamin</label>
-                        <fieldset>
-                            <div class="vs-radio-con">
-                                <input type="radio" name="vueradio" checked value="1">
-                                <span class="vs-radio">
-                                    <span class="vs-radio--border"></span>
-                                    <span class="vs-radio--circle"></span>
-                                </span>
-                                <span class="">Laki-laki</span>
-                            </div>
-                        </fieldset>
-                        <fieldset>
-                            <div class="vs-radio-con">
-                                <input type="radio" name="vueradio" value="0">
-                                <span class="vs-radio">
-                                    <span class="vs-radio--border"></span>
-                                    <span class="vs-radio--circle"></span>
-                                </span>
-                                <span class="">Perempuan</span>
-                            </div>
-                        </fieldset>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Email</label>
-                        <input type="text" name="email" class="form-control">
-                    </div>
-
-                    <div class="form-group">
-                        <label>No HP</label>
-                        <input type="text" name="hp" class="form-control">
-                    </div>
-
-                    <div class="form-group">
-                        <label>Alamat Saat Ini</label>
-                        <textarea name="alamat" cols="30" rows="10" class="form-control"></textarea>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Alamat Asal</label>
-                        <textarea name="alamatasal" cols="30" rows="10" class="form-control"></textarea>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Gambar</label>
-                        <input type="file" name="gambar" class="form-control">
-                    </div>
-                </div>
-
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Tambah</button>
-                </div>
+                </form>
             </div>
         </div>
     </div>

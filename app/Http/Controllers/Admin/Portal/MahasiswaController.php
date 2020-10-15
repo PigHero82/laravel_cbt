@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin\Portal;
 
+use App\Http\Controllers\Controller;
 use App\Mahasiswa;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,7 @@ class MahasiswaController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.mahasiswa.index');
     }
 
     /**
@@ -35,7 +36,14 @@ class MahasiswaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = Mahasiswa::cekMahasiswaNIM($request->nim);
+        if (isset($data->nim)) {
+            return redirect()->back()->with('danger', 'Data dengan NIM '. $data->nim .' Telah Terdaftar atas nama '. $data->nama);
+        }
+        else {
+            Mahasiswa::storeMahasiswa($request);
+            return redirect()->back()->with('success', 'Input Data '. $request->nama .' Berhasil');
+        }
     }
 
     /**
@@ -44,9 +52,9 @@ class MahasiswaController extends Controller
      * @param  \App\Mahasiswa  $mahasiswa
      * @return \Illuminate\Http\Response
      */
-    public function show(Mahasiswa $mahasiswa)
+    public function show($mahasiswa)
     {
-        //
+        return view('admin.mahasiswa.show');
     }
 
     /**
