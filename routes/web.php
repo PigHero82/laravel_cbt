@@ -31,10 +31,11 @@ Route::namespace('admin')->name('admin.')->prefix('admin')->group(function() {
     Route::namespace('portal')->name('portal.')->prefix('portal')->group(function() {
         Route::view('alur', 'alur')->name('alur');
         Route::resource('mahasiswa', 'MahasiswaController');
-        Route::namespace('dosen')->name('dosen.')->prefix('dosen')->group(function() {
-            Route::view('', 'admin.dosen.index')->name('index');
-            Route::view('/123456', 'admin.dosen.show')->name('show');
-        });
+        Route::resource('dosen', 'DosenController');
+        // Route::namespace('dosen')->name('dosen.')->prefix('dosen')->group(function() {
+        //     Route::view('', 'admin.dosen.index')->name('index');
+        //     Route::view('/123456', 'admin.dosen.show')->name('show');
+        // });
         Route::namespace('kelas')->name('kelas.')->prefix('kelas')->group(function() {
             Route::view('', 'admin.kelas.index')->name('index');
         });

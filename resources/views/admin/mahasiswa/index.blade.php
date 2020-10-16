@@ -46,36 +46,43 @@
         </div>
         <!-- /.card-header -->
         <div class="card-body">
-            <div class="table-responsive">
-                <table id="myTable" class="table zero-configuration table-striped" style="width:100%">
-                    <thead>
-                        <tr>
-                            <th>NIM</th>
-                            <th>Nama</th>
-                            <th>Email</th>
-                            <th>No HP</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($data as $item)
+            @if (count($data) > 0)
+                <div class="table-responsive">
+                    <table id="myTable" class="table zero-configuration table-striped" style="width:100%">
+                        <thead>
                             <tr>
-                                <td>{{ $item->nim }}</td>
-                                <td><a href="{{ route('admin.portal.mahasiswa.show', $item->id) }}">{{ $item->nama }}</a></td>
-                                <td>{{ $item->email }}</td>
-                                <td>{{ $item->hp }}</td>
-                                <td>
-                                    <form action="{{ route('admin.portal.mahasiswa.destroy', $item->id) }}" class="form" method="post">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="button" class="btn btn-danger px-1 hapus"><i class="feather icon-trash-2"></i></button>
-                                    </form>
-                                </td>
+                                <th>NIM</th>
+                                <th>Nama</th>
+                                <th>Email</th>
+                                <th>No HP</th>
+                                <th></th>
                             </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
+                        </thead>
+                        <tbody>
+                            @foreach ($data as $item)
+                                <tr>
+                                    <td>{{ $item->nim }}</td>
+                                    <td><a href="{{ route('admin.portal.mahasiswa.show', $item->id) }}">{{ $item->nama }}</a></td>
+                                    <td>{{ $item->email }}</td>
+                                    <td>{{ $item->hp }}</td>
+                                    <td>
+                                        <form action="{{ route('admin.portal.mahasiswa.destroy', $item->id) }}" class="form" method="post">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="button" class="btn btn-danger px-1 hapus"><i class="feather icon-trash-2"></i></button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            @else
+                <div class="error-template text-center">
+                    <h1><i class="feather icon-slash"></i></h1>
+                    <h2>Tidak Ada Data</h2>
+                </div> 
+            @endif
         </div>
         <!-- /.card-body -->
     </div>

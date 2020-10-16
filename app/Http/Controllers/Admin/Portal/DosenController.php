@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Admin\Portal;
 
 use App\Http\Controllers\Controller;
-use App\Mahasiswa;
+use App\Dosen;
 use Illuminate\Http\Request;
 
-class MahasiswaController extends Controller
+class DosenController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +15,8 @@ class MahasiswaController extends Controller
      */
     public function index()
     {
-        $data = Mahasiswa::getMahasiswa();
-        return view('admin.mahasiswa.index', compact('data'));
+        $data = Dosen::getDosen();
+        return view('admin.dosen.index', compact('data'));
     }
 
     /**
@@ -37,12 +37,12 @@ class MahasiswaController extends Controller
      */
     public function store(Request $request)
     {
-        $data = Mahasiswa::firstMahasiswaNIM($request->nim);
-        if (isset($data->nim)) {
-            return redirect()->back()->with('danger', 'Data dengan NIM '. $data->nim .' telah terdaftar atas nama '. $data->nama);
+        $data = Dosen::firstDosenNIDN($request->nidn);
+        if (isset($data->nidn)) {
+            return redirect()->back()->with('danger', 'Data dengan NIDN '. $data->nidn .' telah terdaftar atas nama '. $data->nama);
         }
         else {
-            Mahasiswa::storeMahasiswa($request);
+            Dosen::storeDosen($request);
             return redirect()->back()->with('success', 'Input Data '. $request->nama .' Berhasil');
         }
     }
@@ -50,22 +50,22 @@ class MahasiswaController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Mahasiswa  $mahasiswa
+     * @param  \App\Dosen  $dosen
      * @return \Illuminate\Http\Response
      */
-    public function show(Mahasiswa $mahasiswa)
+    public function show(Dosen $dosen)
     {
-        $data = Mahasiswa::firstMahasiswa($mahasiswa->id);
-        return view('admin.mahasiswa.show', compact('data'));
+        $data = Dosen::firstDosen($dosen->id);
+        return view('admin.dosen.show', compact('data'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Mahasiswa  $mahasiswa
+     * @param  \App\Dosen  $dosen
      * @return \Illuminate\Http\Response
      */
-    public function edit(Mahasiswa $mahasiswa)
+    public function edit(Dosen $dosen)
     {
         //
     }
@@ -74,28 +74,28 @@ class MahasiswaController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Mahasiswa  $mahasiswa
+     * @param  \App\Dosen  $dosen
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Mahasiswa $mahasiswa)
+    public function update(Request $request, Dosen $dosen)
     {
-        $data = Mahasiswa::firstMahasiswaNIM($request->nim);
-        if (isset($data->nim) && $mahasiswa->nim != $data->nim) {
-            return redirect()->back()->with('danger', 'Data dengan NIM '. $data->nim .' Telah Terdaftar atas nama '. $data->nama);
+        $data = Dosen::firstDosenNIDN($request->nidn);
+        if (isset($data->nim) && $dosen->nidn != $data->nidn) {
+            return redirect()->back()->with('danger', 'Data dengan NIDN '. $data->nidn .' Telah Terdaftar atas nama '. $data->nama);
         }
-        Mahasiswa::updateMahasiswa($request, $mahasiswa->id);
+        Dosen::updateDosen($request, $dosen->id);
         return redirect()->back()->with('success', 'Data Berhasil diubah');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Mahasiswa  $mahasiswa
+     * @param  \App\Dosen  $dosen
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Mahasiswa $mahasiswa)
+    public function destroy(Dosen $dosen)
     {
-        Mahasiswa::deleteMahasiswa($mahasiswa->id);
+        Dosen::deleteDosen($dosen->id);
         return redirect()->back();
     }
 }
