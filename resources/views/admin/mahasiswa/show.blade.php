@@ -9,10 +9,28 @@
 @endsection
 
 @section('content')
-    @if(session()->get('success'))
-        <div class ="alert alert-success">
-            {{ session()->get('success') }}  
-        </div><br />
+    @if ($message = Session::get('success'))
+    <div class="alert alert-success alert-block">
+        <button type="button" class="close" data-dismiss="alert"><i class="feather icon-x"></i></button>
+        {{ $message }}
+    </div>
+    @endif
+
+    @if ($message = Session::get('danger'))
+    <div class="alert alert-danger alert-block">
+        <button type="button" class="close" data-dismiss="alert"><i class="feather icon-x"></i></button>
+        {{ $message }}
+    </div>
+    @endif
+
+    @if ($errors->any())
+    <div class="alert alert-danger alert-block">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
     @endif
 
     <!-- account setting page start -->
@@ -44,111 +62,107 @@
                                 <div role="tabpanel" class="tab-pane active" id="account-vertical-general" aria-labelledby="account-pill-general" aria-expanded="true">
                                     <div class="media">
                                         <a href="javascript: void(0);">
-                                            <img src="../../../app-assets/images/portrait/small/avatar-s-12.jpg" class="rounded mr-75" alt="profile image" height="64" width="64">
+                                            <img src="../../../app-assets/images/profile/blank.png" class="rounded mr-75" alt="profile image" height="64">
                                         </a>
                                         <div class="media-body mt-75">
                                             <div class="col-12 px-0 d-flex flex-sm-row flex-column justify-content-start">
-                                                <label class="btn btn-sm btn-primary ml-50 mb-50 mb-sm-0 cursor-pointer" for="account-upload">Upload new photo</label>
-                                                <input type="file" id="account-upload" hidden>
-                                                <button class="btn btn-sm btn-outline-warning ml-50">Reset</button>
+                                                <button class="btn btn-sm btn-primary ml-50"><i class="feather icon-camera"></i> Unggah Foto Profil</button>
                                             </div>
-                                            <p class="text-muted ml-75 mt-50"><small>Allowed JPG, GIF or PNG. Max
-                                                    size of
-                                                    800kB</small></p>
+                                            <p class="text-muted ml-75 mt-50"><small>Format JPG, GIF atau PNG. Ukuran Maksimal 800kB</small></p>
                                         </div>
                                     </div>
                                     <hr>
-                                    <form novalidate>
+                                    <form action="{{ route('admin.portal.mahasiswa.update', $data->id) }}" method="POST">
+                                        @csrf
+                                        @method('PATCH')
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <div class="controls">
-                                                        <label for="periode">Periode</label>
-                                                        <input type="text" class="form-control" name="periode" placeholder="Periode" value="2019/2020 Ganjil - Mandiri" required data-validation-required-message="Kolom periode tidak boleh kosong">
+                                                        <label for="nim">NIM</label>
+                                                        <input type="text" class="form-control" name="nim" placeholder="NIM Mahasiswa" value="{{ $data->nim }}" maxlength="12" required>
                                                     </div>
                                                 </div>
+
                                                 <div class="form-group">
                                                     <div class="controls">
-                                                        <label for="kode-peserta">Kode Peserta</label>
-                                                        <input type="text" class="form-control" name="kode" placeholder="Kode Peserta" value="0843098017" required data-validation-required-message="Kolom kode peserta tidak boleh kosong">
+                                                        <label for="nama-peserta">Nama</label>
+                                                        <input type="text" class="form-control" name="nama" placeholder="Nama Mahasiswa" value="{{ $data->nama }}" required>
                                                     </div>
                                                 </div>
-                                                <div class="form-group">
-                                                    <div class="controls">
-                                                        <label for="nama-peserta">Nama Peserta</label>
-                                                        <input type="text" class="form-control" name="nama" placeholder="Nama Peserta" value="Garrett Winters" required data-validation-required-message="Kolom nama peserta tidak boleh kosong">
-                                                    </div>
-                                                </div>
+
                                                 <div class="form-group">
                                                     <div class="controls">
                                                         <label for="jenis-kelamin">Jenis Kelamin</label>
-                                                        <select class="form-control" name="jk" required data-validation-required-message="Kolom jenis kelamin tidak boleh kosong">
-                                                            <option value="" hidden>--Pilih jenis kelamin</option>
-                                                            <option value="1" selected>Laki-laki</option>
-                                                            <option value="2">Perempuan</option>
+                                                        <select class="form-control" name="jeniskelamin">
+                                                            <option value="1"
+                                                                @if ($data->jeniskelamin == 1)
+                                                                    selected
+                                                                @endif
+                                                            >Laki-laki</option>
+                                                            <option value="0"
+                                                                @if ($data->jeniskelamin == 0)
+                                                                    selected
+                                                                @endif
+                                                            >Perempuan</option>
                                                         </select>
                                                     </div>
                                                 </div>
-                                                <div class="form-group">
-                                                    <div class="controls">
-                                                        <label for="hp">No. HP</label>
-                                                        <input type="number" class="form-control" name="hp" placeholder="No. HP" value="08999999990" required data-validation-required-message="Kolom no. hp tidak boleh kosong">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <div class="controls">
-                                                        <label for="email">Alamat Email</label>
-                                                        <input type="email" class="form-control" name="email" placeholder="Alamat Email" value="mail@garrett.com" required data-validation-required-message="Kolom alamat email tidak boleh kosong">
-                                                    </div>
-                                                </div>
+
                                                 <div class="form-group">
                                                     <div class="controls">
                                                         <label for="alamat">Alamat</label>
-                                                        <textarea class="form-control" name="alamat" cols="30" rows="3" placeholder="Alamat" required data-validation-required-message="Kolom alamat tidak boleh kosong">Denpasar, Bali</textarea>
+                                                        <textarea class="form-control" name="alamat" cols="30" rows="3" placeholder="Alamat Mahasiswa" required>{{ $data->alamat }}</textarea>
                                                     </div>
                                                 </div>
                                             </div>
+
                                             <div class="col-md-6">
+                                                
+                                                <div class="form-group">
+                                                    <div class="controls">
+                                                        <label for="hp">No. HP</label>
+                                                        <input type="text" class="form-control" name="hp" placeholder="No HP Mahasiswa" value="{{ $data->hp }}" maxlength="13" required>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <div class="controls">
+                                                        <label for="email">Email</label>
+                                                        <input type="email" class="form-control" name="email" placeholder="Email Mahasiswa" value="{{ $data->email }}" required>
+                                                    </div>
+                                                </div>
+
                                                 <div class="form-group">
                                                     <div class="controls">
                                                         <label for="account-username">Status</label>
-                                                        <select class="form-control" id="basicSelect" required data-validation-required-message="Kolom status tidak boleh kosong">
-                                                            <option>Aktif</option>
-                                                            <option>Tidak aktif</option>
+                                                        <select class="form-control" name="status">
+                                                            <option value="1"
+                                                                @if ($data->status == 1)
+                                                                    selected
+                                                                @endif
+                                                            >Aktif</option>
+                                                            <option value="0"
+                                                                @if ($data->status == 0)
+                                                                    selected
+                                                                @endif
+                                                            >Tidak aktif</option>
                                                         </select>
                                                     </div>
                                                 </div>
-                                                <div class="form-group">
-                                                    <div class="controls">
-                                                        <label for="account-username">Sumber Data</label>
-                                                        <input type="text" class="form-control" id="account-username" placeholder="Sumber Data" value="" required data-validation-required-message="Kolom sumber data tidak boleh kosong">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <div class="controls">
-                                                        <label for="account-username">No. Referensi</label>
-                                                        <input type="text" class="form-control" id="account-username" placeholder="No. Referensi" value="" required data-validation-required-message="Kolom no. referensi tidak boleh kosong">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <div class="controls">
-                                                        <label for="account-username">Password</label>
-                                                        <input type="text" class="form-control" id="account-username" placeholder="Password" value="1234" required data-validation-required-message="Kolom password tidak boleh kosong">
-                                                    </div>
-                                                </div>
+                                                
                                                 <div class="form-group">
                                                     <div class="controls">
                                                         <label for="asal">Wilayah Asal</label>
-                                                        <textarea class="form-control" name="asal" cols="30" rows="3" placeholder="Wilayah Asal" required data-validation-required-message="Kolom wilayah asal tidak boleh kosong">Jakarta</textarea>
+                                                        <textarea class="form-control" name="alamatasal" cols="30" rows="3" placeholder="Wilayah Asal Mahasiswa" required>{{ $data->alamatasal }}</textarea>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
+
                                         <div class="row">
                                             <div class="col-12 d-flex flex-sm-row flex-column justify-content-end">
-                                                <button type="submit" class="btn btn-primary mr-sm-1 mb-1 mb-sm-0">Save
-                                                    changes</button>
-                                                <button type="reset" class="btn btn-outline-warning">Cancel</button>
+                                                <button type="submit" class="btn btn-primary">Ubah Data</button>
                                             </div>
                                         </div>
                                     </form>

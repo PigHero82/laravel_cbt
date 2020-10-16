@@ -6,6 +6,7 @@
 
 @section('css')
     <link rel="stylesheet" type="text/css" href="{{ asset('/app-assets/vendors/css/tables/datatable/datatables.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('/app-assets/vendors/css/extensions/sweetalert2.min.css') }}">
 @endsection
 
 @section('content')
@@ -45,37 +46,36 @@
         </div>
         <!-- /.card-header -->
         <div class="card-body">
-            <table id="myTable" class="table zero-configuration table-striped" style="width:100%">
-                <thead>
-                    <tr>
-                        <th>NIM</th>
-                        <th>Nama</th>
-                        <th>Email</th>
-                        <th>No HP</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>0898841078</td>
-                        <td><a href="{{ route('admin.portal.mahasiswa.show', 0) }}">Tiger Nixon</a></td>
-                        <td>mail@tiger.com</td>
-                        <td>081234567890</td>
-                        <td>
-                            <button type="button" class="btn btn-danger px-1"><i class="feather icon-trash-2"></i></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>0843098017</td>
-                        <td><a href="{{ route('admin.portal.mahasiswa.show', 0) }}">Garrett Winters</a></td>
-                        <td>mail@garrett.com</td>
-                        <td>081234567890</td>
-                        <td>
-                            <button type="button" class="btn btn-danger px-1"><i class="feather icon-trash-2"></i></button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="table-responsive">
+                <table id="myTable" class="table zero-configuration table-striped" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>NIM</th>
+                            <th>Nama</th>
+                            <th>Email</th>
+                            <th>No HP</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($data as $item)
+                            <tr>
+                                <td>{{ $item->nim }}</td>
+                                <td><a href="{{ route('admin.portal.mahasiswa.show', $item->id) }}">{{ $item->nama }}</a></td>
+                                <td>{{ $item->email }}</td>
+                                <td>{{ $item->hp }}</td>
+                                <td>
+                                    <form action="{{ route('admin.portal.mahasiswa.destroy', $item->id) }}" class="form" method="post">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="button" class="btn btn-danger px-1 hapus"><i class="feather icon-trash-2"></i></button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
         <!-- /.card-body -->
     </div>
@@ -196,9 +196,40 @@
 @section('js')
     <script src="{{ asset('app-assets/vendors/js/tables/datatable/datatables.min.js') }}"></script>
     <script src="{{ asset('app-assets/vendors/js/tables/datatable/datatables.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('app-assets/vendors/js/extensions/sweetalert2.all.min.js') }}"></script>
     <script>
         $(document).ready( function () {
             $('.zero-configuration').DataTable();
+
+            $('form').submit(function() {
+                $(this).find("button[type='submit']").prop('disabled', true);
+            });
+            
+            $(document).on('click', '.hapus', function () {
+                Swal.fire({
+                    title: 'Yakin ingin hapus?',
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Ya',
+                    confirmButtonClass: 'btn btn-primary',
+                    cancelButtonText: 'Tidak',
+                    cancelButtonClass: 'btn btn-danger ml-1',
+                    buttonsStyling: false,
+                }).then(function (result) {
+                    if (result.value) {
+                        Swal.fire({
+                            type: "success",
+                            title: 'Terhapus!',
+                            text: 'Data telah dihapus.',
+                            timer: 1000,
+                            showConfirmButton: false
+                        });
+                        $('.form').submit();
+                    }
+                })
+            });
         } );
     </script>
 @endsection

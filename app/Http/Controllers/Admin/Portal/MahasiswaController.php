@@ -15,7 +15,8 @@ class MahasiswaController extends Controller
      */
     public function index()
     {
-        return view('admin.mahasiswa.index');
+        $data = Mahasiswa::getMahasiswa();
+        return view('admin.mahasiswa.index', compact('data'));
     }
 
     /**
@@ -36,7 +37,7 @@ class MahasiswaController extends Controller
      */
     public function store(Request $request)
     {
-        $data = Mahasiswa::cekMahasiswaNIM($request->nim);
+        $data = Mahasiswa::firstMahasiswaNIM($request->nim);
         if (isset($data->nim)) {
             return redirect()->back()->with('danger', 'Data dengan NIM '. $data->nim .' Telah Terdaftar atas nama '. $data->nama);
         }
@@ -52,9 +53,10 @@ class MahasiswaController extends Controller
      * @param  \App\Mahasiswa  $mahasiswa
      * @return \Illuminate\Http\Response
      */
-    public function show($mahasiswa)
+    public function show(Mahasiswa $mahasiswa)
     {
-        return view('admin.mahasiswa.show');
+        $data = Mahasiswa::firstMahasiswa($mahasiswa->id);
+        return view('admin.mahasiswa.show', compact('data'));
     }
 
     /**
@@ -77,7 +79,12 @@ class MahasiswaController extends Controller
      */
     public function update(Request $request, Mahasiswa $mahasiswa)
     {
-        //
+        $data = Mahasiswa::firstMahasiswaNIM($request->nim);
+        if (isset($data->nim) && $mahasiswa->nim != $data->nim) {
+            return redirect()->back()->with('danger', 'Data dengan NIM '. $data->nim .' Telah Terdaftar atas nama '. $data->nama);
+        }
+        Mahasiswa::updateMahasiswa($request, $mahasiswa->id);
+        return redirect()->back()->with('success', 'Input Data Berhasil diubah');
     }
 
     /**
@@ -88,6 +95,7 @@ class MahasiswaController extends Controller
      */
     public function destroy(Mahasiswa $mahasiswa)
     {
-        //
+        Mahasiswa::deleteMahasiswa($mahasiswa->id);
+        return redirect()->back();
     }
 }
