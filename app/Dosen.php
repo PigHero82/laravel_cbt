@@ -8,6 +8,8 @@ class Dosen extends Model
 {
     protected $fillable = ['nidn', 'nama', 'jeniskelamin', 'email', 'ktp', 'hp', 'telepon', 'alamat', 'alamatasal', 'status'];
 
+    protected $table = 'dosen';
+
     static function getDosen()
     {
         return Dosen::all();

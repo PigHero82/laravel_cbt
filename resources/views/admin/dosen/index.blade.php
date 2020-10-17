@@ -85,12 +85,12 @@
                     <div class="modal-body">
                         <div class="form-group">
                             <label>Nama</label>
-                            <input type="text" name="nama" class="form-control" placeholder="Nama Dosen" required>
+                            <input type="text" name="nama" class="form-control" placeholder="Nama Dosen" required autofocus>
                         </div>
     
                         <div class="form-group">
                             <label>NIDN</label>
-                            <input type="text" name="nidn" class="form-control" maxlength="10" placeholder="NIDN Dosen" required>
+                            <input type="text" name="nidn" class="form-control" pattern="[0-9]+" maxlength="10" placeholder="NIDN Dosen (Diisi dengan angka)" required>
                         </div>
     
                         <div class="form-group">
@@ -124,17 +124,17 @@
     
                         <div class="form-group">
                             <label>No KTP</label>
-                            <input type="text" name="ktp" class="form-control" maxlength="16" placeholder="No KTP Dosen" required>
+                            <input type="text" name="ktp" class="form-control" pattern="[0-9]+" maxlength="16" placeholder="No KTP Dosen (Diisi dengan angka)" required>
                         </div>
     
                         <div class="form-group">
                             <label>No HP</label>
-                            <input type="text" name="hp" class="form-control" maxlength="13" placeholder="No HP Dosen (Maksimal diisi 13 digit)" required>
+                            <input type="text" name="hp" class="form-control" pattern="[0-9]+" maxlength="13" placeholder="No HP Dosen (Maksimal diisi 13 digit | Diisi dengan angka)" required>
                         </div>
     
                         <div class="form-group">
                             <label>No Telepon</label>
-                            <input type="text" name="telepon" class="form-control" maxlength="12" placeholder="No Telepon Dosen (Maksimal diisi 12 digit | Tidak wajib)">
+                            <input type="text" name="telepon" class="form-control" pattern="[0-9]+" maxlength="12" placeholder="No Telepon Dosen (Maksimal diisi 12 digit | Tidak wajib | Diisi dengan angka)">
                         </div>
     
                         <div class="form-group">

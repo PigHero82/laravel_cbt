@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDosensTable extends Migration
+class CreateMataKuliahsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,9 @@ class CreateDosensTable extends Migration
      */
     public function up()
     {
-        Schema::create('dosen', function (Blueprint $table) {
+        Schema::create('mata_kuliah', function (Blueprint $table) {
             $table->id();
-            $table->char('nidn', 10);
             $table->string('nama');
-            $table->boolean('jeniskelamin');
-            $table->string('email');
-            $table->char('ktp', 16);
-            $table->char('hp', 13);
-            $table->char('telepon', 12)->nullable();
-            $table->text('alamat');
-            $table->text('alamatasal');
             $table->boolean('status')->default(1);
             $table->timestamps();
         });
@@ -36,6 +28,6 @@ class CreateDosensTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('dosens');
+        Schema::dropIfExists('mata_kuliahs');
     }
 }

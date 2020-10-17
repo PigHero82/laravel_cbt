@@ -32,14 +32,11 @@ Route::namespace('admin')->name('admin.')->prefix('admin')->group(function() {
         Route::view('alur', 'alur')->name('alur');
         Route::resource('mahasiswa', 'MahasiswaController');
         Route::resource('dosen', 'DosenController');
-        // Route::namespace('dosen')->name('dosen.')->prefix('dosen')->group(function() {
-        //     Route::view('', 'admin.dosen.index')->name('index');
-        //     Route::view('/123456', 'admin.dosen.show')->name('show');
+        // Route::namespace('kelas')->name('kelas.')->prefix('kelas')->group(function() {
+        //     Route::view('', 'admin.kelas.index')->name('index');
         // });
-        Route::namespace('kelas')->name('kelas.')->prefix('kelas')->group(function() {
-            Route::view('', 'admin.kelas.index')->name('index');
-        });
-        Route::view('mata-kuliah', 'mata-kuliah')->name('mata-kuliah');
+        Route::resource('kelas', 'KelasController');
+        Route::resource('mata-kuliah', 'MataKuliahController');
         Route::view('pengumuman', 'pengumuman')->name('pengumuman');
     });
 });

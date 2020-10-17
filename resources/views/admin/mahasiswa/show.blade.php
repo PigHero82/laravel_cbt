@@ -122,7 +122,7 @@
                                                 <div class="form-group">
                                                     <div class="controls">
                                                         <label for="hp">No. HP</label>
-                                                        <input type="text" class="form-control" name="hp" placeholder="No HP Mahasiswa" value="{{ $data->hp }}" maxlength="13" required>
+                                                        <input type="text" class="form-control" pattern="[0-9]+" name="hp" placeholder="No HP Mahasiswa (Maksimal diisi 13 digit | Diisi dengan angka)" value="{{ $data->hp }}" maxlength="13" required>
                                                     </div>
                                                 </div>
 

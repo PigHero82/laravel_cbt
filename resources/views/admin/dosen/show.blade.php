@@ -61,7 +61,7 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>NIDN</label>
-                                                    <input type="text" name="nidn" class="form-control" maxlength="10" placeholder="NIDN Dosen" value="{{ $data->nidn }}" required>
+                                                    <input type="text" name="nidn" class="form-control" pattern="[0-9]+" maxlength="10" placeholder="NIDN Dosen (Diisi dengan angka)" value="{{ $data->nidn }}" required>
                                                 </div>
 
                                                 <div class="form-group">
@@ -100,17 +100,17 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>No KTP</label>
-                                                    <input type="text" name="ktp" class="form-control" maxlength="16" placeholder="No KTP Dosen" value="{{ $data->ktp }}" required>
+                                                    <input type="text" name="ktp" class="form-control" pattern="[0-9]+" maxlength="16" placeholder="No KTP Dosen (Diisi dengan angka)" value="{{ $data->ktp }}" required>
                                                 </div>
                             
                                                 <div class="form-group">
                                                     <label>No Telepon</label>
-                                                    <input type="text" name="telepon" class="form-control" maxlength="12" placeholder="No Telepon Dosen (Maksimal diisi 12 digit | Tidak wajib)" value="{{ $data->telepon }}">
+                                                    <input type="text" name="telepon" class="form-control" pattern="[0-9]+" maxlength="12" placeholder="No Telepon Dosen (Maksimal diisi 12 digit | Tidak wajib | Diisi dengan angka)" value="{{ $data->telepon }}">
                                                 </div>
                             
                                                 <div class="form-group">
                                                     <label>No HP</label>
-                                                    <input type="text" name="hp" class="form-control" maxlength="13" placeholder="No HP Dosen (Maksimal diisi 13 digit)" value="{{ $data->hp }}" required>
+                                                    <input type="text" name="hp" class="form-control" pattern="[0-9]+" maxlength="13" placeholder="No HP Dosen (Maksimal diisi 13 digit | Diisi dengan angka)" value="{{ $data->hp }}" required>
                                                 </div>
                             
                                                 <div class="form-group">

@@ -142,7 +142,7 @@
     
                         <div class="form-group">
                             <label>No HP</label>
-                            <input type="number" name="hp" class="form-control" maxlength="13" placeholder="No HP Mahasiswa (Maksimal diisi 13 digit)" required>
+                            <input type="number" name="hp" class="form-control" pattern="[0-9]+" maxlength="13" placeholder="No HP Mahasiswa (Maksimal diisi 13 digit | Diisi dengan angka)" required>
                         </div>
     
                         <div class="form-group">

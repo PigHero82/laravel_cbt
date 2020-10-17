@@ -8,6 +8,8 @@ class Mahasiswa extends Model
 {
     protected $fillable = ['nim', 'nama', 'jeniskelamin', 'email', 'hp', 'alamat', 'alamatasal', 'status'];
 
+    protected $table = 'mahasiswa';
+    
     static function firstMahasiswaNIM($nim)
     {
         return Mahasiswa::firstWhere('nim', $nim);
