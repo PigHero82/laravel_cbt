@@ -6,7 +6,7 @@
         <li class="nav-item {{ (request()->is('dosean')) ? 'active' : '' }}"><a href="#"><i class="feather icon-printer"></i><span class="menu-title">Cetak Hasil</span></a></li>
     </ul>
     <ul class="navigation navigation-main" {{ (request()->is('admin*')) ? '' : 'hidden' }} id="main-menu-navigation" data-menu="menu-navigation">
-        <li class="nav-item"><a href="{{ route('admin.index') }}"><i class="feather icon-home"></i><span class="menu-title">Dashboard</span></a></li>
+        <li class="nav-item {{ (request()->is('admin')) ? 'active' : '' }}"><a href="{{ route('admin.index') }}"><i class="feather icon-home"></i><span class="menu-title">Dashboard</span></a></li>
         <li class="nav-item"><a href="#"><i class="feather icon-codepen"></i><span class="menu-title">Portal</span></a>
             <ul class="menu-content">
                 <li class="{{ (request()->is('admin/portal/mahasiswa*')) ? 'active' : '' }}"><a href="{{ route('admin.portal.mahasiswa.index') }}"><i></i><span class="menu-item">Data Mahasiswa</span></a></li>

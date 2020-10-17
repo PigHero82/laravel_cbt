@@ -26,9 +26,9 @@ Route::namespace('dosen')->name('dosen.')->prefix('dosen')->group(function() {
     });
 });
 
-Route::namespace('admin')->name('admin.')->prefix('admin')->group(function() {
+Route::name('admin.')->prefix('admin')->group(function() {
     Route::view('', 'index')->name('index');
-    Route::namespace('portal')->name('portal.')->prefix('portal')->group(function() {
+    Route::name('portal.')->prefix('portal')->group(function() {
         Route::view('alur', 'alur')->name('alur');
         Route::resource('mahasiswa', 'MahasiswaController');
         Route::resource('dosen', 'DosenController');
