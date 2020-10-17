@@ -30,10 +30,10 @@ Route::name('admin.')->prefix('admin')->group(function() {
     Route::view('', 'index')->name('index');
     Route::name('portal.')->prefix('portal')->group(function() {
         Route::view('alur', 'alur')->name('alur');
-        Route::resource('mahasiswa', 'MahasiswaController');
-        Route::resource('dosen', 'DosenController');
-        Route::resource('kelas', 'KelasController');
-        Route::resource('mata-kuliah', 'MataKuliahController');
+        Route::resource('mahasiswa', 'Admin\Portal\MahasiswaController');
+        Route::resource('dosen', 'Admin\Portal\DosenController');
+        Route::resource('kelas', 'Admin\Portal\KelasController');
+        Route::resource('mata-kuliah', 'Admin\Portal\MataKuliahController');
         Route::view('pengumuman', 'pengumuman')->name('pengumuman');
     });
 });
