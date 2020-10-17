@@ -32,9 +32,6 @@ Route::namespace('admin')->name('admin.')->prefix('admin')->group(function() {
         Route::view('alur', 'alur')->name('alur');
         Route::resource('mahasiswa', 'MahasiswaController');
         Route::resource('dosen', 'DosenController');
-        // Route::namespace('kelas')->name('kelas.')->prefix('kelas')->group(function() {
-        //     Route::view('', 'admin.kelas.index')->name('index');
-        // });
         Route::resource('kelas', 'KelasController');
         Route::resource('mata-kuliah', 'MataKuliahController');
         Route::view('pengumuman', 'pengumuman')->name('pengumuman');

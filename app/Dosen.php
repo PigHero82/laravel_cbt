@@ -15,6 +15,11 @@ class Dosen extends Model
         return Dosen::all();
     }
 
+    static function getDosenNama()
+    {
+        return Dosen::select('id', 'nama')->get();
+    }
+
     static function storeDosen($request)
     {
         Dosen::create([
