@@ -80,7 +80,7 @@ class DosenController extends Controller
     public function update(Request $request, Dosen $dosen)
     {
         $data = Dosen::firstDosenNIDN($request->nidn);
-        if (isset($data->nim) && $dosen->nidn != $data->nidn) {
+        if (isset($data->nidn) && $dosen->nidn != $data->nidn) {
             return redirect()->back()->with('danger', 'Data dengan NIDN '. $data->nidn .' Telah Terdaftar atas nama '. $data->nama);
         }
         Dosen::updateDosen($request, $dosen->id);

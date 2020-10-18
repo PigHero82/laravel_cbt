@@ -52,6 +52,11 @@ class Mahasiswa extends Model
         return Mahasiswa::all();
     }
 
+    static function getMahasiswaNIMNama()
+    {
+        return Mahasiswa::select('id', 'nim', 'nama')->get();
+    }
+
     static function deleteMahasiswa($id)
     {
         Mahasiswa::whereId($id)->delete();

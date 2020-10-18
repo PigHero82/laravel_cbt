@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin\Portal;
 
 use App\Http\Controllers\Controller;
 use App\KelasMahasiswa;
+use App\Kelas;
+use App\Mahasiswa;
 use Illuminate\Http\Request;
 
 class KelasMahasiswaController extends Controller
@@ -36,7 +38,15 @@ class KelasMahasiswaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = KelasMahasiswa::firstKelasMahasiswaidKelasidMahasiswa($request->idKelas, $request->idMahasiswa);
+        if (isset($data->id)) {
+            return redirect()->back()->with('danger', 'Data Mahasiswa telah terdaftar');
+        }
+        else {
+            KelasMahasiswa::storeKelasMahasiswa($request);
+            return redirect()->back()->with('success', 'Input Data Mahasiswa Berhasil');
+        }
+        
     }
 
     /**
@@ -45,9 +55,13 @@ class KelasMahasiswaController extends Controller
      * @param  \App\KelasMahasiswa  $kelasMahasiswa
      * @return \Illuminate\Http\Response
      */
-    public function show(KelasMahasiswa $kelasMahasiswa)
+    public function show($kelasMahasiswa)
     {
-        //
+        $info = Kelas::firstKelas($kelasMahasiswa);
+        $data = KelasMahasiswa::getKelasMahasiswa($kelasMahasiswa);
+        $mahasiswa = Mahasiswa::getMahasiswaNIMNama();
+
+        return view('admin.kelas.show', compact('info', 'data', 'mahasiswa'));
     }
 
     /**
@@ -56,9 +70,13 @@ class KelasMahasiswaController extends Controller
      * @param  \App\KelasMahasiswa  $kelasMahasiswa
      * @return \Illuminate\Http\Response
      */
-    public function edit(KelasMahasiswa $kelasMahasiswa)
+    public function edit($kelasMahasiswa)
     {
-        //
+        if (count(KelasMahasiswa::getKelasMahasiswa($kelasMahasiswa)) > 0) {
+            return json_encode(KelasMahasiswa::getKelasMahasiswa($kelasMahasiswa));
+        } else {
+            return json_encode(KelasMahasiswa::getKelasMahasiswaKosong($kelasMahasiswa));
+        }
     }
 
     /**
@@ -79,8 +97,10 @@ class KelasMahasiswaController extends Controller
      * @param  \App\KelasMahasiswa  $kelasMahasiswa
      * @return \Illuminate\Http\Response
      */
-    public function destroy(KelasMahasiswa $kelasMahasiswa)
+    public function destroy($kelasMahasiswa)
     {
-        //
+        KelasMahasiswa::deleteKelasMahasiswa($kelasMahasiswa);
+
+        return redirect()->back();
     }
 }

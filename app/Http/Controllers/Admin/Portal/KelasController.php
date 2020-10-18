@@ -41,7 +41,7 @@ class KelasController extends Controller
      */
     public function store(Request $request)
     {
-        $data = Kelas::firstKelasKodeMataKuliah($request->kode, $request->idMataKuliah);
+        $data = Kelas::firstKelasKodeMataKuliah($request->kode, $request->idMataKuliah, $request->id);
         if (isset($data->kode)) {
             return redirect()->back()->with('danger', 'Data Kelas telah terdaftar');
         }
@@ -57,9 +57,9 @@ class KelasController extends Controller
      * @param  \App\Kelas  $kelas
      * @return \Illuminate\Http\Response
      */
-    public function show(Kelas $kelas)
+    public function show($kelas)
     {
-        //
+        return json_encode(Kelas::firstKelas($kelas));
     }
 
     /**
@@ -82,7 +82,12 @@ class KelasController extends Controller
      */
     public function update(Request $request, Kelas $kelas)
     {
-        //
+        $data = Kelas::firstKelasKodeMataKuliah($request->kode, $request->idMataKuliah, $request->id);
+        if (isset($data->id)) {
+            return redirect()->back()->with('danger', 'Data kelas telah terdaftar');
+        }
+        Kelas::updateKelas($request);
+        return redirect()->back()->with('success', 'Data Berhasil diubah');
     }
 
     /**
@@ -91,8 +96,9 @@ class KelasController extends Controller
      * @param  \App\Kelas  $kelas
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Kelas $kelas)
+    public function destroy($kelas)
     {
-        //
+        Kelas::deleteKelas($kelas);
+        return redirect()->back();
     }
 }

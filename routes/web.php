@@ -34,6 +34,7 @@ Route::name('admin.')->prefix('admin')->group(function() {
         Route::resource('dosen', 'Admin\Portal\DosenController');
         Route::resource('kelas', 'Admin\Portal\KelasController');
         Route::resource('mata-kuliah', 'Admin\Portal\MataKuliahController');
+        Route::resource('kelas/detail', 'Admin\Portal\KelasMahasiswaController');
         Route::view('pengumuman', 'pengumuman')->name('pengumuman');
     });
 });

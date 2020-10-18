@@ -20,10 +20,11 @@ class Kelas extends Model
                     ->get();
     }
 
-    static function firstKelasKodeMataKuliah($kode, $idMataKuliah)
+    static function firstKelasKodeMataKuliah($kode, $idMataKuliah, $id)
     {
         return Kelas::where('kode', $kode)
                     ->where('idMataKuliah', $idMataKuliah)
+                    ->where('id', '!=', $id)
                     ->first();
     }
 
@@ -34,5 +35,27 @@ class Kelas extends Model
             'idMataKuliah'  => $request->idMataKuliah,
             'idDosen'       => $request->idDosen
         ]);
+    }
+
+    static function updateKelas($request)
+    {
+        Kelas::whereId($request->id)->update([
+            'kode'          => $request->kode,
+            'idMataKuliah'  => $request->idMataKuliah,
+            'idDosen'       => $request->idDosen
+        ]);
+    }
+
+    static function firstKelas($id)
+    {
+        return Kelas::join('mata_kuliah', 'kelas.idMataKuliah', 'mata_kuliah.id')
+                    ->join('dosen', 'kelas.idDosen', 'dosen.id')
+                    ->select('kelas.id', 'idDosen', 'idMataKuliah', 'kode', 'mata_kuliah.nama', 'dosen.nama as dosen')
+                    ->findOrFail($id);
+    }
+
+    static function deleteKelas($id)
+    {
+        Kelas::whereId($id)->delete();
     }
 }
