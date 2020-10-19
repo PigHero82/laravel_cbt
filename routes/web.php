@@ -27,7 +27,7 @@ Route::namespace('dosen')->name('dosen.')->prefix('dosen')->group(function() {
 });
 
 Route::name('admin.')->prefix('admin')->group(function() {
-    Route::view('', 'index')->name('index');
+    Route::get('', 'Admin\HomeController@index')->name('index');
     Route::name('portal.')->prefix('portal')->group(function() {
         Route::view('alur', 'alur')->name('alur');
         Route::resource('mahasiswa', 'Admin\Portal\MahasiswaController');

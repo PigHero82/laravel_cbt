@@ -26,7 +26,7 @@
                                     <i class="feather icon-users text-info font-medium-5"></i>
                                 </div>
                             </div>
-                            <h2 class="text-bold-700">279</h2>
+                            <h2 class="text-bold-700">{{ $mahasiswa }}</h2>
                             <p class="mb-0 line-ellipsis text-dark">Jumlah Mahasiswa</p>
                         </div>
                     </div>
@@ -43,7 +43,7 @@
                                     <i class="feather icon-user text-success font-medium-5"></i>
                                 </div>
                             </div>
-                            <h2 class="text-bold-700">40</h2>
+                            <h2 class="text-bold-700">{{ $dosen }}</h2>
                             <p class="mb-0 line-ellipsis text-dark">Jumlah Dosen</p>
                         </div>
                     </div>
@@ -60,7 +60,7 @@
                                     <i class="feather icon-home text-warning font-medium-5"></i>
                                 </div>
                             </div>
-                            <h2 class="text-bold-700">32</h2>
+                            <h2 class="text-bold-700">{{ $kelas }}</h2>
                             <p class="mb-0 line-ellipsis text-dark">Jumlah Kelas</p>
                         </div>
                     </div>
@@ -74,11 +74,11 @@
                         <div class="card-body">
                             <div class="avatar bg-rgba-danger p-50 m-0 mb-1">
                                 <div class="avatar-content">
-                                    <i class="feather icon-file-text text-danger font-medium-5"></i>
+                                    <i class="feather icon-book text-danger font-medium-5"></i>
                                 </div>
                             </div>
-                            <h2 class="text-bold-700">24</h2>
-                            <p class="mb-0 line-ellipsis text-dark">Jumlah Paket Soal</p>
+                            <h2 class="text-bold-700">{{ $mataKuliah }}</h2>
+                            <p class="mb-0 line-ellipsis text-dark">Jumlah Mata Kuliah</p>
                         </div>
                     </div>
                 </div>
