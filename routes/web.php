@@ -43,3 +43,7 @@ Route::namespace('')->name('')->prefix('')->group(function() {
     Route::view('', 'front.index')->name('index');
     Route::view('soal', 'front.soal')->name('soal');
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

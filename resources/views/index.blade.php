@@ -17,7 +17,7 @@
 
     <div class="row">
         <div class="col-xl-3 col-md-4 col-sm-6">
-            <a href="#">
+            <a href="{{ route('admin.portal.mahasiswa.index') }}">
                 <div class="card text-center">
                     <div class="card-content">
                         <div class="card-body">
@@ -34,7 +34,7 @@
             </a>
         </div>
         <div class="col-xl-3 col-md-4 col-sm-6">
-            <a href="#">
+            <a href="{{ route('admin.portal.dosen.index') }}">
                 <div class="card text-center">
                     <div class="card-content">
                         <div class="card-body">
@@ -51,7 +51,7 @@
             </a>
         </div>
         <div class="col-xl-3 col-md-4 col-sm-6">
-            <a href="#">
+            <a href="{{ route('admin.portal.kelas.index') }}">
                 <div class="card text-center">
                     <div class="card-content">
                         <div class="card-body">
@@ -68,7 +68,7 @@
             </a>
         </div>
         <div class="col-xl-3 col-md-4 col-sm-6">
-            <a href="#">
+            <a href="{{ route('admin.portal.mata-kuliah.index') }}">
                 <div class="card text-center">
                     <div class="card-content">
                         <div class="card-body">

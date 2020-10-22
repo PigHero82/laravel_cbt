@@ -56,18 +56,11 @@
                     <ul class="nav navbar-nav float-right">
                         <li class="nav-item d-none d-lg-block"><a class="nav-link nav-link-expand"><i class="ficon feather icon-maximize"></i></a></li>
                         <li class="dropdown dropdown-user nav-item"><a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown">
-                                <div class="user-nav d-sm-flex d-none"><span class="user-name text-bold-600">Admin</span><span class="user-status">Admin</span></div><span><div class="avatar bg-primary mr-1">
-                                    <div class="avatar-content">
-                                      A
-                                    </div>
+                                <div class="user-nav d-sm-flex d-none"><span class="user-name text-bold-600">{{ Auth::user()->name }}</span><span class="user-status">Admin</span></div><span><div class="avatar bg-primary mr-1">
+                                    <span><img class="round" src="/assets/images/profile/{{ Auth::user()->gambar }}" alt="avatar" height="40" width="40"></span>
                                 </div></span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right">
-                                <a class="dropdown-item" href="page-user-profile.html">Pimpinan</a>
-                                <a class="dropdown-item" href="page-user-profile.html">Reviewer</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="/profil"><i class="feather icon-user"></i> Profil</a>
-                                <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#" onclick="event.preventDefault();
                                 document.getElementById('logout-form').submit();"><i class="feather icon-power"></i> Logout</a>
                                 <form id="logout-form" action="#" method="POST" style="display: none;">
