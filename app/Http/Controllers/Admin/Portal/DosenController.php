@@ -3,7 +3,8 @@
 namespace App\Http\Controllers\Admin\Portal;
 
 use App\Http\Controllers\Controller;
-use App\Dosen;
+use App\DataDiri;
+use App\User;
 use Illuminate\Http\Request;
 
 class DosenController extends Controller
@@ -25,7 +26,7 @@ class DosenController extends Controller
      */
     public function index()
     {
-        $data = Dosen::getDosen();
+        $data = User::getDosen();
         return view('admin.dosen.index', compact('data'));
     }
 
@@ -47,12 +48,14 @@ class DosenController extends Controller
      */
     public function store(Request $request)
     {
-        $data = Dosen::firstDosenNIDN($request->nidn);
-        if (isset($data->nidn)) {
-            return redirect()->back()->with('danger', 'Data dengan NIDN '. $data->nidn .' telah terdaftar atas nama '. $data->nama);
+        $data = User::firstUsername($request->nidn, $request->id);
+        if (isset($data->username)) {
+            return redirect()->back()->with('danger', 'Data dengan NIDN '. $data->username .' telah terdaftar atas nama '. $data->name);
         }
         else {
-            Dosen::storeDosen($request);
+            User::storeDosen($request);
+            $data = User::firstUsername($request->nidn, 0);
+            DataDiri::storeDataDiri($request, $data->id);
             return redirect()->back()->with('success', 'Input Data '. $request->nama .' Berhasil');
         }
     }
@@ -63,10 +66,11 @@ class DosenController extends Controller
      * @param  \App\Dosen  $dosen
      * @return \Illuminate\Http\Response
      */
-    public function show(Dosen $dosen)
+    public function show($id)
     {
-        $data = Dosen::firstDosen($dosen->id);
-        return view('admin.dosen.show', compact('data'));
+        $data = User::firstUser($id);
+        $info = DataDiri::firstDataDiri($id);
+        return view('admin.dosen.show', compact('data', 'info'));
     }
 
     /**
@@ -75,7 +79,7 @@ class DosenController extends Controller
      * @param  \App\Dosen  $dosen
      * @return \Illuminate\Http\Response
      */
-    public function edit(Dosen $dosen)
+    public function edit(DataDiri $dataDiri)
     {
         //
     }
@@ -87,13 +91,9 @@ class DosenController extends Controller
      * @param  \App\Dosen  $dosen
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Dosen $dosen)
+    public function update(Request $request, $dataDiri)
     {
-        $data = Dosen::firstDosenNIDN($request->nidn);
-        if (isset($data->nidn) && $dosen->nidn != $data->nidn) {
-            return redirect()->back()->with('danger', 'Data dengan NIDN '. $data->nidn .' Telah Terdaftar atas nama '. $data->nama);
-        }
-        Dosen::updateDosen($request, $dosen->id);
+        DataDiri::updateDataDiri($request, $dataDiri);
         return redirect()->back()->with('success', 'Data Berhasil diubah');
     }
 
@@ -103,9 +103,8 @@ class DosenController extends Controller
      * @param  \App\Dosen  $dosen
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Dosen $dosen)
+    public function destroy(DataDiri $dataDiri)
     {
-        Dosen::deleteDosen($dosen->id);
-        return redirect()->back();
+        //
     }
 }

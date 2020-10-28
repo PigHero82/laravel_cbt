@@ -65,7 +65,7 @@
                                     <td>{{ $item->dosen }}</td>
                                     <td>{{ $item->jumlah }} Orang</td>
                                     <td>
-                                        <form action="{{ route('admin.portal.detail.destroy', $item->id) }}" class="form" method="post">
+                                        <form action="{{ route('admin.portal.kelas.destroy', $item->id) }}" class="form" method="post">
                                             @csrf
                                             @method('DELETE')
                                             <button type="button" class="btn btn-danger px-1 hapus"><i class="feather icon-trash-2"></i></button>
@@ -118,7 +118,7 @@
                             <label>Dosen</label>
                             <select name="idDosen" class="form-control select">
                                 @foreach ($dosen as $item)
-                                    <option value="{{ $item->id }}">{{ $item->nama }}</option>
+                                    <option value="{{ $item->id }}">{{ $item->name }}</option>
                                 @endforeach
                             </select>
                         </div>

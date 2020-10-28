@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin\Portal;
 use App\Http\Controllers\Controller;
 use App\KelasMahasiswa;
 use App\Kelas;
-use App\Mahasiswa;
+use App\User;
 use Illuminate\Http\Request;
 
 class KelasMahasiswaController extends Controller
@@ -69,7 +69,7 @@ class KelasMahasiswaController extends Controller
     {
         $info = Kelas::firstKelas($kelasMahasiswa);
         $data = KelasMahasiswa::getKelasMahasiswa($kelasMahasiswa);
-        $mahasiswa = Mahasiswa::getMahasiswaNIMNama();
+        $mahasiswa = User::getMahasiswa();
 
         return view('admin.kelas.show', compact('info', 'data', 'mahasiswa'));
     }

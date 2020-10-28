@@ -6,7 +6,6 @@
 
 @section('css')
     <link rel="stylesheet" type="text/css" href="{{ asset('/app-assets/vendors/css/tables/datatable/datatables.min.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('/app-assets/vendors/css/extensions/sweetalert2.min.css') }}">
 @endsection
 
 @section('content')
@@ -53,25 +52,13 @@
                             <tr>
                                 <th>NIM</th>
                                 <th>Nama</th>
-                                <th>Email</th>
-                                <th>No HP</th>
-                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($data as $item)
                                 <tr>
                                     <td>{{ $item->nim }}</td>
-                                    <td><a href="{{ route('admin.portal.mahasiswa.show', $item->id) }}">{{ $item->nama }}</a></td>
-                                    <td>{{ $item->email }}</td>
-                                    <td>{{ $item->hp }}</td>
-                                    <td>
-                                        <form action="{{ route('admin.portal.mahasiswa.destroy', $item->id) }}" class="form" method="post">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="button" class="btn btn-danger px-1 hapus"><i class="feather icon-trash-2"></i></button>
-                                        </form>
-                                    </td>
+                                    <td><a href="{{ route('admin.portal.mahasiswa.show', $item->id) }}">{{ $item->name }}</a></td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -137,27 +124,17 @@
     
                         <div class="form-group">
                             <label>Email</label>
-                            <input type="email" name="email" class="form-control" placeholder="Email Mahasiswa (input dengan email yang valid)" required>
+                            <input type="email" name="email" class="form-control" placeholder="Email Mahasiswa (input dengan email yang valid)">
                         </div>
     
                         <div class="form-group">
                             <label>No HP</label>
-                            <input type="number" name="hp" class="form-control" pattern="[0-9]+" maxlength="13" placeholder="No HP Mahasiswa (Maksimal diisi 13 digit | Diisi dengan angka)" required>
+                            <input type="number" name="hp" class="form-control" pattern="[0-9]+" maxlength="13" placeholder="No HP Mahasiswa (Maksimal diisi 13 digit | Diisi dengan angka)">
                         </div>
     
                         <div class="form-group">
-                            <label>Alamat Saat Ini</label>
-                            <textarea name="alamat" cols="30" rows="10" class="form-control" placeholder="Alamat Mahasiswa" required></textarea>
-                        </div>
-    
-                        <div class="form-group">
-                            <label>Alamat Asal</label>
-                            <textarea name="alamatasal" cols="30" rows="10" class="form-control" placeholder="Alamat Asal Mahasiswa" required></textarea>
-                        </div>
-    
-                        <div class="form-group">
-                            <label>Gambar</label>
-                            <input type="file" name="gambar" class="form-control-file" placeholder="Gambar Mahasiswa">
+                            <label>Alamat</label>
+                            <textarea name="alamat" cols="30" rows="10" class="form-control" placeholder="Alamat Mahasiswa"></textarea>
                         </div>
                     </div>
                     
@@ -171,7 +148,7 @@
 
     <!-- Modal -->
     <div class="modal fade" id="modalExcel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Tambah Mahasiswa</h5>
@@ -188,6 +165,33 @@
 
                     <hr>
                     <p>Sebelum mengunggah pastikan file yang akan anda unggah sudah dalam bentuk Ms. Excel 97-2003 Workbook (.xls) dan format penulisan harus sesuai dengan yang telah ditentukan.</p>
+                    <label>Ketentuan Data</label>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>nim</th>
+                                    <th>nama</th>
+                                    <th>jeniskelamin</th>
+                                    <th>email</th>
+                                    <th>hp</th>
+                                    <th>alamat</th>
+                                    <th>alamatasal</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Wajib diisi</td>
+                                    <td>Wajib diisi</td>
+                                    <td>Hanya diisi dengan angka 1 & 0 (1 = Laki-laki & 2 = Perempuan) | Wajib diisi</td>
+                                    <td>Tidak Wajib diisi</td>
+                                    <td>Dibatasi hingga 13 digit angka | Tidak wajib diisi</td>
+                                    <td>Tidak wajib diisi</td>
+                                    <td>Tidak wajib diisi</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
 
                     <a href="#" class="btn btn-success">Download Format</a>
                 </div>
@@ -203,39 +207,12 @@
 @section('js')
     <script src="{{ asset('app-assets/vendors/js/tables/datatable/datatables.min.js') }}"></script>
     <script src="{{ asset('app-assets/vendors/js/tables/datatable/datatables.bootstrap4.min.js') }}"></script>
-    <script src="{{ asset('app-assets/vendors/js/extensions/sweetalert2.all.min.js') }}"></script>
     <script>
         $(document).ready( function () {
             $('.zero-configuration').DataTable();
 
             $('form').submit(function() {
                 $(this).find("button[type='submit']").prop('disabled', true);
-            });
-            
-            $(document).on('click', '.hapus', function () {
-                Swal.fire({
-                    title: 'Yakin ingin hapus?',
-                    type: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Ya',
-                    confirmButtonClass: 'btn btn-primary',
-                    cancelButtonText: 'Tidak',
-                    cancelButtonClass: 'btn btn-danger ml-1',
-                    buttonsStyling: false,
-                }).then(function (result) {
-                    if (result.value) {
-                        Swal.fire({
-                            type: "success",
-                            title: 'Terhapus!',
-                            text: 'Data telah dihapus.',
-                            timer: 1000,
-                            showConfirmButton: false
-                        });
-                        $('.form').submit();
-                    }
-                })
             });
         } );
     </script>

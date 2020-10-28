@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMahasiswasTable extends Migration
+class CreateDataDirisTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,13 @@ class CreateMahasiswasTable extends Migration
      */
     public function up()
     {
-        Schema::create('mahasiswa', function (Blueprint $table) {
+        Schema::create('data_diri', function (Blueprint $table) {
             $table->id();
-            $table->char('nim', 12);
-            $table->string('nama');
-            $table->boolean('jeniskelamin');
+            $table->bigInteger('idUser');
+            $table->boolean('jeniskelamin')->default(1);
             $table->string('email')->nullable();
-            $table->char('hp', 13);
-            $table->text('alamat');
-            $table->text('alamatasal');
-            $table->boolean('status')->default(1);
+            $table->char('hp', 13)->nullable();
+            $table->text('alamat')->nullable();
             $table->timestamps();
         });
     }
@@ -34,6 +31,6 @@ class CreateMahasiswasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('mahasiswas');
+        Schema::dropIfExists('data_diri');
     }
 }

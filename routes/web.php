@@ -13,10 +13,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::view('/login', 'login')->name('login');
+// Route::view('/login', 'login')->name('login');
 
-Route::namespace('dosen')->name('dosen.')->prefix('dosen')->group(function() {
-    Route::view('', 'dosen.index')->name('index');
+Route::namespace('Dosen')->name('dosen.')->prefix('dosen')->group(function() {
+    Route::get('', 'HomeController@index')->name('index');
     Route::view('mahasiswa', 'dosen.mahasiswa')->name('mahasiswa');
     Route::view('cetak', 'dosen.cetak')->name('cetak');
     Route::namespace('soal')->name('soal.')->prefix('soal')->group(function() {
@@ -26,7 +26,7 @@ Route::namespace('dosen')->name('dosen.')->prefix('dosen')->group(function() {
     });
 });
 
-Route::name('admin.')->prefix('admin')->group(function() {
+Route::name('admin.')->prefix('admin')->middleware('auth', 'role:admin')->group(function() {
     Route::get('', 'Admin\HomeController@index')->name('index');
     Route::name('portal.')->prefix('portal')->group(function() {
         Route::view('alur', 'alur')->name('alur');
@@ -39,8 +39,9 @@ Route::name('admin.')->prefix('admin')->group(function() {
     });
 });
 
-Route::namespace('')->name('')->prefix('')->group(function() {
-    Route::view('', 'front.index')->name('index');
+Route::namespace('Mahasiswa')->prefix('')->group(function() {
+    Route::get('', 'HomeController@index')->name('index');
+    // Route::view('', 'front.index')->name('index');
     Route::view('soal', 'front.soal')->name('soal');
 });
 

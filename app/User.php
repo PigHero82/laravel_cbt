@@ -6,6 +6,9 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
+use App\Role;
+use Illuminate\Support\Facades\Hash;
+
 class User extends Authenticatable
 {
     use Notifiable;
@@ -16,7 +19,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'gambar'
+        'name', 'username', 'password', 'gambar', 'status'
     ];
 
     /**
@@ -25,16 +28,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
-    ];
-
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
+        'password',
     ];
 
     /**
@@ -70,5 +64,60 @@ class User extends Authenticatable
     public function roles()
     {
         return $this->belongsToMany(Role::class);
+    }
+
+    static function storeMahasiswa($request)
+    {
+        User::create([
+            'username'  => $request->nim,
+            'name'      => $request->nama,
+            'password'  => Hash::make($request->nim)
+        ])
+            ->roles()
+            ->attach(Role::where('name', 'mahasiswa')->first());
+    }
+
+    static function storeDosen($request)
+    {
+        User::create([
+            'username'  => $request->nidn,
+            'name'      => $request->nama,
+            'password'  => Hash::make($request->nim)
+        ])
+            ->roles()
+            ->attach(Role::where('name', 'dosen')->first());
+    }
+
+    static function getMahasiswa()
+    {
+        return User::join('role_user', 'users.id', 'role_user.user_id')
+                    ->select('users.id as id', 'username as nim', 'name')
+                    ->where('role_user.role_id', 3)->get();
+    }
+
+    static function getDosen()
+    {
+        return User::join('role_user', 'users.id', 'role_user.user_id')
+                    ->select('users.id as id', 'username as nidn', 'name')
+                    ->where('role_user.role_id', 2)->get();
+    }
+
+    static function firstUsername($username, $id)
+    {
+        return User::where('username', $username)
+                        ->where('id', '!=', $id)
+                        ->first();
+    }
+
+    static function firstUser($id)
+    {
+        return User::select('id', 'username', 'name', 'gambar')
+                    ->whereId($id)
+                    ->first();
+    }
+
+    static function deleteUser($id)
+    {
+        User::whereId($id)->delete();
     }
 }

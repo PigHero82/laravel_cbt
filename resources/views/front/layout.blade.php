@@ -29,6 +29,22 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/core/menu/menu-types/horizontal-menu.css') }}">
     <!-- END: Page CSS-->
 
+    <style>
+        .qbtn{
+            cursor:pointer;
+            width:35px;
+            height:35px;
+            border-radius:0px;
+            background-color:#212121;
+            color:#ffffff;
+            float:left;
+            font-size:15px;
+            padding:2px;
+            text-align:center;
+            margin:5px;
+	    }
+    </style>
+
     @yield('css')
 
 </head>

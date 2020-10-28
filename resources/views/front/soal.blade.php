@@ -106,27 +106,17 @@
             <div class="col-md-4">
                 <h6 class="filter-heading">Navigasi</h6>
                 <div class="card">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-3 mb-1">
-                                <button type="button" class="btn btn-outline-primary">1</button>
-                            </div>
-                            <div class="col-3 mb-1">
-                                <button type="button" class="btn btn-outline-primary">2</button>
-                            </div>
-                            <div class="col-3 mb-1">
-                                <button type="button" class="btn btn-outline-primary">3</button>
-                            </div>
-                            <div class="col-3 mb-1">
-                                <button type="button" class="btn btn-outline-primary">4</button>
-                            </div>
-                            <div class="col-3 mb-1">
-                                <button type="button" class="btn btn-outline-primary">5</button>
-                            </div>
-                            <div class="col-3 mb-1">
-                                <button type="button" class="btn btn-outline-primary">6</button>
-                            </div>
-                        </div>
+                    <div class="card-body" style="padding-left: 1rem; padding-right: 0.8rem">
+                        <button type="button" class="alert alert-primary px-0" style="border-radius: 0; width: 35px">1</button>
+                        <button type="button" class="alert alert-primary px-0" style="border-radius: 0; width: 35px">2</button>
+                        <button type="button" class="alert alert-primary px-0" style="border-radius: 0; width: 35px">3</button>
+                        <button type="button" class="alert alert-primary px-0" style="border-radius: 0; width: 35px">4</button>
+                        <button type="button" class="alert alert-primary px-0" style="border-radius: 0; width: 35px">5</button>
+                        <button type="button" class="alert alert-primary px-0" style="border-radius: 0; width: 35px">6</button>
+                        <button type="button" class="alert alert-primary px-0" style="border-radius: 0; width: 35px">7</button>
+                        <button type="button" class="alert alert-primary px-0" style="border-radius: 0; width: 35px">8</button>
+                        <button type="button" class="alert alert-primary px-0" style="border-radius: 0; width: 35px">9</button>
+                        <button type="button" class="alert alert-primary px-0" style="border-radius: 0; width: 35px">10</button>
                     </div>
                     <div class="card-footer">
                         <button class="btn btn-block btn-success"><i class="feather icon-check"></i> Selesai</button>

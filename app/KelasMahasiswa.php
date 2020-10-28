@@ -12,8 +12,8 @@ class KelasMahasiswa extends Model
 
     static function getKelasMahasiswa($idKelas)
     {
-        return KelasMahasiswa::join('mahasiswa', 'kelas_mahasiswa.idMahasiswa', 'mahasiswa.id')
-                            ->select('idKelas', 'mahasiswa.id', 'mahasiswa.nim', 'mahasiswa.nama')
+        return KelasMahasiswa::join('users', 'kelas_mahasiswa.idMahasiswa', 'users.id')
+                            ->select('idKelas', 'users.id as id', 'users.username as nim', 'users.name as nama', 'users.gambar', 'kelas_mahasiswa.id as iddata')
                             ->where('idKelas', $idKelas)
                             ->get();
     }

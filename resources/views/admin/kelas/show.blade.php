@@ -90,11 +90,11 @@
                                                 <tbody>
                                                     @foreach ($data as $item)
                                                         <tr>
-                                                            <td class="text-center"><img src="{{ asset('/app-assets/images/profile/blank.png') }}" class="rounded mr-75" alt="profile image" height="64"></td>
+                                                            <td class="text-center"><img src="{{ asset('/assets/images/profile/'.$item->gambar) }}" class="rounded mr-75" alt="profile image" height="64"></td>
                                                             <td>{{ $item->nim }}</td>
                                                             <td>{{ $item->nama }}</td>
                                                             <td>
-                                                                <form action="{{ route('admin.portal.detail.destroy', $item->id) }}" class="form" method="post">
+                                                                <form action="{{ route('admin.portal.detail.destroy', $item->iddata) }}" class="form" method="post">
                                                                     @csrf
                                                                     @method('DELETE')
                                                                     <button type="button" class="btn btn-danger px-1 hapus"><i class="feather icon-trash-2"></i></button>
@@ -176,7 +176,7 @@
                             <label>Mahasiswa</label>
                             <select name="idMahasiswa" class="form-control select">
                                 @foreach ($mahasiswa as $item)
-                                    <option value="{{ $item->id }}">{{ $item->nim }} | {{ $item->nama }}</option>
+                                    <option value="{{ $item->id }}">{{ $item->nim }} | {{ $item->name }}</option>
                                 @endforeach
                             </select>
                         </div>

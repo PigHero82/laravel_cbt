@@ -53,25 +53,13 @@
                             <tr>
                                 <th>NIDN</th>
                                 <th>Nama</th>
-                                <th>Email</th>
-                                <th>No HP</th>
-                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($data as $item)
                                 <tr>
                                     <td>{{ $item->nidn }}</td>
-                                    <td><a href="{{ route('admin.portal.dosen.show', $item->id) }}">{{ $item->nama }}</a></td>
-                                    <td>{{ $item->email }}</td>
-                                    <td>{{ $item->hp }}</td>
-                                    <td>
-                                        <form action="{{ route('admin.portal.dosen.destroy', $item->id) }}" class="form" method="post">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="button" class="btn btn-danger px-1 hapus"><i class="feather icon-trash-2"></i></button>
-                                        </form>
-                                    </td>
+                                    <td><a href="{{ route('admin.portal.dosen.show', $item->id) }}">{{ $item->name }}</a></td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -137,38 +125,18 @@
     
                         <div class="form-group">
                             <label>Email</label>
-                            <input type="email" name="email" class="form-control" placeholder="Email Dosen (input dengan email yang valid)" required>
+                            <input type="email" name="email" class="form-control" placeholder="Email Dosen (input dengan email yang valid)">
                         </div>
-    
-                        <div class="form-group">
-                            <label>No KTP</label>
-                            <input type="text" name="ktp" class="form-control" pattern="[0-9]+" maxlength="16" placeholder="No KTP Dosen (Diisi dengan angka)" required>
-                        </div>
-    
+
                         <div class="form-group">
                             <label>No HP</label>
-                            <input type="text" name="hp" class="form-control" pattern="[0-9]+" maxlength="13" placeholder="No HP Dosen (Maksimal diisi 13 digit | Diisi dengan angka)" required>
+                            <input type="text" name="hp" class="form-control" pattern="[0-9]+" maxlength="13" placeholder="No HP Dosen (Maksimal diisi 13 digit | Diisi dengan angka)">
                         </div>
     
                         <div class="form-group">
-                            <label>No Telepon</label>
-                            <input type="text" name="telepon" class="form-control" pattern="[0-9]+" maxlength="12" placeholder="No Telepon Dosen (Maksimal diisi 12 digit | Tidak wajib | Diisi dengan angka)">
-                        </div>
-    
-                        <div class="form-group">
-                            <label>Alamat Saat Ini</label>
-                            <textarea name="alamat" cols="30" rows="10" class="form-control" placeholder="Alamat Dosen" required></textarea>
-                        </div>
-    
-                        <div class="form-group">
-                            <label>Alamat Asal</label>
-                            <textarea name="alamatasal" cols="30" rows="10" class="form-control" placeholder="Alamat Asal Dosen" required></textarea>
-                        </div>
-    
-                        <div class="form-group">
-                            <label>Gambar</label>
-                            <input type="file" name="gambar" class="form-control-file" placeholder="Gambar Dosen">
-                        </div>
+                            <label>Alamat</label>
+                            <textarea name="alamat" cols="30" rows="10" class="form-control" placeholder="Alamat Dosen"></textarea>
+                        </div>    
                     </div>
                     
                     <div class="modal-footer">

@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin\Portal;
 use App\Http\Controllers\Controller;
 use App\Kelas;
 use App\MataKuliah;
-use App\Dosen;
+use App\User;
 use Illuminate\Http\Request;
 
 class KelasController extends Controller
@@ -29,7 +29,7 @@ class KelasController extends Controller
     {
         $data = Kelas::getKelas();
         $matakuliah = MataKuliah::getMataKuliah();
-        $dosen = Dosen::getDosenNama();
+        $dosen = User::getDosen();
         return view('admin.kelas.index', compact('data', 'matakuliah', 'dosen'));
     }
 

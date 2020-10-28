@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Admin\Portal;
 
 use App\Http\Controllers\Controller;
-use App\Mahasiswa;
+use App\DataDiri;
+use App\User;
 use Illuminate\Http\Request;
+
 
 class MahasiswaController extends Controller
 {
@@ -25,7 +27,7 @@ class MahasiswaController extends Controller
      */
     public function index()
     {
-        $data = Mahasiswa::getMahasiswa();
+        $data = User::getMahasiswa();
         return view('admin.mahasiswa.index', compact('data'));
     }
 
@@ -47,12 +49,14 @@ class MahasiswaController extends Controller
      */
     public function store(Request $request)
     {
-        $data = Mahasiswa::firstMahasiswaNIM($request->nim);
-        if (isset($data->nim)) {
-            return redirect()->back()->with('danger', 'Data dengan NIM '. $data->nim .' telah terdaftar atas nama '. $data->nama);
+        $data = User::firstUsername($request->nim, $request->id);
+        if (isset($data->username)) {
+            return redirect()->back()->with('danger', 'Data dengan NIM '. $data->username .' telah terdaftar atas nama '. $data->name);
         }
         else {
-            Mahasiswa::storeMahasiswa($request);
+            User::storeMahasiswa($request);
+            $data = User::firstUsername($request->nim, 0);
+            DataDiri::storeDataDiri($request, $data->id);
             return redirect()->back()->with('success', 'Input Data '. $request->nama .' Berhasil');
         }
     }
@@ -63,10 +67,11 @@ class MahasiswaController extends Controller
      * @param  \App\Mahasiswa  $mahasiswa
      * @return \Illuminate\Http\Response
      */
-    public function show(Mahasiswa $mahasiswa)
+    public function show($id)
     {
-        $data = Mahasiswa::firstMahasiswa($mahasiswa->id);
-        return view('admin.mahasiswa.show', compact('data'));
+        $data = User::firstUser($id);
+        $info = DataDiri::firstDataDiri($id);
+        return view('admin.mahasiswa.show', compact('data', 'info'));
     }
 
     /**
@@ -75,7 +80,7 @@ class MahasiswaController extends Controller
      * @param  \App\Mahasiswa  $mahasiswa
      * @return \Illuminate\Http\Response
      */
-    public function edit(Mahasiswa $mahasiswa)
+    public function edit(DataDiri $dataDiri)
     {
         //
     }
@@ -87,13 +92,9 @@ class MahasiswaController extends Controller
      * @param  \App\Mahasiswa  $mahasiswa
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Mahasiswa $mahasiswa)
+    public function update(Request $request, $dataDiri)
     {
-        $data = Mahasiswa::firstMahasiswaNIM($request->nim);
-        if (isset($data->nim) && $mahasiswa->nim != $data->nim) {
-            return redirect()->back()->with('danger', 'Data dengan NIM '. $data->nim .' Telah Terdaftar atas nama '. $data->nama);
-        }
-        Mahasiswa::updateMahasiswa($request, $mahasiswa->id);
+        DataDiri::updateDataDiri($request, $dataDiri);
         return redirect()->back()->with('success', 'Data Berhasil diubah');
     }
 
@@ -103,9 +104,8 @@ class MahasiswaController extends Controller
      * @param  \App\Mahasiswa  $mahasiswa
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Mahasiswa $mahasiswa)
+    public function destroy($id)
     {
-        Mahasiswa::deleteMahasiswa($mahasiswa->id);
-        return redirect()->back();
+        //
     }
 }

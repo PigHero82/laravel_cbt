@@ -62,7 +62,7 @@
                                 <div role="tabpanel" class="tab-pane active" id="account-vertical-general" aria-labelledby="account-pill-general" aria-expanded="true">
                                     <div class="media">
                                         <a href="javascript: void(0);">
-                                            <img src="../../../app-assets/images/profile/blank.png" class="rounded mr-75" alt="profile image" height="64">
+                                            <img src="{{ asset('assets/images/profile/'.$data->gambar) }}" class="rounded mr-75" alt="profile image" height="64">
                                         </a>
                                         <div class="media-body mt-75">
                                             <div class="col-12 px-0 d-flex flex-sm-row flex-column justify-content-start">
@@ -72,37 +72,23 @@
                                         </div>
                                     </div>
                                     <hr>
+                                    <p class="font-weight-bold">{{ $data->name }} <br>{{ $data->username }}</p>
                                     <form action="{{ route('admin.portal.dosen.update', $data->id) }}" method="POST">
                                         @csrf
                                         @method('PATCH')
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label>NIDN</label>
-                                                    <input type="text" name="nidn" class="form-control" pattern="[0-9]+" maxlength="10" placeholder="NIDN Dosen (Diisi dengan angka)" value="{{ $data->nidn }}" required>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <label>Nama</label>
-                                                    <input type="text" name="nama" class="form-control" placeholder="Nama Dosen" value="{{ $data->nama }}" required>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <label>Email</label>
-                                                    <input type="email" name="email" class="form-control" placeholder="Email Dosen (input dengan email yang valid)" value="{{ $data->email }}" required>
-                                                </div>
-                            
-                                                <div class="form-group">
                                                     <div class="controls">
                                                         <label for="jenis-kelamin">Jenis Kelamin</label>
                                                         <select class="form-control" name="jeniskelamin">
                                                             <option value="1"
-                                                                @if ($data->jeniskelamin == 1)
+                                                                @if ($info->jeniskelamin == 1)
                                                                     selected
                                                                 @endif
                                                             >Laki-laki</option>
                                                             <option value="0"
-                                                                @if ($data->jeniskelamin == 0)
+                                                                @if ($info->jeniskelamin == 0)
                                                                     selected
                                                                 @endif
                                                             >Perempuan</option>
@@ -111,48 +97,25 @@
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <label>Alamat</label>
-                                                    <textarea name="alamat" cols="30" rows="3" class="form-control" placeholder="Alamat Dosen" required>{{ $data->alamat }}</textarea>
-                                                </div>                            
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>No KTP</label>
-                                                    <input type="text" name="ktp" class="form-control" pattern="[0-9]+" maxlength="16" placeholder="No KTP Dosen (Diisi dengan angka)" value="{{ $data->ktp }}" required>
-                                                </div>
-                            
-                                                <div class="form-group">
-                                                    <label>No Telepon</label>
-                                                    <input type="text" name="telepon" class="form-control" pattern="[0-9]+" maxlength="12" placeholder="No Telepon Dosen (Maksimal diisi 12 digit | Tidak wajib | Diisi dengan angka)" value="{{ $data->telepon }}">
-                                                </div>
-                            
-                                                <div class="form-group">
-                                                    <label>No HP</label>
-                                                    <input type="text" name="hp" class="form-control" pattern="[0-9]+" maxlength="13" placeholder="No HP Dosen (Maksimal diisi 13 digit | Diisi dengan angka)" value="{{ $data->hp }}" required>
-                                                </div>
-                            
-                                                <div class="form-group">
                                                     <div class="controls">
-                                                        <label for="account-username">Status</label>
-                                                        <select class="form-control" name="status">
-                                                            <option value="1"
-                                                                @if ($data->status == 1)
-                                                                    selected
-                                                                @endif
-                                                            >Aktif</option>
-                                                            <option value="0"
-                                                                @if ($data->status == 0)
-                                                                    selected
-                                                                @endif
-                                                            >Tidak aktif</option>
-                                                        </select>
+                                                        <label for="email">Email</label>
+                                                        <input type="email" class="form-control" name="email" placeholder="Email Mahasiswa" value="{{ $info->email }}" required>
                                                     </div>
                                                 </div>
-                                                
+                                            </div>
+
+                                            <div class="col-md-6">
                                                 <div class="form-group">
                                                     <div class="controls">
-                                                        <label for="asal">Wilayah Asal</label>
-                                                        <textarea class="form-control" name="alamatasal" cols="30" rows="3" placeholder="Wilayah Asal Dosen" required>{{ $data->alamatasal }}</textarea>
+                                                        <label for="hp">No. HP</label>
+                                                        <input type="text" class="form-control" pattern="[0-9]+" name="hp" placeholder="No HP Mahasiswa (Maksimal diisi 13 digit | Diisi dengan angka)" value="{{ $info->hp }}" maxlength="13" required>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <div class="controls">
+                                                        <label for="alamat">Alamat</label>
+                                                        <textarea class="form-control" name="alamat" cols="30" rows="3" placeholder="Alamat Mahasiswa" required>{{ $info->alamat }}</textarea>
                                                     </div>
                                                 </div>
                                             </div>
