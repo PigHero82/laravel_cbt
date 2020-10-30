@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Dosen;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
+use App\Kelas;
+
 class HomeController extends Controller
 {
     /**
@@ -19,6 +21,14 @@ class HomeController extends Controller
 
     public function index()
     {
-        return view('dosen.index');
+        $kelas = Kelas::getKelasCount();
+        $mahasiswa = Kelas::getKelasMahasiswaCount();
+        return view('dosen.index', compact('kelas', 'mahasiswa'));
+    }
+
+    public function mahasiswa()
+    {
+        $data = Kelas::getKelasByDosen();
+        return view('dosen.mahasiswa', compact('data'));
     }
 }

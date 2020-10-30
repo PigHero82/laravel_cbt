@@ -15,9 +15,9 @@ use Illuminate\Support\Facades\Route;
 
 // Route::view('/login', 'login')->name('login');
 
-Route::namespace('Dosen')->name('dosen.')->prefix('dosen')->group(function() {
+Route::namespace('Dosen')->name('dosen.')->prefix('dosen')->middleware('auth', 'role:dosen')->group(function() {
     Route::get('', 'HomeController@index')->name('index');
-    Route::view('mahasiswa', 'dosen.mahasiswa')->name('mahasiswa');
+    Route::get('mahasiswa', 'HomeController@mahasiswa')->name('mahasiswa');
     Route::view('cetak', 'dosen.cetak')->name('cetak');
     Route::namespace('soal')->name('soal.')->prefix('soal')->group(function() {
         Route::view('', 'dosen.soal.index')->name('index');

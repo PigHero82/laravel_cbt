@@ -56,14 +56,29 @@
                     <ul class="nav navbar-nav float-right">
                         <li class="nav-item d-none d-lg-block"><a class="nav-link nav-link-expand"><i class="ficon feather icon-maximize"></i></a></li>
                         <li class="dropdown dropdown-user nav-item"><a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown">
-                                <div class="user-nav d-sm-flex d-none"><span class="user-name text-bold-600">{{ Auth::user()->name }}</span><span class="user-status">Admin</span></div><span><div class="avatar bg-primary mr-1">
+                                <div class="user-nav d-sm-flex d-none"><span class="user-name text-bold-600">{{ Auth::user()->name }}</span>
+                                    <span class="user-status">
+                                        @if (request()->is('admin*'))
+                                            Admin
+                                        @elseif (request()->is('dosen*'))
+                                            Dosen
+                                        @else
+                                            Mahasiswa
+                                        @endif
+                                    </span>
+                                </div>
+                                <span><div class="avatar bg-primary mr-1">
                                     <span><img class="round" src="/assets/images/profile/{{ Auth::user()->gambar }}" alt="avatar" height="40" width="40"></span>
                                 </div></span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right">
-                                <a class="dropdown-item" href="#" onclick="event.preventDefault();
-                                document.getElementById('logout-form').submit();"><i class="feather icon-power"></i> Logout</a>
-                                <form id="logout-form" action="#" method="POST" style="display: none;">
+                                <a class="dropdown-item" href="{{ route('logout') }}"
+                                    onclick="event.preventDefault();
+                                                    document.getElementById('logout-form').submit();">
+                                    Logout
+                                </a>
+
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                     @csrf
                                 </form>
                             </div>

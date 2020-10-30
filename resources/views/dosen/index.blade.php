@@ -17,7 +17,7 @@
 
     <div class="row">
         <div class="col-xl-3 col-md-4 col-sm-6">
-            <a href="#">
+            <a href="{{ route('dosen.mahasiswa') }}">
                 <div class="card text-center">
                     <div class="card-content">
                         <div class="card-body">
@@ -26,7 +26,7 @@
                                     <i class="feather icon-user text-success font-medium-5"></i>
                                 </div>
                             </div>
-                            <h2 class="text-bold-700">34</h2>
+                            <h2 class="text-bold-700">{{ $mahasiswa }}</h2>
                             <p class="mb-0 line-ellipsis text-dark">Jumlah Mahasiswa</p>
                         </div>
                     </div>
@@ -34,7 +34,7 @@
             </a>
         </div>
         <div class="col-xl-3 col-md-4 col-sm-6">
-            <a href="#">
+            <a href="{{ route('dosen.mahasiswa') }}">
                 <div class="card text-center">
                     <div class="card-content">
                         <div class="card-body">
@@ -43,7 +43,7 @@
                                     <i class="feather icon-home text-info font-medium-5"></i>
                                 </div>
                             </div>
-                            <h2 class="text-bold-700">2</h2>
+                            <h2 class="text-bold-700">{{ $kelas }}</h2>
                             <p class="mb-0 line-ellipsis text-dark">Jumlah Kelas</p>
                         </div>
                     </div>

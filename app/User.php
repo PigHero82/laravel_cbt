@@ -82,7 +82,7 @@ class User extends Authenticatable
         User::create([
             'username'  => $request->nidn,
             'name'      => $request->nama,
-            'password'  => Hash::make($request->nim)
+            'password'  => Hash::make($request->nidn)
         ])
             ->roles()
             ->attach(Role::where('name', 'dosen')->first());
