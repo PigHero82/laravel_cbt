@@ -59,6 +59,15 @@ class Kelas extends Model
         return $data;
     }
 
+    static function getKelasOnlyByDosen()
+    {
+        return Kelas::join('mata_kuliah', 'kelas.idMataKuliah', 'mata_kuliah.id')
+                    ->join('users', 'kelas.idDosen', 'users.id')
+                    ->select('kelas.id', 'kode', 'mata_kuliah.nama', 'users.name as dosen')
+                    ->where('idDosen', Auth::id())
+                    ->get();
+    }
+
     static function firstKelasKodeMataKuliah($kode, $idMataKuliah, $id)
     {
         return Kelas::where('kode', $kode)

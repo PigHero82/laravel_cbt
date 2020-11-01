@@ -20,13 +20,14 @@
             <div class="card-body">
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane active" id="account-vertical-general" aria-labelledby="account-pill-general" aria-expanded="true">
-                        <form action="#" method="POST">
+                        <form action="{{ route('dosen.soal.store') }}" method="POST">
+                            @csrf
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <div class="controls">
                                             <label for="">Nama</label>
-                                            <input type="text" class="form-control" placeholder="Nama Tes" required>
+                                            <input type="text" class="form-control" placeholder="Nama Tes" name="nama" required>
                                         </div>
                                     </div>
                                 </div>
@@ -47,6 +48,14 @@
                                         <div class="controls">
                                             <label for="">Durasi</label>
                                             <input type="number" name="" id="" class="form-control" placeholder="Hitungan menit">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label for="">Tanggal</label>
+                                            <input type="date" class="form-control">
                                         </div>
                                     </div>
                                 </div>
