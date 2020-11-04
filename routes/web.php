@@ -14,17 +14,15 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Route::view('/login', 'login')->name('login');
+Route::get('', 'HomeController@index')->name('home');
 
 Route::namespace('Dosen')->name('dosen.')->prefix('dosen')->middleware('auth', 'role:dosen')->group(function() {
     Route::get('', 'HomeController@index')->name('index');
     Route::get('mahasiswa', 'HomeController@mahasiswa')->name('mahasiswa');
     Route::view('cetak', 'dosen.cetak')->name('cetak');
-    Route::namespace('Soal')->name('soal.')->prefix('soal')->group(function() {
-        Route::resource('', 'PaketController');
-        // Route::view('', 'dosen.soal.index')->name('index');
-        Route::view('1', 'dosen.soal.show')->name('show');
-        Route::view('1/1', 'dosen.soal.single')->name('single');
-    });
+    Route::resource('soal', 'Soal\PaketController');
+    // Route::name('soal.')->prefix('soal')->group(function() {
+    // });
 });
 
 Route::name('admin.')->prefix('admin')->middleware('auth', 'role:admin')->group(function() {
@@ -39,12 +37,10 @@ Route::name('admin.')->prefix('admin')->middleware('auth', 'role:admin')->group(
     });
 });
 
-Route::namespace('Mahasiswa')->prefix('')->group(function() {
+Route::namespace('Mahasiswa')->prefix('mahasiswa')->middleware('auth', 'role:mahasiswa')->group(function() {
     Route::get('', 'HomeController@index')->name('index');
     // Route::view('', 'front.index')->name('index');
     Route::view('soal', 'front.soal')->name('soal');
 });
 
 Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');

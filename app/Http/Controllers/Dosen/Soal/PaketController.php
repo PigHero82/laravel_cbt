@@ -51,9 +51,9 @@ class PaketController extends Controller
      * @param  \App\Paket  $paket
      * @return \Illuminate\Http\Response
      */
-    public function show(Paket $paket)
+    public function show($id)
     {
-        //
+        return json_encode(Paket::singlePaket($id));
     }
 
     /**
@@ -76,7 +76,9 @@ class PaketController extends Controller
      */
     public function update(Request $request, Paket $paket)
     {
-        //
+        Paket::updatePaket($request);
+        
+        return redirect()->back()->with('success', 'Data berhasil diubah');
     }
 
     /**
@@ -85,8 +87,10 @@ class PaketController extends Controller
      * @param  \App\Paket  $paket
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Paket $paket)
+    public function destroy($paket)
     {
-        //
+        Paket::deletePaket($paket);
+
+        return redirect()->back();
     }
 }

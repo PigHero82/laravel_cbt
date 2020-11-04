@@ -51,7 +51,7 @@
             </a>
         </div>
         <div class="col-xl-3 col-md-4 col-sm-6">
-            <a href="#">
+            <a href="{{ route('dosen.soal.index') }}">
                 <div class="card text-center">
                     <div class="card-content">
                         <div class="card-body">
@@ -60,7 +60,7 @@
                                     <i class="feather icon-file-text text-warning font-medium-5"></i>
                                 </div>
                             </div>
-                            <h2 class="text-bold-700">3</h2>
+                            <h2 class="text-bold-700">{{ count($paket) }}</h2>
                             <p class="mb-0 line-ellipsis text-dark">Jumlah Paket Soal</p>
                         </div>
                     </div>
@@ -78,40 +78,41 @@
 
                 <div class="card-content">
                     <div class="card-body">
-                        <table class="table table-striped">
-                            <tr class="text-center">
-                                <th>Nama</th>
-                                <th>Jumlah Soal</th>
-                                <th>Tanggal</th>
-                                <th>Waktu</th>
-                                <th>Durasi</th>
-                                <th>Aktif</th>
-                            </tr>
-                            <tr>
-                                <td>Tes Bahasa Indonesia</td>
-                                <td>10 Soal</td>
-                                <td>8 Agustus 2020</td>
-                                <td>15:00 - 16:00</td>
-                                <td><div disabled class="badge badge-md badge-danger">60 Menit</div></td>
-                                <td class="text-center"><i class="feather icon-slash text-danger"></i></td>
-                            </tr>
-                            <tr>
-                                <td>Tes Fisika</td>
-                                <td>15 Soal</td>
-                                <td>9 Agustus 2020</td>
-                                <td>13:00 - 15:00</td>
-                                <td><div disabled class="badge badge-md badge-danger">120 Menit</div></td>
-                                <td class="text-center"><i class="feather icon-check text-success"></i></td>
-                            </tr>
-                            <tr>
-                                <td>Tes Matematika</td>
-                                <td>25 Soal</td>
-                                <td>9 Agustus 2020</td>
-                                <td>17:00 - 19:00</td>
-                                <td><div disabled class="badge badge-md badge-danger">120 Menit</div></td>
-                                <td class="text-center"><i class="feather icon-check text-success"></i></td>
-                            </tr>
-                        </table>
+                        @if (count($paket) > 0)
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Nama</th>
+                                        <th>Jumlah Soal</th>
+                                        <th>Tanggal</th>
+                                        <th>Waktu</th>
+                                        <th>Durasi</th>
+                                        <th>Aktif</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($paket as $item)
+                                        <tr>
+                                            <td><a href="#">{{ $item->nama }}</a></td>
+                                            <td>xx soal</td>
+                                            <td>{{ Carbon\Carbon::parse($item->tanggal)->formatLocalized('%d %B %Y') }}</td>
+                                            <td>{{ Carbon\Carbon::parse($item->waktuAwal)->formatLocalized('%H:%M') }} - {{ Carbon\Carbon::parse($item->waktuAkhir)->formatLocalized('%H:%M') }}</td>
+                                            <td><div disabled class="badge badge-md badge-danger">{{ $item->durasi }} Menit</div></td>
+                                            @if ( $item->status == 1)
+                                                <td class="text-center"><i class="feather icon-check text-success"></i></td>
+                                            @else
+                                                <td class="text-center"><i class="feather icon-slash text-danger"></i></td>
+                                            @endif
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        @else
+                            <div class="error-template text-center">
+                                <h1><i class="feather icon-slash"></i></h1>
+                                <h2>Tidak Ada Data</h2>
+                            </div> 
+                        @endif
                     </div>
                 </div>
             </div>

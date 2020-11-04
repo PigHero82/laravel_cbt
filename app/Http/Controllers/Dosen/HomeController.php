@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Kelas;
+use App\Paket;
 
 class HomeController extends Controller
 {
@@ -23,7 +24,8 @@ class HomeController extends Controller
     {
         $kelas = Kelas::getKelasCount();
         $mahasiswa = Kelas::getKelasMahasiswaCount();
-        return view('dosen.index', compact('kelas', 'mahasiswa'));
+        $paket = Paket::getPaket();
+        return view('dosen.index', compact('kelas', 'mahasiswa', 'paket'));
     }
 
     public function mahasiswa()

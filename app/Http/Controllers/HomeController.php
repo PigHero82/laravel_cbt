@@ -30,7 +30,7 @@ class HomeController extends Controller
 			} elseif (Auth::user()->hasRole('dosen')) {
 				return redirect('/dosen');
 			} elseif (Auth::user()->hasRole('mahasiswa')) {
-				return redirect('/');
+				return redirect('/mahasiswa');
             }
         }
         // return view('home');
