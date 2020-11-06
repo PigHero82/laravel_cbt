@@ -20,9 +20,10 @@ Route::namespace('Dosen')->name('dosen.')->prefix('dosen')->middleware('auth', '
     Route::get('', 'HomeController@index')->name('index');
     Route::get('mahasiswa', 'HomeController@mahasiswa')->name('mahasiswa');
     Route::view('cetak', 'dosen.cetak')->name('cetak');
-    Route::resource('soal', 'Soal\PaketController');
-    // Route::name('soal.')->prefix('soal')->group(function() {
-    // });
+    Route::namespace('Soal')->group(function () {
+        Route::resource('paket', 'SoalController');
+        Route::resource('soal', 'PaketController');
+    });
 });
 
 Route::name('admin.')->prefix('admin')->middleware('auth', 'role:admin')->group(function() {

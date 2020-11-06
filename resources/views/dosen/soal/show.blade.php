@@ -19,27 +19,27 @@
                     <div class="card-body">
                         <dl class="row">
                             <dt class="col-lg-3">Nama</dt>
-                            <dd class="col-lg-9" id="name-text">Tes Bahasa Indonesia</dd>                          
+                            <dd class="col-lg-9" id="name-text">{{ $data->nama }}</dd>                          
                             
                             <dt class="col-lg-3">Kelas</dt>
-                            <dd class="col-lg-9" id="code-text">DA</dd>                          
+                            <dd class="col-lg-9" id="code-text">{{ $data->kode }}</dd>
                             
                             <dt class="col-lg-3">Tanggal</dt>
-                            <dd class="col-lg-9" id="address-text">23 Agustus 2020</dd>                          
+                            <dd class="col-lg-9" id="address-text">{{ $data->tanggal }}</dd>                          
                             
                             <dt class="col-lg-3">Waktu</dt>
-                            <dd class="col-lg-9" id="bank-text">15:00 - 17:00</dd> 
+                            <dd class="col-lg-9" id="bank-text">{{ $data->waktuAwal }} - {{ $data->waktuAkhir }}</dd> 
 
                             <dt class="col-lg-3">Durasi</dt>
-                            <dd class="col-lg-9" id="bank-text">120 Menit</dd>
+                            <dd class="col-lg-9" id="bank-text">{{ $data->durasi }} Menit</dd>
                             
                             <hr>
                             <div class="container">
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas expedita, fugiat reiciendis libero, neque totam rerum vel, alias aliquid pariatur eius cum nam deserunt nesciunt sint ducimus reprehenderit assumenda laboriosam!</p>
+                                <p>{{ $data->deskripsi }}</p>
                             </div>
 
                             <dt class="col-lg-3">Status</dt>
-                            <dd class="badge badge-danger" id="bank-text">Tidak Aktif</dd>
+                            <dd class="badge badge-danger" id="bank-text">{{ $data->status == 1 ? 'Aktif' : 'Tidak Aktif' }}</dd>
 
                         </dl>
 

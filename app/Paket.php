@@ -49,7 +49,7 @@ class Paket extends Model
     static function singlePaket($id)
     {
         return Paket::join('kelas', 'paket.idKelas', 'kelas.id')
-                    ->select('idKelas', 'paket.id', 'paket.nama', 'durasi', 'paket.tanggal', 'waktuAwal', 'waktuAkhir', 'paket.status', 'deskripsi')
+                    ->select('idKelas', 'kelas.kode', 'paket.id', 'paket.nama', 'durasi', 'paket.tanggal', 'waktuAwal', 'waktuAkhir', 'paket.status', 'deskripsi')
                     ->where('paket.id', $id)
                     ->first();
     }
