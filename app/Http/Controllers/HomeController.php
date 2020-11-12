@@ -24,8 +24,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-        if (Auth::check()) {
-			if (Auth::user()->hasRole('admin')) {
+        if (!Auth::check()) {
+			return redirect('/login');
+        } else {
+            if (Auth::user()->hasRole('admin')) {
 				return redirect('/admin');
 			} elseif (Auth::user()->hasRole('dosen')) {
 				return redirect('/dosen');
@@ -33,6 +35,5 @@ class HomeController extends Controller
 				return redirect('/mahasiswa');
             }
         }
-        // return view('home');
     }
 }

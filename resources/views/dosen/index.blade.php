@@ -93,8 +93,8 @@
                                 <tbody>
                                     @foreach ($paket as $item)
                                         <tr>
-                                            <td><a href="#">{{ $item->nama }}</a></td>
-                                            <td>xx soal</td>
+                                            <td><a href="{{ route('dosen.paket.show', $item->id) }}">{{ $item->nama }}</a></td>
+                                            <td>{{ $item->jumlah }} Soal</td>
                                             <td>{{ Carbon\Carbon::parse($item->tanggal)->formatLocalized('%d %B %Y') }}</td>
                                             <td>{{ Carbon\Carbon::parse($item->waktuAwal)->formatLocalized('%H:%M') }} - {{ Carbon\Carbon::parse($item->waktuAkhir)->formatLocalized('%H:%M') }}</td>
                                             <td><div disabled class="badge badge-md badge-danger">{{ $item->durasi }} Menit</div></td>

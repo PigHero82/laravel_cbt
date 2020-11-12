@@ -41,7 +41,9 @@ class Paket extends Model
     static function getPaket()
     {
         return Paket::join('kelas', 'paket.idKelas', 'kelas.id')
+                    ->leftJoin('soal', 'paket.id', 'soal.idPaket')
                     ->select('paket.id', 'paket.nama', 'durasi', 'paket.tanggal', 'waktuAwal', 'waktuAkhir', 'paket.status')
+                    ->selectRaw('COUNT(soal.id) as jumlah')
                     ->where('kelas.idDosen', Auth::id())
                     ->get();
     }
@@ -51,6 +53,15 @@ class Paket extends Model
         return Paket::join('kelas', 'paket.idKelas', 'kelas.id')
                     ->select('idKelas', 'kelas.kode', 'paket.id', 'paket.nama', 'durasi', 'paket.tanggal', 'waktuAwal', 'waktuAkhir', 'paket.status', 'deskripsi')
                     ->where('paket.id', $id)
+                    ->first();
+    }
+
+    static function cekPaketbyDosen($id)
+    {
+        return Paket::join('kelas', 'paket.idKelas', 'kelas.id')
+                    ->select('paket.id', 'kelas.idDosen')
+                    ->where('paket.id', $id)
+                    ->where('kelas.idDosen', Auth::id())
                     ->first();
     }
 

@@ -17,7 +17,7 @@ class SoalController extends Controller
      */
     public function index()
     {
-        return view('dosen.soal.show');
+        return redirect()->back();
     }
 
     /**
@@ -27,7 +27,7 @@ class SoalController extends Controller
      */
     public function create()
     {
-        //
+        return view('dosen.soal.single');
     }
 
     /**
@@ -38,7 +38,20 @@ class SoalController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if ($request->file('gambar') !== NULL) {
+            $image = $request->file('gambar');
+            $gambar = rand() . '.' . $image->getClientOriginalExtension();
+            $image->move('assets/images/soal/', $gambar);
+
+            $request->media = $gambar;
+            Soal::storeSoal($request);
+
+            return back()->with('success', 'Soal berhasil ditambah');
+        }
+
+        Soal::storeSoal($request);
+
+        return back()->with('success', 'Soal berhasil ditambah');
     }
 
     /**
@@ -50,8 +63,13 @@ class SoalController extends Controller
     public function show($soal)
     {
         $data = Paket::singlePaket($soal);
+        $cek = Paket::cekPaketbyDosen($soal);
+        $soal = Soal::getSoal($soal);
 
-        return view('dosen.soal.show', compact('data'));
+        if ($cek == NULL) {
+            return redirect()->back()->with('danger', 'Data Paket Tidak Ditemukan');
+        }
+        return view('dosen.soal.show', compact('data', 'soal'));
     }
 
     /**
@@ -60,9 +78,13 @@ class SoalController extends Controller
      * @param  \App\Soal  $soal
      * @return \Illuminate\Http\Response
      */
-    public function edit(Soal $soal)
+    public function edit($soal)
     {
-        //
+        $data = Soal::singleSoal($soal);
+        $cek = Soal::cekMediaSoal($soal);
+        
+        
+        return view('dosen.soal.single', compact('data', 'cek'));
     }
 
     /**
