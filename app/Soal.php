@@ -8,21 +8,32 @@ class Soal extends Model
 {
     protected $table = 'soal';
 
-    protected $fillable = ['idPaket', 'modelSoal', 'media', 'pertanyaan', 'jawaban', 'skor', 'status'];
+    protected $fillable = ['idGrup', 'modelSoal', 'media', 'pertanyaan', 'idPilihan'];
 
     static function storeSoal($request)
     {
-        Soal::create([
-            'idPaket'    => $request->idPaket,
+        return Soal::create([
+            'idGrup'     => $request->idGrup,
             'modelSoal'  => $request->modelSoal,
             'media'      => $request->media,
             'pertanyaan' => $request->pertanyaan
         ]);
     }
 
+    static function updateSoalJawaban($id, $idPilihan)
+    {
+        return Soal::whereId($id)->update([
+            'idPilihan'     => $idPilihan
+        ]);
+    }
+
     static function getSoal($id)
     {
-        return Soal::where('idPaket', $id)->get();
+        return Soal::join('grup', 'soal.idGrup', 'grup.id')
+                    ->join('paket', 'grup.idPaket', 'paket.id')
+                    ->leftJoin('pilihan', 'soal.idPilihan', 'pilihan.id')
+                    ->where('idGrup', $id)
+                    ->get();
     }
 
     static function cekMediaSoal($id)
@@ -32,10 +43,27 @@ class Soal extends Model
 
     static function singleSoal($id)
     {
-        return Soal::where('soal.id', $id)
-                    ->join('paket', 'soal.idPaket', 'paket.id')
-                    ->join('kelas', 'paket.idKelas', 'kelas.id')
-                    ->select('soal.id', 'paket.nama', 'kelas.kode', 'soal.media', 'soal.modelSoal', 'soal.pertanyaan')
-                    ->first();
+        $soal = Soal::join('pilihan', 'soal.idPilihan', 'pilihan.id')
+                    ->select('soal.id')
+                    ->where('soal.id', $id)
+                    ->get();
+
+        if ($soal->isNotEmpty()) {
+            foreach ($soal as $key => $value) {
+                $id = $value->id;
+
+                $data[$key] = Soal::join('grup', 'soal.idGrup', 'grup.id')
+                                    ->join('paket', 'grup.idPaket', 'paket.id')
+                                    ->join('kelas', 'paket.idKelas', 'kelas.id')
+                                    ->select('soal.*', 'paket.nama', 'kelas.kode')
+                                    ->where('soal.id', $id)
+                                    ->first();
+                $data[$key]['pilihan'] = Soal::join('pilihan', 'soal.id', 'pilihan.idSoal')
+                                        ->select('pilihan.deskripsi', 'pilihan.id')
+                                        ->where('pilihan.idSoal', $id)
+                                        ->get();
+            }
+            return $data;
+        }
     }
 }

@@ -21,8 +21,10 @@ Route::namespace('Dosen')->name('dosen.')->prefix('dosen')->middleware('auth', '
     Route::get('mahasiswa', 'HomeController@mahasiswa')->name('mahasiswa');
     Route::view('cetak', 'dosen.cetak')->name('cetak');
     Route::namespace('Soal')->group(function () {
-        Route::resource('paket', 'SoalController');
-        Route::resource('soal', 'PaketController');
+        Route::resource('soal', 'SoalController')->except(['index']);
+        Route::get('soal/edit/{id}', 'SoalController@data_soal')->name('edit-soal');
+        Route::resource('paket', 'PaketController');
+        Route::resource('pilihan', 'PilihanController');
     });
 });
 

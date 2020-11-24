@@ -51,7 +51,7 @@
             </a>
         </div>
         <div class="col-xl-3 col-md-4 col-sm-6">
-            <a href="{{ route('dosen.soal.index') }}">
+            <a href="{{ route('dosen.paket.index') }}">
                 <div class="card text-center">
                     <div class="card-content">
                         <div class="card-body">
@@ -93,7 +93,7 @@
                                 <tbody>
                                     @foreach ($paket as $item)
                                         <tr>
-                                            <td><a href="{{ route('dosen.paket.show', $item->id) }}">{{ $item->nama }}</a></td>
+                                            <td><a href="{{ route('dosen.soal.show', $item->id) }}">{{ $item->nama }}</a></td>
                                             <td>{{ $item->jumlah }} Soal</td>
                                             <td>{{ Carbon\Carbon::parse($item->tanggal)->formatLocalized('%d %B %Y') }}</td>
                                             <td>{{ Carbon\Carbon::parse($item->waktuAwal)->formatLocalized('%H:%M') }} - {{ Carbon\Carbon::parse($item->waktuAkhir)->formatLocalized('%H:%M') }}</td>
@@ -110,7 +110,7 @@
                         @else
                             <div class="error-template text-center">
                                 <h1><i class="feather icon-slash"></i></h1>
-                                <h2>Tidak Ada Data</h2>
+                                <h2>Tidak Ada Paket Soal</h2>
                             </div> 
                         @endif
                     </div>

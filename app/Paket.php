@@ -10,40 +10,55 @@ class Paket extends Model
 {
     protected $table = 'paket';
 
-    protected $fillable = ['idKelas', 'nama', 'durasi', 'tanggal', 'waktuAwal', 'waktuAkhir', 'deskripsi', 'status'];
+    protected $fillable = ['idKelas', 'nama', 'tanggal_awal', 'tanggal_akhir', 'waktu_awal', 'waktu_akhir', 'durasi', 'deskripsi', 'bobot_benar', 'bobot_salah', 'status'];
 
     static function storePaket($request)
     {
-        Paket::create([
-            'idKelas'   => $request->idKelas,
-            'nama'      => $request->nama,
-            'durasi'    => $request->durasi,
-            'tanggal'   => $request->tanggal,
-            'waktuAwal' => $request->waktuAwal,
-            'waktuAkhir'=> $request->waktuAkhir,
-            'deskripsi' => $request->deskripsi
+        return Paket::create([
+            'idKelas'       => $request->idKelas,
+            'nama'          => $request->nama,
+            'durasi'        => $request->durasi,
+            'tanggal_awal'  => $request->tanggal_awal,
+            'tanggal_akhir' => $request->tanggal_akhir,
+            'waktu_awal'    => $request->waktu_awal,
+            'waktu_akhir'   => $request->waktu_akhir,
+            'bobot_benar'   => $request->bobot_benar,
+            'bobot_salah'   => $request->bobot_salah,
+            'deskripsi'     => $request->deskripsi
         ]);
     }
 
-    static function updatePaket($request)
+    static function updatePaket($id, $request)
     {
-        Paket::whereId($request->id)->update([
-            'idKelas'   => $request->idKelas,
-            'nama'      => $request->nama,
-            'durasi'    => $request->durasi,
-            'tanggal'   => $request->tanggal,
-            'waktuAwal' => $request->waktuAwal,
-            'waktuAkhir'=> $request->waktuAkhir,
-            'deskripsi' => $request->deskripsi
+        Paket::whereId($id)->update([
+            'idKelas'       => $request->idKelas,
+            'nama'          => $request->nama,
+            'durasi'        => $request->durasi,
+            'tanggal_awal'  => $request->tanggal_awal,
+            'tanggal_akhir' => $request->tanggal_akhir,
+            'waktu_awal'    => $request->waktu_awal,
+            'waktu_akhir'   => $request->waktu_akhir,
+            'bobot_benar'   => $request->bobot_benar,
+            'bobot_salah'   => $request->bobot_salah,
+            'deskripsi'     => $request->deskripsi
+        ]);
+    }
+
+    static function updatePaketStatus($id, $status)
+    {
+        Paket::whereId($id)->update([
+            'status'     => $status
         ]);
     }
 
     static function getPaket()
     {
         return Paket::join('kelas', 'paket.idKelas', 'kelas.id')
-                    ->leftJoin('soal', 'paket.id', 'soal.idPaket')
-                    ->select('paket.id', 'paket.nama', 'durasi', 'paket.tanggal', 'waktuAwal', 'waktuAkhir', 'paket.status')
+                    ->leftJoin('grup', 'paket.id', 'grup.idPaket')
+                    ->leftJoin('soal', 'grup.id', 'soal.idGrup')
+                    ->select('paket.id', 'paket.nama', 'durasi', 'paket.tanggal_awal', 'paket.tanggal_akhir', 'waktu_awal', 'waktu_akhir', 'paket.status')
                     ->selectRaw('COUNT(soal.id) as jumlah')
+                    ->groupBy('paket.id')
                     ->where('kelas.idDosen', Auth::id())
                     ->get();
     }
@@ -51,7 +66,7 @@ class Paket extends Model
     static function singlePaket($id)
     {
         return Paket::join('kelas', 'paket.idKelas', 'kelas.id')
-                    ->select('idKelas', 'kelas.kode', 'paket.id', 'paket.nama', 'durasi', 'paket.tanggal', 'waktuAwal', 'waktuAkhir', 'paket.status', 'deskripsi')
+                    ->select('paket.*', 'kelas.kode')
                     ->where('paket.id', $id)
                     ->first();
     }

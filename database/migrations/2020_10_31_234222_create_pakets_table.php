@@ -17,11 +17,14 @@ class CreatePaketsTable extends Migration
             $table->id();
             $table->bigInteger('idKelas');
             $table->string('nama');
+            $table->date('tanggal_awal');
+            $table->date('tanggal_akhir');
+            $table->time('waktu_awal', 0);
+            $table->time('waktu_akhir', 0);
             $table->smallInteger('durasi')->unsigned();
-            $table->date('tanggal');
-            $table->time('waktuAwal', 0);
-            $table->time('waktuAkhir', 0);
             $table->text('deskripsi')->nullable();
+            $table->integer('bobot_benar');
+            $table->integer('bobot_salah');
             $table->boolean('status')->default(0);
             $table->timestamps();
         });

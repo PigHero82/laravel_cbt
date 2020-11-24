@@ -7,6 +7,8 @@ use App\Soal;
 use Illuminate\Http\Request;
 
 use App\Paket;
+use App\Pilihan;
+use App\Grup;
 
 class SoalController extends Controller
 {
@@ -38,18 +40,43 @@ class SoalController extends Controller
      */
     public function store(Request $request)
     {
+        if ($request->storeGrup == 1) {
+            Grup::storeGrupNama($request);
+
+            return back()->with('success', 'Grup Soal berhasil ditambah');
+        }
+
         if ($request->file('gambar') !== NULL) {
             $image = $request->file('gambar');
             $gambar = rand() . '.' . $image->getClientOriginalExtension();
             $image->move('assets/images/soal/', $gambar);
 
             $request->media = $gambar;
-            Soal::storeSoal($request);
-
-            return back()->with('success', 'Soal berhasil ditambah');
         }
 
-        Soal::storeSoal($request);
+        $soal = Soal::storeSoal($request);
+
+        if ($request->modelSoal == 1) {
+            $jawaban = $request->jawaban;
+        }
+        if ($request->modelSoal == 2) {
+            $jawaban = $request->sebabakibat;
+        }
+        if ($request->modelSoal == 3) {
+            $jawaban = $request->benarsalah;
+        }
+
+        if ($request->modelSoal !== 4) {
+            foreach ($jawaban as $key => $value) {
+                if ($value !== NULL) {
+                    $data = Pilihan::storePilihan($soal->id, $value);
+        
+                    if ($key == $request->benar) {
+                        Soal::updateSoalJawaban($soal->id, $data->id);
+                    }
+                }
+            }
+        }
 
         return back()->with('success', 'Soal berhasil ditambah');
     }
@@ -64,12 +91,13 @@ class SoalController extends Controller
     {
         $data = Paket::singlePaket($soal);
         $cek = Paket::cekPaketbyDosen($soal);
-        $soal = Soal::getSoal($soal);
+        $grup = Grup::getGrup($soal);
+        // $grup = Soal::getSoal($soal);
 
         if ($cek == NULL) {
             return redirect()->back()->with('danger', 'Data Paket Tidak Ditemukan');
         }
-        return view('dosen.soal.show', compact('data', 'soal'));
+        return view('dosen.soal.show', compact('data', 'grup'));
     }
 
     /**
@@ -82,9 +110,9 @@ class SoalController extends Controller
     {
         $data = Soal::singleSoal($soal);
         $cek = Soal::cekMediaSoal($soal);
+        $pilihan = Pilihan::getPilihan($soal);
         
-        
-        return view('dosen.soal.single', compact('data', 'cek'));
+        return view('dosen.soal.single', compact('data', 'cek', 'pilihan'));
     }
 
     /**
@@ -94,9 +122,11 @@ class SoalController extends Controller
      * @param  \App\Soal  $soal
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Soal $soal)
+    public function update(Request $request, $id)
     {
-        //
+        Grup::updateGrup($request);
+
+        return back()->with('success', 'Data grup berhasil diubah');
     }
 
     /**
@@ -105,8 +135,17 @@ class SoalController extends Controller
      * @param  \App\Soal  $soal
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Soal $soal)
+    public function destroy($soal)
     {
-        //
+        Grup::deleteGrup($soal);
+
+        return back()->with('success', 'Grup berhasil dihapus');
+    }
+
+    public function data_soal($id)
+    {
+        $data = Soal::singleSoal($id)[0];
+        
+        return view('dosen.soal.single', compact('data'));
     }
 }

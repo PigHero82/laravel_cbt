@@ -7,6 +7,7 @@ use App\Paket;
 use Illuminate\Http\Request;
 
 use App\Kelas;
+use App\Grup;
 
 class PaketController extends Controller
 {
@@ -19,6 +20,7 @@ class PaketController extends Controller
     {
         $data = Kelas::getKelasOnlyByDosen();
         $paket = Paket::getPaket();
+
         return view('dosen.soal.index', compact('data', 'paket'));
     }
 
@@ -40,7 +42,8 @@ class PaketController extends Controller
      */
     public function store(Request $request)
     {
-        Paket::storePaket($request);
+        $data = Paket::storePaket($request);
+        Grup::storeGrup($data->id);
 
         return redirect()->back()->with('success', 'Paket '. $request->nama .' berhasil ditambah, Paket dapat ditampilkan ke mahasiswa apabila telah mengubah status paket menjadi aktif');
     }
@@ -76,7 +79,12 @@ class PaketController extends Controller
      */
     public function update(Request $request, Paket $paket)
     {
-        Paket::updatePaket($request);
+        if ($request->status != NULL) {
+            Paket::updatePaketStatus($paket->id, $request->status);
+
+            return redirect()->back()->with('success', 'Status Paket berhasil diubah');
+        }
+        Paket::updatePaket($paket->id, $request);
         
         return redirect()->back()->with('success', 'Data berhasil diubah');
     }
@@ -87,9 +95,9 @@ class PaketController extends Controller
      * @param  \App\Paket  $paket
      * @return \Illuminate\Http\Response
      */
-    public function destroy($paket)
+    public function destroy(Paket $paket)
     {
-        Paket::deletePaket($paket);
+        Paket::deletePaket($paket->id);
 
         return redirect()->back();
     }

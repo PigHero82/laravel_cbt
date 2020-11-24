@@ -47,43 +47,57 @@
         <div class="card-content">
             <div class="card-body">
                 @if (count($paket) > 0)
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>Nama</th>
-                                <th>Jumlah Soal</th>
-                                <th>Tanggal</th>
-                                <th>Waktu</th>
-                                <th>Durasi</th>
-                                <th>Aktif</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($paket as $item)
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
                                 <tr>
-                                    <td><a href="{{ route('dosen.paket.show', $item->id) }}">{{ $item->nama }}</a></td>
-                                    <td>{{ $item->jumlah }} Soal</td>
-                                    <td>{{ Carbon\Carbon::parse($item->tanggal)->formatLocalized('%d %B %Y') }}</td>
-                                    <td>{{ Carbon\Carbon::parse($item->waktuAwal)->formatLocalized('%H:%M') }} - {{ Carbon\Carbon::parse($item->waktuAkhir)->formatLocalized('%H:%M') }}</td>
-                                    <td><div disabled class="badge badge-md badge-danger">{{ $item->durasi }} Menit</div></td>
-                                    @if ( $item->status == 1)
-                                        <td class="text-center"><i class="feather icon-check text-success"></i></td>
-                                    @else
-                                        <td class="text-center"><i class="feather icon-slash text-danger"></i></td>
-                                    @endif
-                                    <td>
-                                        <form action="{{ route('dosen.soal.destroy', $item->id) }}" class="form" method="post">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button class="btn badge badge-lg badge-warning" data-toggle="modal" data-target="#modalUbah" data-value="{{ $item->id }}"><i class="feather icon-edit-1"></i></button>
-                                            <button type="button" class="btn badge badge-lg badge-danger hapus"><i class="feather icon-trash-2"></i></button>
-                                        </form>
-                                    </td>
+                                    <th>Nama</th>
+                                    <th>Jumlah Soal</th>
+                                    <th>Tanggal</th>
+                                    <th>Waktu</th>
+                                    <th>Durasi</th>
+                                    <th>Aktif</th>
+                                    <th></th>
                                 </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                @foreach ($paket as $item)
+                                    <tr>
+                                        <td><a href="{{ route('dosen.soal.show', $item->id) }}">{{ $item->nama }}</a></td>
+                                        <td>{{ $item->jumlah }} Soal</td>
+                                        <td>
+                                            @if ($item->tanggal_awal == $item->tanggal_akhir)
+                                                {{ Carbon\Carbon::parse($item->tanggal_awal)->formatLocalized('%d %B %Y') }}
+                                            @else
+                                                {{ Carbon\Carbon::parse($item->tanggal_awal)->formatLocalized('%d %B %Y') }} - {{ Carbon\Carbon::parse($item->tanggal_akhir)->formatLocalized('%d %B %Y') }}
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if ($item->waktu_awal == '00:00:00' && $item->waktu_akhir == '23:59:00')
+                                                -
+                                            @else
+                                                {{ Carbon\Carbon::parse($item->waktu_awal)->formatLocalized('%H:%M') }} - {{ Carbon\Carbon::parse($item->waktu_akhir)->formatLocalized('%H:%M') }}
+                                            @endif
+                                        </td>
+                                        <td><div disabled class="badge badge-md badge-danger">{{ $item->durasi }} Menit</div></td>
+                                        @if ( $item->status == 1)
+                                            <td class="text-center"><i class="feather icon-check text-success"></i></td>
+                                        @else
+                                            <td class="text-center"><i class="feather icon-slash text-danger"></i></td>
+                                        @endif
+                                        <td>
+                                            <form action="{{ route('dosen.paket.destroy', $item->id) }}" class="form" method="post">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="button" class="btn badge badge-lg badge-warning" data-toggle="modal" data-target="#modalUbah" data-value="{{ $item->id }}"><i class="feather icon-edit-1"></i></button>
+                                                <button type="button" class="btn badge badge-lg badge-danger hapus"><i class="feather icon-trash-2"></i></button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 @else
                     <div class="error-template text-center">
                         <h1><i class="feather icon-slash"></i></h1>
@@ -106,74 +120,105 @@
                 </div>
                 
                 <div class="modal-body">
-                    <form action="{{ route('dosen.soal.store') }}" method="POST">
-                        @csrf
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <div class="controls">
-                                        <label for="">Nama</label>
-                                        <input type="text" class="form-control" placeholder="Nama Tes" name="nama" required>
+                    @if (count($data) > 0)
+                        <form action="{{ route('dosen.paket.store') }}" method="POST">
+                            @csrf
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label for="">Nama</label>
+                                            <input type="text" class="form-control" placeholder="Nama Tes" name="nama" required>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <div class="controls">
-                                        <label for="">Kelas</label>
-                                        <select name="idKelas" id="" class="form-control select" required>
-                                            @foreach ($data as $item)
-                                                <option value="{{ $item->id }}">{{ $item->kode }} | {{ $item->nama }}</option>
-                                            @endforeach
-                                        </select>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label for="">Kelas</label>
+                                            <select name="idKelas" id="" class="form-control select" required>
+                                                @foreach ($data as $item)
+                                                    <option value="{{ $item->id }}">{{ $item->kode }} | {{ $item->nama }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <div class="controls">
-                                        <label for="">Durasi</label>
-                                        <input type="number" class="form-control" placeholder="Hitungan menit" name="durasi" required>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label for="">Durasi</label>
+                                            <input type="number" class="form-control" placeholder="Hitungan menit" name="durasi" required>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <div class="controls">
-                                        <label for="">Tanggal</label>
-                                        <input type="date" class="form-control" name="tanggal" required>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label for="">Tanggal Awal</label>
+                                            <input type="date" class="form-control" name="tanggal_awal" required>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <div class="controls">
-                                        <label for="">Waktu Awal</label>
-                                        <input type="time" class="form-control" name="waktuAwal" value="00:00" required>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label for="">Tanggal Akhir</label>
+                                            <input type="date" class="form-control" name="tanggal_akhir" required>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <div class="controls">
-                                        <label for="">Waktu Akhir</label>
-                                        <input type="time" class="form-control" name="waktuAkhir" value="23:59" required>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label for="">Waktu Awal</label>
+                                            <input type="time" class="form-control" name="waktu_awal" value="00:00" required>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="form-group">
-                                    <div class="controls">
-                                        <label for="">Deskripsi</label>
-                                        <textarea class="form-control" name="deskripsi" cols="30" rows="10" placeholder="Deskripsi Tes"></textarea>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label for="">Waktu Akhir</label>
+                                            <input type="time" class="form-control" name="waktu_akhir" value="23:59" required>
+                                        </div>
                                     </div>
                                 </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label for="">Bobot Nilai Benar</label>
+                                            <input type="number" class="form-control" name="bobot_benar" placeholder="0, -1, -2, dsb" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label for="">Bobot Nilai Salah</label>
+                                            <input type="number" class="form-control" name="bobot_salah" placeholder="1, 2, 3, dsb" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label for="">Deskripsi</label>
+                                            <textarea class="form-control" name="deskripsi" cols="30" rows="10" placeholder="Deskripsi Tes"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 d-flex flex-sm-row flex-column justify-content-end">
+                                    <button type="submit" class="btn btn-primary mr-sm-1 mb-1 mb-sm-0">Submit</button>
+                                </div>
                             </div>
-                            <div class="col-12 d-flex flex-sm-row flex-column justify-content-end">
-                                <button type="submit" class="btn btn-primary mr-sm-1 mb-1 mb-sm-0">Submit</button>
-                            </div>
-                        </div>
-                    </form>
+                        </form>
+                    @else
+                        <div class="error-template text-center">
+                            <h1><i class="feather icon-slash"></i></h1>
+                            <h2>Anda Tidak Memiliki Kelas</h2>
+                        </div> 
+                    @endif
                 </div>
             </div>
         </div>
@@ -191,10 +236,9 @@
                 </div>
                 
                 <div class="modal-body">
-                    <form action="{{ route('dosen.soal.update', 1) }}" method="POST">
+                    <form id="update" method="POST">
                         @csrf
                         @method('PATCH')
-                        <input type="text" id="id" name="id" hidden>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -227,8 +271,16 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <div class="controls">
-                                        <label for="">Tanggal</label>
-                                        <input type="date" class="form-control" name="tanggal" id="tanggal" required>
+                                        <label for="">Tanggal Awal</label>
+                                        <input type="date" class="form-control" name="tanggal_awal" id="tanggal_awal" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <div class="controls">
+                                        <label for="">Tanggal Akhir</label>
+                                        <input type="date" class="form-control" name="tanggal_akhir" id="tanggal_akhir" required>
                                     </div>
                                 </div>
                             </div>
@@ -236,7 +288,7 @@
                                 <div class="form-group">
                                     <div class="controls">
                                         <label for="">Waktu Awal</label>
-                                        <input type="time" class="form-control" name="waktuAwal" id="waktuAwal" value="00:00" required>
+                                        <input type="time" class="form-control" name="waktu_awal" id="waktu_awal" required>
                                     </div>
                                 </div>
                             </div>
@@ -244,7 +296,23 @@
                                 <div class="form-group">
                                     <div class="controls">
                                         <label for="">Waktu Akhir</label>
-                                        <input type="time" class="form-control" name="waktuAkhir" id="waktuAkhir" value="23:59" required>
+                                        <input type="time" class="form-control" name="waktu_akhir" id="waktu_akhir" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <div class="controls">
+                                        <label for="">Bobot Nilai Benar</label>
+                                        <input type="number" class="form-control" name="bobot_benar" id="bobot_benar" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <div class="controls">
+                                        <label for="">Bobot Nilai Salah</label>
+                                        <input type="number" class="form-control" name="bobot_salah" id="bobot_salah" required>
                                     </div>
                                 </div>
                             </div>
@@ -284,17 +352,23 @@
             $(document).on('click', '.table-striped tbody tr td button', function(e) {
                 var id = $(this).attr('data-value');
                 console.log(id);
-                $.get( "/dosen/soal/" + id, function( data ) {
+                $.get( "/dosen/paket/" + id, function( data ) {
                     console.log(JSON.parse(data));
                     var d = JSON.parse(data);
+                    $('#storeData').attr("action", "/dosen/soal/"+ d.id);
                     $('#exampleModalLabel').text("Ubah Paket Soal | "+ d.nama);
                     $('#id').val(d.id);
                     $('#nama').val(d.nama);
                     $('#durasi').val(d.durasi);
-                    $('#tanggal').val(d.tanggal);
-                    $('#waktuAwal').val(d.waktuAwal);
-                    $('#waktuAkhir').val(d.waktuAkhir);
+                    $('#tanggal_awal').val(d.tanggal_awal);
+                    $('#tanggal_akhir').val(d.tanggal_akhir);
+                    $('#waktu_awal').val(d.waktu_awal);
+                    $('#waktu_akhir').val(d.waktu_akhir);
+                    $('#bobot_benar').val(d.bobot_benar);
+                    $('#bobot_salah').val(d.bobot_salah);
+                    $('#deskripsi').val(d.deskripsi);
                     $('#idKelas').select2().val(d.idKelas).trigger('change');
+                    $('#update').attr("action", "/dosen/paket/"+ d.id);
                 });
             });
 
