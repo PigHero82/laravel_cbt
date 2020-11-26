@@ -22,7 +22,9 @@ Route::namespace('Dosen')->name('dosen.')->prefix('dosen')->middleware('auth', '
     Route::view('cetak', 'dosen.cetak')->name('cetak');
     Route::namespace('Soal')->group(function () {
         Route::resource('soal', 'SoalController')->except(['index']);
-        Route::get('soal/edit/{id}', 'SoalController@data_soal')->name('edit-soal');
+        Route::get('edit/{id}', 'SoalController@data_soal')->name('edit-soal');
+        Route::patch('edit/{id}/update', 'SoalController@data_soal_update')->name('edit-soal.update');
+        Route::delete('edit/{id}/delete', 'SoalController@data_soal_delete')->name('edit-soal.destroy');
         Route::resource('paket', 'PaketController');
         Route::resource('pilihan', 'PilihanController');
     });

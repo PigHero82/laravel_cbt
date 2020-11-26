@@ -12,7 +12,7 @@
 @section('content')
     @if(session()->get('success'))
         <div class ="alert alert-success">
-            {{ session()->get('success') }}  
+            {{ session()->get('success') }} | <a href="{{ route('dosen.soal.show', $data->idPaket) }}">Kembali ke paket soal</a>
         </div><br />
     @endif
 
@@ -23,9 +23,9 @@
             <div class="col-md-3 mb-2 mb-md-0">
                 <ul class="nav nav-pills flex-column mt-md-0 mt-1">
                     <li class="nav-item">
-                        <a class="nav-link d-flex py-75 active" id="account-pill-password" data-toggle="pill" href="#account-vertical-password" aria-expanded="true">
-                            <i class="feather icon-clipboard mr-50 font-medium-3"></i>
-                            Pertanyaan
+                        <a class="nav-link d-flex py-75 active" href="{{ route('dosen.soal.show', $data->idPaket) }}" aria-expanded="true">
+                            <i class="feather icon-chevron-left mr-50 font-medium-3"></i>
+                            Kembali ke Paket
                         </a>
                     </li>
                 </ul>
@@ -60,8 +60,10 @@
                         <div class="card">
                             <div class="card-content">
                                 <div class="card-body">
-                                    <form class="form form-horizontal" method="POST" action="{{ route('dosen.soal.update', $data->id) }}" enctype="multipart/form-data">
+                                    <form class="form form-horizontal" method="POST" action="{{ route('dosen.edit-soal.update', $data->id) }}" enctype="multipart/form-data">
                                         @csrf
+                                        @method('PATCH')
+                                        <input type="hidden" name="modelSoal" value="{{ $data->modelSoal }}">
                                         <div class="form-body">
                                             <div class="row">
                                                 <div class="col-12">
@@ -114,55 +116,6 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                {{-- <div class="col-12">
-                                                    <div class="form-group row">
-                                                        <div class="col-md-3">
-                                                            <span>Jenis Soal</span>
-                                                        </div>
-                                                        <div class="col-md-9">
-                                                            <fieldset>
-                                                                <div class="vs-radio-con">
-                                                                    <input type="radio" name="modelSoal" value="1" {{ $data->modelSoal == 1 ? 'checked' : ''}}>
-                                                                    <span class="vs-radio">
-                                                                        <span class="vs-radio--border"></span>
-                                                                        <span class="vs-radio--circle"></span>
-                                                                    </span>
-                                                                    <span class="">Pilihan Ganda</span>
-                                                                </div>
-                                                            </fieldset>
-                                                            <fieldset>
-                                                                <div class="vs-radio-con">
-                                                                    <input type="radio" name="modelSoal" value="2" {{ $data->modelSoal == 2 ? 'checked' : ''}}>
-                                                                    <span class="vs-radio">
-                                                                        <span class="vs-radio--border"></span>
-                                                                        <span class="vs-radio--circle"></span>
-                                                                    </span>
-                                                                    <span class="">Sebab Akibat</span>
-                                                                </div>
-                                                            </fieldset>
-                                                            <fieldset>
-                                                                <div class="vs-radio-con">
-                                                                    <input type="radio" name="modelSoal" value="3" {{ $data->modelSoal == 3 ? 'checked' : ''}}>
-                                                                    <span class="vs-radio">
-                                                                        <span class="vs-radio--border"></span>
-                                                                        <span class="vs-radio--circle"></span>
-                                                                    </span>
-                                                                    <span class="">Benar Salah</span>
-                                                                </div>
-                                                            </fieldset>
-                                                            <fieldset>
-                                                                <div class="vs-radio-con">
-                                                                    <input type="radio" name="modelSoal" value="4" {{ $data->modelSoal == 4 ? 'checked' : ''}}>
-                                                                    <span class="vs-radio">
-                                                                        <span class="vs-radio--border"></span>
-                                                                        <span class="vs-radio--circle"></span>
-                                                                    </span>
-                                                                    <span class="">Esai</span>
-                                                                </div>
-                                                            </fieldset>
-                                                        </div>
-                                                    </div>
-                                                </div> --}}
                                                 <div class="col-12">
                                                     <div class="form-group row">
                                                         <div class="col-md-3">
@@ -170,25 +123,49 @@
                                                         </div>
                                                         <div class="col-md-9">
                                                             <fieldset class="form-group">
-                                                                <textarea class="form-control" rows="3" placeholder="Pertanyaan" name="pertanyaan" required>{!! $data->pertanyaan !!}</textarea>
+                                                                <textarea class="form-control summernote" rows="3" placeholder="Pertanyaan" name="pertanyaan" required>{!! $data->pertanyaan !!}</textarea>
                                                             </fieldset>
                                                         </div>
                                                     </div>
                                                 </div>
+
                                                 @foreach ($data->pilihan as $key => $item)
                                                     <div class="col-12">
-                                                        <div class="form-group row">
-                                                            <div class="col-md-3">
-                                                                <span>Jawaban {{ $key+1 }}</span>
+                                                        <div class="pertanyaan">
+                                                            <div class="form-group row">
+                                                                <div class="col-md-3">
+                                                                    <span>Jawaban {{ $key+1 }}</span>
+                                                                </div>
+                                                                <div class="col-md-9">
+                                                                    <fieldset class="form-group">
+                                                                        <textarea class="form-control summernote" rows="3" placeholder="Deskripsi Jawaban" name="jawaban[{{ $key }}]" required>{!! $item->deskripsi !!}</textarea>
+                                                                        <div class="vs-radio-con">
+                                                                            <input type="radio" name="benar" value="{{ $key }}" {{ $data->idPilihan == $item->id ? 'checked' : '' }}>
+                                                                            <span class="vs-radio">
+                                                                                <span class="vs-radio--border"></span>
+                                                                                <span class="vs-radio--circle"></span>
+                                                                            </span>
+                                                                            <span class="">Jawaban Benar</span>
+                                                                        </div>
+                                                                    </fieldset>
+                                                                </div>
                                                             </div>
-                                                            <div class="col-md-9">
-                                                                <fieldset class="form-group">
-                                                                    <textarea class="form-control" rows="3" placeholder="Pertanyaan" name="pertanyaan" required>{!! $item->deskripsi !!}</textarea>
-                                                                </fieldset>
-                                                            </div>
+
+                                                            @if ($data->modelSoal == 1)
+                                                                @if ($loop->last)
+                                                                    <div class="form-group row">
+                                                                        <div class="col-md-3">
+                                                                        </div>
+                                                                        <div class="col-md-9">
+                                                                            <button type="button" class="btn btn-success tambah-pertanyaan"><i class="feather icon-plus"></i> Tambah Opsi</button>
+                                                                        </div>
+                                                                    </div>
+                                                                @endif
+                                                            @endif
                                                         </div>
                                                     </div>
                                                 @endforeach
+
                                                 <div class="col-12">
                                                     <div class="float-right">
                                                         <button type="submit" class="btn btn-primary">Submit</button>
@@ -219,9 +196,35 @@
 
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
     <script>
+        var digit = {{ $key+1 }};
+        var no = {{ $key+2 }};
         $(document).ready(function() {
-            $('textarea').summernote({
+            $('.summernote').summernote({
                 height: 200
+            });
+
+            $(document).on('click', '.tambah-pertanyaan', function(e) {
+                $('.pertanyaan').append(`<div class="form-group row">
+                                            <div class="col-md-3">
+                                                <span>Jawaban  ` + no + `</span>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <fieldset class="form-group">
+                                                    <textarea class="form-control pertanyaan`+ digit +`" rows="3" placeholder="Deskripsi Jawaban" name="jawaban[` + digit `]" required></textarea>
+                                                    <div class="vs-radio-con">
+                                                        <input type="radio" name="benar" value="` + digit `">
+                                                        <span class="vs-radio">
+                                                            <span class="vs-radio--border"></span>
+                                                            <span class="vs-radio--circle"></span>
+                                                        </span>
+                                                        <span class="">Jawaban Benar</span>
+                                                    </div>
+                                                </fieldset>
+                                            </div>
+                                        </div>`);
+
+                digit++;
+                no++;
             });
         });
     </script>

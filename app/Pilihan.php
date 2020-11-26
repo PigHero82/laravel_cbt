@@ -15,6 +15,11 @@ class Pilihan extends Model
         return Pilihan::whereId($id)->get();
     }
 
+    static function deletePilihan($id)
+    {
+        Pilihan::where('idSoal', $id)->delete();
+    }
+
     static function storePilihan($idSoal, $pilihan)
     {
         return Pilihan::create([

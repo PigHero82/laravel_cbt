@@ -46,15 +46,15 @@ class SoalController extends Controller
             return back()->with('success', 'Grup Soal berhasil ditambah');
         }
 
+        $soal = Soal::storeSoal($request);
+
         if ($request->file('gambar') !== NULL) {
             $image = $request->file('gambar');
             $gambar = rand() . '.' . $image->getClientOriginalExtension();
             $image->move('assets/images/soal/', $gambar);
 
-            $request->media = $gambar;
+            Soal::updateGambarSoal($soal->id, $gambar);
         }
-
-        $soal = Soal::storeSoal($request);
 
         if ($request->modelSoal == 1) {
             $jawaban = $request->jawaban;
@@ -139,7 +139,7 @@ class SoalController extends Controller
     {
         Grup::deleteGrup($soal);
 
-        return back()->with('success', 'Grup berhasil dihapus');
+        return back();
     }
 
     public function data_soal($id)
@@ -147,5 +147,41 @@ class SoalController extends Controller
         $data = Soal::singleSoal($id)[0];
         
         return view('dosen.soal.single', compact('data'));
+    }
+
+    public function data_soal_update(Request $request, $id)
+    {
+        if ($request->file('gambar') !== NULL) {
+            $image = $request->file('gambar');
+            $gambar = rand() . '.' . $image->getClientOriginalExtension();
+            $image->move('assets/images/soal/', $gambar);
+
+            Soal::updateGambarSoal($soal->id, $gambar);
+        }
+
+        Soal::updateSoal($request, $id);
+
+        if ($request->modelSoal !== 4) {
+            Pilihan::deletePilihan($id);
+            
+            foreach ($request->jawaban as $key => $value) {
+                if ($value !== NULL) {
+                    $data = Pilihan::storePilihan($id, $value);
+        
+                    if ($key == $request->benar) {
+                        Soal::updateSoalJawaban($id, $data->id);
+                    }
+                }
+            }
+        }
+
+        return back()->with('success', 'Soal berhasil diubah');
+    }
+
+    public function data_soal_delete($id)
+    {
+        Soal::deleteSoal($id);
+
+        return back();
     }
 }

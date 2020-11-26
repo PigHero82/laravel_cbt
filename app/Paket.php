@@ -63,6 +63,17 @@ class Paket extends Model
                     ->get();
     }
 
+    static function getDataUjianPaket($id)
+    {
+        return Paket::join('kelas', 'paket.idKelas', 'kelas.id')
+                    ->join('kelas_mahasiswa', 'kelas.id', 'kelas_mahasiswa.idKelas')
+                    ->join('users', 'kelas.idDosen', 'users.id')
+                    ->select('paket.id', 'paket.nama', 'paket.deskripsi', 'kelas.kode', 'users.name', 'paket.tanggal_awal', 'paket.tanggal_akhir', 'paket.waktu_awal', 'paket.waktu_akhir', 'paket.durasi')
+                    ->where('idMahasiswa', $id)
+                    ->where('paket.status', 1)
+                    ->get();
+    }
+
     static function singlePaket($id)
     {
         return Paket::join('kelas', 'paket.idKelas', 'kelas.id')

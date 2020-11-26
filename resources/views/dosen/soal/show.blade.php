@@ -109,7 +109,7 @@
                                                     <button type="button" class="btn btn-warning modalUbahGrup" data-toggle="modal" data-target="#modalUbahGrup" data-value="{{ $item->id }}" data-nama="{{ $item->nama }}">
                                                         <i class="feather icon-edit-1" data-toggle="tooltip" data-placement="top" title="Ubah Grup"></i>
                                                     </button>
-                                                    <button type="submit" class="btn btn-danger">
+                                                    <button type="button" class="btn btn-danger hapus">
                                                         <i class="feather icon-trash-2" data-toggle="tooltip" data-placement="top" title="Hapus Grup"></i>
                                                     </button>
                                                 </form>
@@ -146,12 +146,17 @@
                                                                         </td>
                                                                         <td class="text-center">{!! $soal->deskripsi !!}</td>
                                                                         <td class="text-center">
-                                                                            <button type="button" class="btn btn-warning px-1 modalUbahSoal" data-toggle="modal" data-target="#modalUbahSoal" data-value="{{ $item->id }}">
-                                                                                <i class="feather icon-edit-1" data-toggle="tooltip" data-placement="top" title="Ubah Soal"></i>
-                                                                            </button>
-                                                                            <button type="button" class="btn btn-danger px-1">
-                                                                                <i class="feather icon-trash" data-toggle="tooltip" data-placement="top" title="Hapus Soal"></i>
-                                                                            </button>
+                                                                            <form action="{{ route('dosen.edit-soal.destroy', $soal->id) }}" method="post">
+                                                                                @csrf
+                                                                                @method('DELETE')
+                                                                                <input type="hidden" name="hapus_soal" value="1">
+                                                                                <a href="{{ route('dosen.edit-soal', $soal->id) }}" class="btn btn-warning px-1 modalUbahSoal">
+                                                                                    <i class="feather icon-edit-1" data-toggle="tooltip" data-placement="top" title="Ubah Soal"></i>
+                                                                                </a>
+                                                                                <button type="button" class="btn btn-danger px-1 hapus">
+                                                                                    <i class="feather icon-trash" data-toggle="tooltip" data-placement="top" title="Hapus Soal"></i>
+                                                                                </button>
+                                                                            </form>
                                                                         </td>
                                                                     </tr>
                                                                 @endforeach
@@ -624,29 +629,30 @@
         });
 
         $(document).on('click', '.hapus', function () {
-                Swal.fire({
-                    title: 'Yakin ingin hapus?',
-                    type: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Ya',
-                    confirmButtonClass: 'btn btn-primary',
-                    cancelButtonText: 'Tidak',
-                    cancelButtonClass: 'btn btn-danger ml-1',
-                    buttonsStyling: false,
-                }).then(function (result) {
-                    if (result.value) {
-                        Swal.fire({
-                            type: "success",
-                            title: 'Terhapus!',
-                            text: 'Data telah dihapus.',
-                            timer: 1000,
-                            showConfirmButton: false
-                        });
-                        $('form').submit();
-                    }
-                })
-            });
+            id = $(this).parent('form');
+            Swal.fire({
+                title: 'Yakin ingin hapus?',
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya',
+                confirmButtonClass: 'btn btn-primary',
+                cancelButtonText: 'Tidak',
+                cancelButtonClass: 'btn btn-danger ml-1',
+                buttonsStyling: false,
+            }).then(function (result) {
+                if (result.value) {
+                    Swal.fire({
+                        type: "success",
+                        title: 'Terhapus!',
+                        text: 'Data telah dihapus.',
+                        timer: 1000,
+                        showConfirmButton: false
+                    });
+                    id.submit();
+                }
+            })
+        });
     </script>
 @endsection

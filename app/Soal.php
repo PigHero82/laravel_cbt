@@ -15,7 +15,13 @@ class Soal extends Model
         return Soal::create([
             'idGrup'     => $request->idGrup,
             'modelSoal'  => $request->modelSoal,
-            'media'      => $request->media,
+            'pertanyaan' => $request->pertanyaan
+        ]);
+    }
+
+    static function updateSoal($request, $id)
+    {
+        Soal::whereId($id)->update([
             'pertanyaan' => $request->pertanyaan
         ]);
     }
@@ -24,6 +30,13 @@ class Soal extends Model
     {
         return Soal::whereId($id)->update([
             'idPilihan'     => $idPilihan
+        ]);
+    }
+
+    static function updateSoalGambar($id, $gambar)
+    {
+        return Soal::whereId($id)->update([
+            'media'     => $gambar
         ]);
     }
 
@@ -36,9 +49,9 @@ class Soal extends Model
                     ->get();
     }
 
-    static function cekMediaSoal($id)
+    static function deleteSoal($id)
     {
-        return Soal::where('media', 'like', 'http'.'%')->count();
+        Soal::whereId($id)->delete();
     }
 
     static function singleSoal($id)
@@ -55,7 +68,7 @@ class Soal extends Model
                 $data[$key] = Soal::join('grup', 'soal.idGrup', 'grup.id')
                                     ->join('paket', 'grup.idPaket', 'paket.id')
                                     ->join('kelas', 'paket.idKelas', 'kelas.id')
-                                    ->select('soal.*', 'paket.nama', 'kelas.kode')
+                                    ->select('soal.*', 'paket.nama', 'kelas.kode', 'paket.id as idPaket')
                                     ->where('soal.id', $id)
                                     ->first();
                 $data[$key]['pilihan'] = Soal::join('pilihan', 'soal.id', 'pilihan.idSoal')
