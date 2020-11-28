@@ -73,7 +73,7 @@
                                                         </div>
                                                         <div class="col-md-9">
                                                             @if ($data->media !== null)
-                                                                <img src="{{ asset('assets/images/soal/'.$data->media) }}" class="img-thumbnail">
+                                                                <img src="{{ asset('assets/images/soal/'.$data->media) }}" class="img-thumbnail" style="height: 400px">
                                                             @else
                                                                 Tidak ada gambar
                                                             @endif

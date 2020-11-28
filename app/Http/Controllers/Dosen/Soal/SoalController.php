@@ -53,7 +53,7 @@ class SoalController extends Controller
             $gambar = rand() . '.' . $image->getClientOriginalExtension();
             $image->move('assets/images/soal/', $gambar);
 
-            Soal::updateGambarSoal($soal->id, $gambar);
+            Soal::updateSoalGambar($soal->id, $gambar);
         }
 
         if ($request->modelSoal == 1) {
@@ -64,6 +64,10 @@ class SoalController extends Controller
         }
         if ($request->modelSoal == 3) {
             $jawaban = $request->benarsalah;
+        }
+
+        if ($request->benar != null) {
+            $request->benar = 0;
         }
 
         if ($request->modelSoal !== 4) {
@@ -92,7 +96,6 @@ class SoalController extends Controller
         $data = Paket::singlePaket($soal);
         $cek = Paket::cekPaketbyDosen($soal);
         $grup = Grup::getGrup($soal);
-        // $grup = Soal::getSoal($soal);
 
         if ($cek == NULL) {
             return redirect()->back()->with('danger', 'Data Paket Tidak Ditemukan');

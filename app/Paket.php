@@ -68,7 +68,10 @@ class Paket extends Model
         return Paket::join('kelas', 'paket.idKelas', 'kelas.id')
                     ->join('kelas_mahasiswa', 'kelas.id', 'kelas_mahasiswa.idKelas')
                     ->join('users', 'kelas.idDosen', 'users.id')
-                    ->select('paket.id', 'paket.nama', 'paket.deskripsi', 'kelas.kode', 'users.name', 'paket.tanggal_awal', 'paket.tanggal_akhir', 'paket.waktu_awal', 'paket.waktu_akhir', 'paket.durasi')
+                    ->leftJoin('mulai_ujian', function ($join) {
+                        $join->on('paket.id', '=', 'mulai_ujian.idPaket')->on('idMahasiswa', '=', 'mulai_ujian.idUser');
+                    })
+                    ->select('paket.id', 'paket.nama', 'paket.deskripsi', 'kelas.kode', 'users.name', 'paket.tanggal_awal', 'paket.tanggal_akhir', 'paket.waktu_awal', 'paket.waktu_akhir', 'paket.durasi', 'mulai_ujian.waktu')
                     ->where('idMahasiswa', $id)
                     ->where('paket.status', 1)
                     ->get();
@@ -88,6 +91,16 @@ class Paket extends Model
                     ->select('paket.id', 'kelas.idDosen')
                     ->where('paket.id', $id)
                     ->where('kelas.idDosen', Auth::id())
+                    ->first();
+    }
+
+    static function cekPaketbyPeserta($id)
+    {
+        return Paket::join('kelas', 'paket.idKelas', 'kelas.id')
+                    ->join('kelas_mahasiswa', 'kelas.id', 'kelas_mahasiswa.idKelas')
+                    ->select('paket.id', 'kelas_mahasiswa.idMahasiswa')
+                    ->where('paket.id', $id)
+                    ->where('kelas_mahasiswa.idMahasiswa', Auth::id())
                     ->first();
     }
 

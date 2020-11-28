@@ -44,8 +44,7 @@ Route::name('admin.')->prefix('admin')->middleware('auth', 'role:admin')->group(
 
 Route::namespace('Mahasiswa')->prefix('mahasiswa')->middleware('auth', 'role:mahasiswa')->group(function() {
     Route::get('', 'HomeController@index')->name('index');
-    // Route::view('', 'front.index')->name('index');
-    Route::view('soal', 'front.soal')->name('soal');
+    Route::get('soal/{id}', 'HomeController@soal')->name('soal');
 });
 
 Auth::routes();

@@ -63,30 +63,55 @@
                                                     <span class="lead collapse-title collapsed">
                                                         {{ $item->nama }}
                                                     </span>
-                                                    <div class="float-right">
-                                                        <div class="badge badge-success">Tersedia</div>
-                                                    </div>
+                                                    @if ($item->waktu != null && $item->waktu < date('Y-m-d H:i:s'))
+                                                        <div class="float-right">
+                                                            <div class="badge badge-danger">Waktu Habis</div>
+                                                        </div>
+                                                    @else
+                                                        <div class="float-right">
+                                                            <div class="badge badge-success">Tersedia</div>
+                                                        </div>
+                                                    @endif
                                                 </div>
                 
                                                 <div id="collapse{{ $item->id }}" class="collapse" data-parent="#accordion-soal">
                                                     <div class="card-body">
                                                         {!! $item->deskripsi !!}
                                                         <hr>
+
                                                         <label class="font-weight-bold">Kelas</label>
                                                         <p>{{ $item->kode }}</p>
+
                                                         <label class="font-weight-bold">Nama Dosen</label>
                                                         <p>{{ $item->name }}</p>
+
                                                         <label class="font-weight-bold">Tanggal</label>
                                                         <p>{{ $item->tanggal_awal == $item->tanggal_akhir ? $item->tanggal_awal : $item->tanggal_awal.' - '.$item->tanggal_akhir }}</p>
+
                                                         @if (!($item->waktu_awal == "00:00:00" && $item->waktu_akhir == "23:59:00"))
                                                             <label class="font-weight-bold">Waktu</label>
                                                             <p>{{ $item->waktu_awal }} - {{ $item->waktu_akhir }}</p>
                                                         @endif
-                                                        <label class="font-weight-bold">Durasi</label>
-                                                        <p>{{ $item->durasi }} Menit</p>
-                                                        <div class="text-right">
-                                                            <button type="button" class="btn btn-success"><i class="feather icon-play-circle"></i> Mulai Ujian</button>
-                                                        </div>
+
+                                                        @if ($item->waktu == null)
+                                                            <label class="font-weight-bold">Durasi</label>
+                                                            <p>{{ $item->durasi }} Menit</p>
+
+                                                            <div class="text-right">
+                                                                <a href="{{ route('soal', $item->id) }}" class="btn btn-success"><i class="feather icon-play-circle"></i> Mulai Ujian</a>
+                                                            </div>
+                                                        @elseif ($item->waktu > date('Y-m-d H:i:s'))
+                                                            <label class="font-weight-bold">Sisa Waktu</label>
+                                                            <p>{{ number_format((strtotime($item->waktu) - strtotime(date('Y-m-d H:i:s')))/60, 0) }} Menit</p>
+                                                            
+                                                            <div class="text-right">
+                                                                <a href="{{ route('soal', $item->id) }}" class="btn btn-success"><i class="feather icon-play-circle"></i> Lanjut</a>
+                                                            </div>   
+                                                        @else
+                                                            <div class="text-right">
+                                                                <button type="button" class="btn btn-danger" disabled><i class="feather icon-slash"></i> Waktu Habis</button>
+                                                            </div>   
+                                                        @endif
                                                     </div>
                                                 </div>
                                             </div>
@@ -111,9 +136,6 @@
                                                     <span class="lead collapse-title collapsed">
                                                         {{ $item->nama }}
                                                     </span>
-                                                    <div class="float-right">
-                                                        <div class="badge badge-success">Tersedia</div>
-                                                    </div>
                                                 </div>
                 
                                                 <div id="collapse{{ $item->id }}" class="collapse" data-parent="#accordion-riwayat">
@@ -132,9 +154,6 @@
                                                         @endif
                                                         <label class="font-weight-bold">Durasi</label>
                                                         <p>{{ $item->durasi }} Menit</p>
-                                                        <div class="text-right">
-                                                            <button type="button" class="btn btn-success"><i class="feather icon-play-circle"></i> Mulai Ujian</button>
-                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -159,9 +178,6 @@
                                                     <span class="lead collapse-title collapsed">
                                                         {{ $item->nama }}
                                                     </span>
-                                                    <div class="float-right">
-                                                        <div class="badge badge-success">Tersedia</div>
-                                                    </div>
                                                 </div>
                 
                                                 <div id="collapse{{ $item->id }}" class="collapse" data-parent="#accordion-datang">
@@ -180,9 +196,6 @@
                                                         @endif
                                                         <label class="font-weight-bold">Durasi</label>
                                                         <p>{{ $item->durasi }} Menit</p>
-                                                        <div class="text-right">
-                                                            <button type="button" class="btn btn-success"><i class="feather icon-play-circle"></i> Mulai Ujian</button>
-                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>

@@ -32,6 +32,20 @@ class Grup extends Model
         ]);
     }
 
+    static function getGrupId($id)
+    {
+        return Grup::select('id', 'nama')
+                    ->where('idPaket', $id)
+                    ->get();
+    }
+
+    static function firstGrupId($id)
+    {
+        return Grup::select('id', 'nama')
+                    ->where('id', $id)
+                    ->first();
+    }
+
     static function getGrup($id)
     {
         $grup = Grup::where('idPaket', $id)->get();
@@ -39,13 +53,35 @@ class Grup extends Model
         if ($grup->isNotEmpty()) {
             foreach ($grup as $key => $value) {
                 $id = $value->id;
+                $idPaket = $value->idPaket;
 
                 $data[$key] = Grup::findOrFail($id);
                 $data[$key]['soal'] = Grup::join('soal', 'grup.id', 'soal.idGrup')
                                         ->leftJoin('pilihan', 'soal.idPilihan', 'pilihan.id')
                                         ->select('soal.id', 'soal.pertanyaan', 'soal.modelSoal','pilihan.deskripsi')
-                                        ->where('grup.idPaket', $id)
+                                        ->where('grup.idPaket', $idPaket)
+                                        ->where('grup.id', $id)
                                         ->get();
+            }
+            return $data;
+        }
+    }
+
+    static function getSoalPeserta($id)
+    {
+        $grup = Grup::where('idPaket', $id)->get();
+
+        if ($grup->isNotEmpty()) {
+            foreach ($grup as $key => $value) {
+                $id = $value->id;
+                $idPaket = $value->idPaket;
+
+                $data[$key] = Grup::join('soal', 'grup.id', 'soal.idGrup')
+                                ->select('soal.id')
+                                ->where('grup.idPaket', $idPaket)
+                                ->where('grup.id', $id)
+                                ->orderByRaw("RAND()")
+                                ->get();
             }
             return $data;
         }
