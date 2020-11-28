@@ -11,6 +11,7 @@ use App\Paket;
 use App\MulaiUjian;
 use App\Grup;
 use App\Jawaban;
+use App\Soal;
 
 class HomeController extends Controller
 {
@@ -51,7 +52,13 @@ class HomeController extends Controller
             $data[$key] = Grup::firstGrupId($id);
             $data[$key]['soal'] = Jawaban::getDataSoal($id);
         }
+        $no = 1;
 
-        return view('soal', compact('data'));
+        return view('front.soal', compact('data', 'no'));
+    }
+
+    public function data_soal($id)
+    {
+        return json_encode(Soal::singleSoalJawab($id)[0]);
     }
 }

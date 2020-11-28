@@ -4,6 +4,14 @@
     Tes Bahasa Indonesia
 @endsection
 
+@section('css')
+    <style>
+        .deskripsi p{
+            margin-bottom: 0%;
+        }
+    </style>
+@endsection
+
 @section('content')
     @if(session()->get('success'))
         <div class ="alert alert-success">
@@ -29,14 +37,13 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="overflow-auto">
-                            1.
-                            Dibawah ini manakah yang tidak termasuk fungsi dari bahasa Indonesia ?
-                            <br>
-                            <ul class="list-unstyled mb-0">
-                                <li class=" mr-2">
+                            <div id="gambar"></div>
+                            <div id="pertanyaan"></div>
+                            <ul class="list-unstyled mb-0" id="jawaban">
+                                {{-- <li class=" mr-2">
                                     <fieldset>
                                         <div class="vs-radio-con">
-                                            <input type="radio" name="vueradio" checked value="false">
+                                            <input type="radio" name="vueradio">
                                             <span class="vs-radio">
                                                 <span class="vs-radio--border"></span>
                                                 <span class="vs-radio--circle"></span>
@@ -48,7 +55,7 @@
                                 <li class=" mr-2">
                                     <fieldset>
                                         <div class="vs-radio-con">
-                                            <input type="radio" name="vueradio" checked value="false">
+                                            <input type="radio" name="vueradio">
                                             <span class="vs-radio">
                                                 <span class="vs-radio--border"></span>
                                                 <span class="vs-radio--circle"></span>
@@ -60,7 +67,7 @@
                                 <li class=" mr-2">
                                     <fieldset>
                                         <div class="vs-radio-con">
-                                            <input type="radio" name="vueradio" checked value="false">
+                                            <input type="radio" name="vueradio">
                                             <span class="vs-radio">
                                                 <span class="vs-radio--border"></span>
                                                 <span class="vs-radio--circle"></span>
@@ -72,7 +79,7 @@
                                 <li class=" mr-2">
                                     <fieldset>
                                         <div class="vs-radio-con">
-                                            <input type="radio" name="vueradio" checked value="false">
+                                            <input type="radio" name="vueradio">
                                             <span class="vs-radio">
                                                 <span class="vs-radio--border"></span>
                                                 <span class="vs-radio--circle"></span>
@@ -84,7 +91,7 @@
                                 <li class=" mr-2">
                                     <fieldset>
                                         <div class="vs-radio-con">
-                                            <input type="radio" name="vueradio" checked value="false">
+                                            <input type="radio" name="vueradio">
                                             <span class="vs-radio">
                                                 <span class="vs-radio--border"></span>
                                                 <span class="vs-radio--circle"></span>
@@ -92,7 +99,7 @@
                                             <span class="">E. Sebagai dasar negara</span>
                                         </div>
                                     </fieldset>
-                                </li>
+                                </li> --}}
                             </ul>
                         </div>
                     </div>
@@ -106,73 +113,86 @@
             <div class="col-md-4">
                 <h6 class="filter-heading">Navigasi</h6>
                 <div class="card">
-                    <div class="card-body" style="padding-left: 1rem; padding-right: 0.8rem">
-                        <button type="button" class="alert alert-primary px-0" style="border-radius: 0; width: 35px">1</button>
-                        <button type="button" class="alert alert-primary px-0" style="border-radius: 0; width: 35px">2</button>
-                        <button type="button" class="alert alert-primary px-0" style="border-radius: 0; width: 35px">3</button>
-                        <button type="button" class="alert alert-primary px-0" style="border-radius: 0; width: 35px">4</button>
-                        <button type="button" class="alert alert-primary px-0" style="border-radius: 0; width: 35px">5</button>
-                        <button type="button" class="alert alert-primary px-0" style="border-radius: 0; width: 35px">6</button>
-                        <button type="button" class="alert alert-primary px-0" style="border-radius: 0; width: 35px">7</button>
-                        <button type="button" class="alert alert-primary px-0" style="border-radius: 0; width: 35px">8</button>
-                        <button type="button" class="alert alert-primary px-0" style="border-radius: 0; width: 35px">9</button>
-                        <button type="button" class="alert alert-primary px-0" style="border-radius: 0; width: 35px">10</button>
-                    </div>
-                    <div class="card-footer">
-                        <button class="btn btn-block btn-success"><i class="feather icon-check"></i> Selesai</button>
-                    </div>
+                    @foreach ($data as $item)
+                    @if ($loop->first) @else <hr class="m-0"> @endif
+                        <div class="card-header">
+                            {{ $item->nama }}
+                        </div>
+                        <div class="card-body @if ($loop->last) @else pb-0 @endif" style="padding-left: 1rem; padding-right: 0.8rem">
+                            @foreach ($item['soal'] as $soal)
+                                <button type="button" class="alert alert-primary px-0 navigasi" @if ($loop->first) id="awal" @endif style="border-radius: 0; width: 35px" data-value="{{ $soal->idSoal }}">{{ $no }}</button>
+                                @php $no++ @endphp
+                            @endforeach
+                        </div>
+                    @endforeach
                 </div>
+                <button class="btn btn-block btn-success"><i class="feather icon-check"></i> Selesai</button>
             </div>
         </div>
     </div>
+@endsection
 
-    <!-- Modal -->
-    {{-- <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">[Nama Paket]</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="firstName1">Nama Paket</label>
-                        <input type="text" class="form-control" value="Tes Bahasa Indonesia" disabled>
-                    </div>
-                    <div class="form-group">
-                        <label for="">Deskripsi</label>
-                        <textarea name="" id="" cols="30" rows="5" class="form-control" disabled>Paket ini digunakan untuk mengetahui apa saja</textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="">Jenis</label>
-                        <select name="" id="" class="form-control" disabled="disabled">
-                            <option value="">Soal Tes</option>
-                            <option value="">Soal Latihan</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="firstName1">KKM</label>
-                        <input type="text" class="form-control" value="80" disabled>
-                    </div>
-                    <div class="form-group">
-                        <label for="firstName1">Waktu</label>
-                        <input type="text" class="form-control" value="100 Menit" disabled>
-                    </div>
-                    <div class="form-group">
-                        <label for="">Status</label>
-                        <select name="" id="" class="form-control" disabled="disabled">
-                            <option value="">Tampil</option>
-                            <option value="">Tidak Tampil</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-warning" data-dismiss="modal">Ubah</button>
-                    <button type="button" class="btn btn-danger">Hapus</button>
-                </div>
-            </div>
-        </div>
-    </div> --}}
+@section('js')
+    <script>
+        $(document).ready( function () {
+            var data = $('#awal').attr('data-value');
+            $.get( "/mahasiswa/data-soal/" + data, function( data ) {
+                console.log(JSON.parse(data));
+                var d = JSON.parse(data);
+                
+                $('#pertanyaan').html(d.pertanyaan);
+                if (d.media != null) {
+                    $('#gambar').html('<img src="/assets/images/soal/'+ d.media +'" class="img-fluid" id="gambar">');
+                }
+                for (var i = 0; i < d['pilihan'].length; i++) {
+                    $('#jawaban').append(`<li class="mr-2">
+                                            <fieldset>
+                                                <div class="vs-radio-con">
+                                                    <input type="radio" name="vueradio">
+                                                    <span class="vs-radio">
+                                                        <span class="vs-radio--border"></span>
+                                                        <span class="vs-radio--circle"></span>
+                                                    </span>
+                                                    <span class="deskripsi">`+ d['pilihan'][i].deskripsi +`</span>
+                                                </div>
+                                            </fieldset>
+                                        </li>`);
+                }
+            });
+
+            $(document).on('click', '.navigasi', function(e) {
+                var id = $(this).attr('data-value');
+                console.log(id);
+                $.get( "/mahasiswa/data-soal/" + id, function( data ) {
+                    console.log(JSON.parse(data));
+                    var d = JSON.parse(data);
+                    
+                    $('#pertanyaan').html(d.pertanyaan);
+
+                    $('#gambar img').remove();
+                    $('#gambar').hide();
+                    if (d.media != null) {
+                        $('#gambar').show();
+                        $('#gambar').html('<img src="/assets/images/soal/'+ d.media +'" class="img-fluid" style="height: 400px;" id="gambar"><br><br>');
+                    }
+
+                    $('#jawaban li').remove();
+                    for (var i = 0; i < d['pilihan'].length; i++) {
+                        $('#jawaban').append(`<li class="mr-2">
+                                                <fieldset>
+                                                    <div class="vs-radio-con">
+                                                        <input type="radio" name="vueradio">
+                                                        <span class="vs-radio">
+                                                            <span class="vs-radio--border"></span>
+                                                            <span class="vs-radio--circle"></span>
+                                                        </span>
+                                                        <span class="deskripsi">`+ d['pilihan'][i].deskripsi +`</span>
+                                                    </div>
+                                                </fieldset>
+                                            </li>`);
+                    }
+                });
+            });
+        });
+    </script>
 @endsection

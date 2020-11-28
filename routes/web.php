@@ -45,6 +45,7 @@ Route::name('admin.')->prefix('admin')->middleware('auth', 'role:admin')->group(
 Route::namespace('Mahasiswa')->prefix('mahasiswa')->middleware('auth', 'role:mahasiswa')->group(function() {
     Route::get('', 'HomeController@index')->name('index');
     Route::get('soal/{id}', 'HomeController@soal')->name('soal');
+    Route::get('data-soal/{id}', 'HomeController@data_soal');
 });
 
 Auth::routes();

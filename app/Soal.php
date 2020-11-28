@@ -79,4 +79,27 @@ class Soal extends Model
             return $data;
         }
     }
+
+    static function singleSoalJawab($id)
+    {
+        $soal = Soal::join('pilihan', 'soal.idPilihan', 'pilihan.id')
+                    ->select('soal.id')
+                    ->where('soal.id', $id)
+                    ->get();
+
+        if ($soal->isNotEmpty()) {
+            foreach ($soal as $key => $value) {
+                $id = $value->id;
+
+                $data[$key] = Soal::select('soal.pertanyaan', 'soal.media')
+                                    ->where('soal.id', $id)
+                                    ->first();
+                $data[$key]['pilihan'] = Soal::join('pilihan', 'soal.id', 'pilihan.idSoal')
+                                        ->select('pilihan.deskripsi', 'pilihan.id')
+                                        ->where('pilihan.idSoal', $id)
+                                        ->get();
+            }
+            return $data;
+        }
+    }
 }
