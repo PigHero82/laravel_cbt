@@ -24,16 +24,12 @@ class HomeController extends Controller
      */
     public function index()
     {
-        if (!Auth::check()) {
-			return redirect('/login');
-        } else {
-            if (Auth::user()->hasRole('admin')) {
-				return redirect('/admin');
-			} elseif (Auth::user()->hasRole('dosen')) {
-				return redirect('/dosen');
-			} elseif (Auth::user()->hasRole('mahasiswa')) {
-				return redirect('/mahasiswa');
-            }
+        if (Auth::user()->hasRole('admin')) {
+            return redirect('/admin');
+        } elseif (Auth::user()->hasRole('dosen')) {
+            return redirect('/dosen');
+        } elseif (Auth::user()->hasRole('mahasiswa')) {
+            return redirect('/mahasiswa');
         }
     }
 }

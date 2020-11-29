@@ -91,7 +91,7 @@ class Soal extends Model
             foreach ($soal as $key => $value) {
                 $id = $value->id;
 
-                $data[$key] = Soal::select('soal.pertanyaan', 'soal.media')
+                $data[$key] = Soal::select('soal.id', 'soal.pertanyaan', 'soal.media')
                                     ->where('soal.id', $id)
                                     ->first();
                 $data[$key]['pilihan'] = Soal::join('pilihan', 'soal.id', 'pilihan.idSoal')

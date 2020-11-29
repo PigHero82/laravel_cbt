@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Route::view('/login', 'login')->name('login');
-Route::get('', 'HomeController@index')->name('home');
+Route::get('', 'HomeController@index')->middleware('auth')->name('home');
 
 Route::namespace('Dosen')->name('dosen.')->prefix('dosen')->middleware('auth', 'role:dosen')->group(function() {
     Route::get('', 'HomeController@index')->name('index');
@@ -46,6 +46,7 @@ Route::namespace('Mahasiswa')->prefix('mahasiswa')->middleware('auth', 'role:mah
     Route::get('', 'HomeController@index')->name('index');
     Route::get('soal/{id}', 'HomeController@soal')->name('soal');
     Route::get('data-soal/{id}', 'HomeController@data_soal');
+    Route::post('jawab', 'HomeController@jawab')->name('jawab');
 });
 
 Auth::routes();

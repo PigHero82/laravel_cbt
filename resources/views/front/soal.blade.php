@@ -5,6 +5,7 @@
 @endsection
 
 @section('css')
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <style>
         .deskripsi p{
             margin-bottom: 0%;
@@ -39,68 +40,7 @@
                         <div class="overflow-auto">
                             <div id="gambar"></div>
                             <div id="pertanyaan"></div>
-                            <ul class="list-unstyled mb-0" id="jawaban">
-                                {{-- <li class=" mr-2">
-                                    <fieldset>
-                                        <div class="vs-radio-con">
-                                            <input type="radio" name="vueradio">
-                                            <span class="vs-radio">
-                                                <span class="vs-radio--border"></span>
-                                                <span class="vs-radio--circle"></span>
-                                            </span>
-                                            <span class="">A. Sebagai alat pemersatu</span>
-                                        </div>
-                                    </fieldset>
-                                </li>
-                                <li class=" mr-2">
-                                    <fieldset>
-                                        <div class="vs-radio-con">
-                                            <input type="radio" name="vueradio">
-                                            <span class="vs-radio">
-                                                <span class="vs-radio--border"></span>
-                                                <span class="vs-radio--circle"></span>
-                                            </span>
-                                            <span class="">B. Sebagai kerangka acuan</span>
-                                        </div>
-                                    </fieldset>
-                                </li>
-                                <li class=" mr-2">
-                                    <fieldset>
-                                        <div class="vs-radio-con">
-                                            <input type="radio" name="vueradio">
-                                            <span class="vs-radio">
-                                                <span class="vs-radio--border"></span>
-                                                <span class="vs-radio--circle"></span>
-                                            </span>
-                                            <span class="">C. Sebagai pemecah bangsa</span>
-                                        </div>
-                                    </fieldset>
-                                </li>
-                                <li class=" mr-2">
-                                    <fieldset>
-                                        <div class="vs-radio-con">
-                                            <input type="radio" name="vueradio">
-                                            <span class="vs-radio">
-                                                <span class="vs-radio--border"></span>
-                                                <span class="vs-radio--circle"></span>
-                                            </span>
-                                            <span class="">D. Sebagai ciri khas suatu bangsa</span>
-                                        </div>
-                                    </fieldset>
-                                </li>
-                                <li class=" mr-2">
-                                    <fieldset>
-                                        <div class="vs-radio-con">
-                                            <input type="radio" name="vueradio">
-                                            <span class="vs-radio">
-                                                <span class="vs-radio--border"></span>
-                                                <span class="vs-radio--circle"></span>
-                                            </span>
-                                            <span class="">E. Sebagai dasar negara</span>
-                                        </div>
-                                    </fieldset>
-                                </li> --}}
-                            </ul>
+                            <ul class="list-unstyled mb-0" id="jawaban"></ul>
                         </div>
                     </div>
                     <div class="card-footer">
@@ -137,7 +77,6 @@
         $(document).ready( function () {
             var data = $('#awal').attr('data-value');
             $.get( "/mahasiswa/data-soal/" + data, function( data ) {
-                console.log(JSON.parse(data));
                 var d = JSON.parse(data);
                 
                 $('#pertanyaan').html(d.pertanyaan);
@@ -148,7 +87,7 @@
                     $('#jawaban').append(`<li class="mr-2">
                                             <fieldset>
                                                 <div class="vs-radio-con">
-                                                    <input type="radio" name="vueradio">
+                                                    <input type="radio" name="vueradio" class="data-jawaban" value="`+ d.id +`/`+ d['pilihan'][i].id +`">
                                                     <span class="vs-radio">
                                                         <span class="vs-radio--border"></span>
                                                         <span class="vs-radio--circle"></span>
@@ -162,9 +101,7 @@
 
             $(document).on('click', '.navigasi', function(e) {
                 var id = $(this).attr('data-value');
-                console.log(id);
                 $.get( "/mahasiswa/data-soal/" + id, function( data ) {
-                    console.log(JSON.parse(data));
                     var d = JSON.parse(data);
                     
                     $('#pertanyaan').html(d.pertanyaan);
@@ -181,7 +118,7 @@
                         $('#jawaban').append(`<li class="mr-2">
                                                 <fieldset>
                                                     <div class="vs-radio-con">
-                                                        <input type="radio" name="vueradio">
+                                                        <input type="radio" name="vueradio" class="data-jawaban" value="`+ d.id +`/`+ d['pilihan'][i].id +`">
                                                         <span class="vs-radio">
                                                             <span class="vs-radio--border"></span>
                                                             <span class="vs-radio--circle"></span>
@@ -191,6 +128,27 @@
                                                 </fieldset>
                                             </li>`);
                     }
+                });
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $(document).on('click', '.data-jawaban', function() {
+                var jawaban = $(this).val();
+
+                $.ajax({
+                    url: "{{ route('jawab') }}",
+                    type: "POST",
+                    data: {
+                        jawaban: jawaban
+                    },
                 });
             });
         });

@@ -61,4 +61,10 @@ class HomeController extends Controller
     {
         return json_encode(Soal::singleSoalJawab($id)[0]);
     }
+
+    public function jawab(Request $request)
+    {
+        $data = explode("/", $request->jawaban);
+        Jawaban::updateJawaban($data[0], $data[1]);
+    }
 }

@@ -19,6 +19,13 @@ class Jawaban extends Model
         ]);
     }
 
+    static function updateJawaban($idSoal, $idPilihan)
+    {
+        Jawaban::where('idUser', Auth::id())->where('idSoal', $idSoal)->update([
+            'idPilihan' => $idPilihan
+        ]);
+    }
+
     static function getDataSoal($idPaket)
     {
         return $jawaban = Jawaban::join('soal', 'jawaban.idSoal', 'soal.id')
