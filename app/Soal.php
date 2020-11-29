@@ -4,6 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+use Auth;
+
 class Soal extends Model
 {
     protected $table = 'soal';
@@ -91,8 +93,10 @@ class Soal extends Model
             foreach ($soal as $key => $value) {
                 $id = $value->id;
 
-                $data[$key] = Soal::select('soal.id', 'soal.pertanyaan', 'soal.media')
+                $data[$key] = Soal::select('soal.id', 'soal.pertanyaan', 'soal.media', 'jawaban.idPilihan')
+                                    ->join('jawaban', 'soal.id', 'jawaban.idSoal')
                                     ->where('soal.id', $id)
+                                    ->where('jawaban.idUser', Auth::id())
                                     ->first();
                 $data[$key]['pilihan'] = Soal::join('pilihan', 'soal.id', 'pilihan.idSoal')
                                         ->select('pilihan.deskripsi', 'pilihan.id')

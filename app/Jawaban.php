@@ -30,7 +30,7 @@ class Jawaban extends Model
     {
         return $jawaban = Jawaban::join('soal', 'jawaban.idSoal', 'soal.id')
                 ->join('grup', 'soal.idGrup', 'grup.id')
-                ->select('jawaban.id', 'jawaban.idSoal')
+                ->select('jawaban.id', 'jawaban.idSoal', 'jawaban.idPilihan')
                 ->where('idUser', Auth::id())
                 ->where('grup.id', $idPaket)
                 ->orderBy('jawaban.id', 'asc')
