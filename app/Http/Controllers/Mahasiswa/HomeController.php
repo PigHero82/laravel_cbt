@@ -64,7 +64,12 @@ class HomeController extends Controller
 
     public function jawab(Request $request)
     {
-        $data = explode("/", $request->jawaban);
-        Jawaban::updateJawaban($data[0], $data[1]);
+        if ($request->jawaban_esai != null) {
+            Jawaban::updateJawabanEsai($request->jawaban_esai, $request->id);
+        } else {
+            $data = explode("/", $request->jawaban);
+            $hasil = Soal::cekJawaban($data[0], $data[1]);
+            Jawaban::updateJawaban($data[0], $data[1], $hasil);
+        }
     }
 }

@@ -9,7 +9,7 @@ class Jawaban extends Model
 {
     protected $table = 'jawaban';
 
-    protected $fillable = ['idUser', 'idSoal', 'idPilihan'. 'jawaban_esai', 'skor'];
+    protected $fillable = ['idUser', 'idSoal', 'idPilihan'. 'jawaban_esai', 'benar', 'skor'];
 
     static function storeJawaban($idSoal)
     {
@@ -19,10 +19,19 @@ class Jawaban extends Model
         ]);
     }
 
-    static function updateJawaban($idSoal, $idPilihan)
+    static function updateJawaban($idSoal, $idPilihan, $hasil)
     {
         Jawaban::where('idUser', Auth::id())->where('idSoal', $idSoal)->update([
-            'idPilihan' => $idPilihan
+            'idPilihan' => $idPilihan,
+            'benar'     => $hasil['data'],
+            'skor'      => $hasil['skor']
+        ]);
+    }
+
+    static function updateJawabanEsai($jawaban, $id)
+    {
+        Jawaban::whereId($id)->update([
+            'jawaban_esai' => $jawaban
         ]);
     }
 
@@ -30,7 +39,7 @@ class Jawaban extends Model
     {
         return $jawaban = Jawaban::join('soal', 'jawaban.idSoal', 'soal.id')
                 ->join('grup', 'soal.idGrup', 'grup.id')
-                ->select('jawaban.id', 'jawaban.idSoal', 'jawaban.idPilihan')
+                ->select('jawaban.id', 'jawaban.idSoal', 'jawaban.idPilihan', 'jawaban.jawaban_esai')
                 ->where('idUser', Auth::id())
                 ->where('grup.id', $idPaket)
                 ->orderBy('jawaban.id', 'asc')

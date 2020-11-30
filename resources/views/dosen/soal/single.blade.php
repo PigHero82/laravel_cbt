@@ -129,42 +129,44 @@
                                                     </div>
                                                 </div>
 
-                                                @foreach ($data->pilihan as $key => $item)
-                                                    <div class="col-12">
-                                                        <div class="pertanyaan">
-                                                            <div class="form-group row">
-                                                                <div class="col-md-3">
-                                                                    <span>Jawaban {{ $key+1 }}</span>
-                                                                </div>
-                                                                <div class="col-md-9">
-                                                                    <fieldset class="form-group">
-                                                                        <textarea class="form-control summernote" rows="3" placeholder="Deskripsi Jawaban" name="jawaban[{{ $key }}]" required>{!! $item->deskripsi !!}</textarea>
-                                                                        <div class="vs-radio-con">
-                                                                            <input type="radio" name="benar" value="{{ $key }}" {{ $data->idPilihan == $item->id ? 'checked' : '' }}>
-                                                                            <span class="vs-radio">
-                                                                                <span class="vs-radio--border"></span>
-                                                                                <span class="vs-radio--circle"></span>
-                                                                            </span>
-                                                                            <span class="">Jawaban Benar</span>
-                                                                        </div>
-                                                                    </fieldset>
-                                                                </div>
-                                                            </div>
-
-                                                            @if ($data->modelSoal == 1)
-                                                                @if ($loop->last)
-                                                                    <div class="form-group row">
-                                                                        <div class="col-md-3">
-                                                                        </div>
-                                                                        <div class="col-md-9">
-                                                                            <button type="button" class="btn btn-success tambah-pertanyaan"><i class="feather icon-plus"></i> Tambah Opsi</button>
-                                                                        </div>
+                                                @if ($data->modelSoal != 4)
+                                                    @foreach ($data->pilihan as $key => $item)
+                                                        <div class="col-12">
+                                                            <div class="pertanyaan">
+                                                                <div class="form-group row">
+                                                                    <div class="col-md-3">
+                                                                        <span>Jawaban {{ $key+1 }}</span>
                                                                     </div>
+                                                                    <div class="col-md-9">
+                                                                        <fieldset class="form-group">
+                                                                            <textarea class="form-control summernote" rows="3" placeholder="Deskripsi Jawaban" name="jawaban[{{ $key }}]" required>{!! $item->deskripsi !!}</textarea>
+                                                                            <div class="vs-radio-con">
+                                                                                <input type="radio" name="benar" value="{{ $key }}" {{ $data->idPilihan == $item->id ? 'checked' : '' }}>
+                                                                                <span class="vs-radio">
+                                                                                    <span class="vs-radio--border"></span>
+                                                                                    <span class="vs-radio--circle"></span>
+                                                                                </span>
+                                                                                <span class="">Jawaban Benar</span>
+                                                                            </div>
+                                                                        </fieldset>
+                                                                    </div>
+                                                                </div>
+
+                                                                @if ($data->modelSoal == 1)
+                                                                    @if ($loop->last)
+                                                                        <div class="form-group row">
+                                                                            <div class="col-md-3">
+                                                                            </div>
+                                                                            <div class="col-md-9">
+                                                                                <button type="button" class="btn btn-success tambah-pertanyaan"><i class="feather icon-plus"></i> Tambah Opsi</button>
+                                                                            </div>
+                                                                        </div>
+                                                                    @endif
                                                                 @endif
-                                                            @endif
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                @endforeach
+                                                    @endforeach
+                                                @endif
 
                                                 <div class="col-12">
                                                     <div class="float-right">
@@ -196,36 +198,41 @@
 
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
     <script>
-        var digit = {{ $key+1 }};
-        var no = {{ $key+2 }};
         $(document).ready(function() {
             $('.summernote').summernote({
                 height: 200
             });
-
-            $(document).on('click', '.tambah-pertanyaan', function(e) {
-                $('.pertanyaan').append(`<div class="form-group row">
-                                            <div class="col-md-3">
-                                                <span>Jawaban  ` + no + `</span>
-                                            </div>
-                                            <div class="col-md-9">
-                                                <fieldset class="form-group">
-                                                    <textarea class="form-control pertanyaan`+ digit +`" rows="3" placeholder="Deskripsi Jawaban" name="jawaban[` + digit `]" required></textarea>
-                                                    <div class="vs-radio-con">
-                                                        <input type="radio" name="benar" value="` + digit `">
-                                                        <span class="vs-radio">
-                                                            <span class="vs-radio--border"></span>
-                                                            <span class="vs-radio--circle"></span>
-                                                        </span>
-                                                        <span class="">Jawaban Benar</span>
-                                                    </div>
-                                                </fieldset>
-                                            </div>
-                                        </div>`);
-
-                digit++;
-                no++;
-            });
         });
     </script>
+    @if ($data->modelSoal != 4)
+        <script>
+            var digit = {{ $key+1 }};
+            var no = {{ $key+2 }};
+            $(document).ready(function() {
+                $(document).on('click', '.tambah-pertanyaan', function(e) {
+                    $('.pertanyaan').append(`<div class="form-group row">
+                                                <div class="col-md-3">
+                                                    <span>Jawaban  ` + no + `</span>
+                                                </div>
+                                                <div class="col-md-9">
+                                                    <fieldset class="form-group">
+                                                        <textarea class="form-control pertanyaan`+ digit +`" rows="3" placeholder="Deskripsi Jawaban" name="jawaban[` + digit `]" required></textarea>
+                                                        <div class="vs-radio-con">
+                                                            <input type="radio" name="benar" value="` + digit `">
+                                                            <span class="vs-radio">
+                                                                <span class="vs-radio--border"></span>
+                                                                <span class="vs-radio--circle"></span>
+                                                            </span>
+                                                            <span class="">Jawaban Benar</span>
+                                                        </div>
+                                                    </fieldset>
+                                                </div>
+                                            </div>`);
+
+                    digit++;
+                    no++;
+                });
+            });
+        </script>
+    @endif
 @endsection

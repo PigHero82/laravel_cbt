@@ -5,6 +5,11 @@
 @endsection
 
 @section('css')
+    <style>
+        td p {
+            margin-bottom: 0%;
+        }
+    </style>
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{{ asset('/app-assets/vendors/css/extensions/sweetalert2.min.css') }}">
 @endsection

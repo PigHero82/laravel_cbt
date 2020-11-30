@@ -188,7 +188,7 @@
                                     <div class="form-group">
                                         <div class="controls">
                                             <label for="">Bobot Nilai Benar</label>
-                                            <input type="number" class="form-control" name="bobot_benar" placeholder="0, -1, -2, dsb" required>
+                                            <input type="number" class="form-control" name="bobot_benar" placeholder="1, 2, 3, dsb" required>
                                         </div>
                                     </div>
                                 </div>
@@ -196,7 +196,7 @@
                                     <div class="form-group">
                                         <div class="controls">
                                             <label for="">Bobot Nilai Salah</label>
-                                            <input type="number" class="form-control" name="bobot_salah" placeholder="1, 2, 3, dsb" required>
+                                            <input type="number" class="form-control" name="bobot_salah" placeholder="0, -1, -2, dsb" required>
                                         </div>
                                     </div>
                                 </div>

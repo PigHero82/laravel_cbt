@@ -19,7 +19,8 @@ class CreateJawabansTable extends Migration
             $table->bigInteger('idSoal');
             $table->bigInteger('idPilihan')->nullable();
             $table->text('jawaban_esai')->nullable();
-            $table->text('skor')->nullable();
+            $table->boolean('benar')->nullable();
+            $table->int('skor')->nullable();
             $table->timestamps();
         });
     }

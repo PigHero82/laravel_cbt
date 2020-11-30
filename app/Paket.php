@@ -74,6 +74,7 @@ class Paket extends Model
                     ->select('paket.id', 'paket.nama', 'paket.deskripsi', 'kelas.kode', 'users.name', 'paket.tanggal_awal', 'paket.tanggal_akhir', 'paket.waktu_awal', 'paket.waktu_akhir', 'paket.durasi', 'mulai_ujian.waktu')
                     ->where('idMahasiswa', $id)
                     ->where('paket.status', 1)
+                    ->orderBy('paket.id', 'desc')
                     ->get();
     }
 

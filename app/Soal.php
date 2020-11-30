@@ -58,7 +58,7 @@ class Soal extends Model
 
     static function singleSoal($id)
     {
-        $soal = Soal::join('pilihan', 'soal.idPilihan', 'pilihan.id')
+        $soal = Soal::leftJoin('pilihan', 'soal.idPilihan', 'pilihan.id')
                     ->select('soal.id')
                     ->where('soal.id', $id)
                     ->get();
@@ -84,26 +84,49 @@ class Soal extends Model
 
     static function singleSoalJawab($id)
     {
-        $soal = Soal::join('pilihan', 'soal.idPilihan', 'pilihan.id')
-                    ->select('soal.id')
-                    ->where('soal.id', $id)
+        $soal = Soal::leftJoin('pilihan', 'soal.idPilihan', 'pilihan.id')
+                    ->join('jawaban', 'soal.id', 'jawaban.idSoal')
+                    ->select('jawaban.id as abc', 'soal.id', 'soal.modelSoal')
+                    ->where('jawaban.id', $id)
                     ->get();
 
         if ($soal->isNotEmpty()) {
             foreach ($soal as $key => $value) {
-                $id = $value->id;
-
-                $data[$key] = Soal::select('soal.id', 'soal.pertanyaan', 'soal.media', 'jawaban.idPilihan')
+                $id = $value->abc;
+                $data[$key] = Soal::select('soal.id', 'soal.pertanyaan', 'soal.media', 'soal.modelSoal', 'jawaban.idPilihan', 'jawaban.jawaban_esai', 'jawaban.id as abc')
                                     ->join('jawaban', 'soal.id', 'jawaban.idSoal')
-                                    ->where('soal.id', $id)
+                                    ->where('jawaban.id', $id)
                                     ->where('jawaban.idUser', Auth::id())
                                     ->first();
-                $data[$key]['pilihan'] = Soal::join('pilihan', 'soal.id', 'pilihan.idSoal')
-                                        ->select('pilihan.deskripsi', 'pilihan.id')
-                                        ->where('pilihan.idSoal', $id)
-                                        ->get();
+                if ($value->modelSoal !=4) {
+                    $data[$key]['pilihan'] = Soal::join('pilihan', 'soal.id', 'pilihan.idSoal')
+                                            ->join('jawaban', 'soal.id', 'jawaban.idSoal')
+                                            ->select('jawaban.id', 'pilihan.deskripsi', 'pilihan.id')
+                                            ->where('jawaban.id', $id)
+                                            ->orderByRaw('RAND()')
+                                            ->get();
+                }
             }
             return $data;
         }
+    }
+
+    static function cekJawaban($idSoal, $idPilihan)
+    {
+        $data = Soal::join('grup', 'soal.idGrup', 'grup.id')
+                    ->join('paket', 'grup.idPaket', 'paket.id')
+                    ->select('soal.id', 'soal.idPilihan', 'paket.bobot_benar', 'paket.bobot_salah')
+                    ->where('soal.id', $idSoal)
+                    ->first();
+
+        if ($data->idPilihan == $idPilihan) {
+            $hasil['data'] = 1;
+            $hasil['skor'] = $data->bobot_benar;
+        } else {
+            $hasil['data'] = 0;
+            $hasil['skor'] = $data->bobot_salah;
+        }
+
+        return $hasil;        
     }
 }

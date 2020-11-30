@@ -11,6 +11,7 @@
             margin-bottom: 0%;
         }
     </style>
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
 @endsection
 
 @section('content')
@@ -40,7 +41,9 @@
                         <div class="overflow-auto">
                             <div id="gambar"></div>
                             <div id="pertanyaan"></div>
-                            <ul class="list-unstyled mb-0" id="jawaban"></ul>
+                            <div id="jawaban-esai"></div>
+                            <hr>
+                            <div id="jawaban"></div>
                         </div>
                     </div>
                     <div class="card-footer">
@@ -60,7 +63,7 @@
                         <div class="card-body @if ($loop->last) @else pb-0 @endif" style="padding-left: 1rem; padding-right: 0.8rem">
                             @php $nourut = "" @endphp
                             @foreach ($item['soal'] as $soal)
-                                <button type="button" class="alert @if($soal->idPilihan == null) alert-primary @else alert-success @endif px-0 navigasi" @if ($loop->first) id="awal" @endif @if ($loop->last) id="akhir" @endif style="border-radius: 0; width: 35px" data-value="{{ $soal->idSoal }}" data-id="{{ $soal->id }}">{{ $no }}</button>
+                                <button type="button" class="alert @if($soal->idPilihan == null && $soal->jawaban_esai == null) alert-primary @else alert-success @endif px-0 navigasi" @if ($loop->first) id="awal" @endif @if ($loop->last) id="akhir" @endif style="border-radius: 0; width: 35px" data-value="{{ $soal->idSoal }}" data-id="{{ $soal->id }}">{{ $no }}</button>
                                 @php $no++ @endphp
                                 @php $nourut = $soal->id @endphp
                             @endforeach
@@ -74,47 +77,76 @@
 @endsection
 
 @section('js')
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
     <script>
         $(document).ready( function () {
             var data = $('#awal').attr('data-id');
             var awal = $('#awal').attr('data-id');
             var akhir = {{ $nourut }};
-            console.log(data);
-            console.log(akhir);
             $.get( "/mahasiswa/data-soal/" + data, function( data ) {
                 var d = JSON.parse(data);
+                console.log(d);
                 
                 $('#pertanyaan').html(d.pertanyaan);
+
                 if (d.media != null) {
-                    $('#gambar').html('<img src="/assets/images/soal/'+ d.media +'" class="img-fluid" id="gambar">');
+                    $('#gambar').html('<img src="/assets/images/soal/'+ d.media +'" class="img-fluid mb-1" style="height: 400px;" id="gambar">');
                 }
-                for (var i = 0; i < d['pilihan'].length; i++) {
-                    var cek = "";
-                    if (d.idPilihan == d['pilihan'][i].id) {
-                        cek = "checked"
+
+                if (d.modelSoal != 4) { 
+                    $('#jawaban ul').remove();        
+                    for (var i = 0; i < d['pilihan'].length; i++) {
+                        var cek = "";
+                        if (d.idPilihan == d['pilihan'][i].id) {
+                            cek = "checked"
+                        }
+                        $('#jawaban').append(`<ul class="list-unstyled mb-0">
+                                                <li class="mr-2">
+                                                    <fieldset>
+                                                        <div class="vs-radio-con">
+                                                            <input type="radio" name="vueradio" class="data-jawaban" value="`+ d.id +`/`+ d['pilihan'][i].id +`" `+ cek +`>
+                                                            <span class="vs-radio">
+                                                                <span class="vs-radio--border"></span>
+                                                                <span class="vs-radio--circle"></span>
+                                                            </span>
+                                                            <span class="deskripsi">`+ d['pilihan'][i].deskripsi +`</span>
+                                                        </div>
+                                                    </fieldset>
+                                                </li>
+                                            </ul>`);
                     }
-                    $('#jawaban').append(`<li class="mr-2">
-                                            <fieldset>
-                                                <div class="vs-radio-con">
-                                                    <input type="radio" name="vueradio" class="data-jawaban" value="`+ d.id +`/`+ d['pilihan'][i].id +`" `+ cek +`>
-                                                    <span class="vs-radio">
-                                                        <span class="vs-radio--border"></span>
-                                                        <span class="vs-radio--circle"></span>
-                                                    </span>
-                                                    <span class="deskripsi">`+ d['pilihan'][i].deskripsi +`</span>
-                                                </div>
-                                            </fieldset>
-                                        </li>`);
+                } else {
+                    $('#jawaban-esai div').remove();
+                    if (d.jawaban_esai != null) {
+                        $('#jawaban-esai').html(`<div>
+                                                    <h5>Jawaban :</h5>
+                                                    `+ d.jawaban_esai +`
+                                                </div>`);
+                    }                 
+
+                    $('#jawaban form').remove();
+                    $('#jawaban').append(`<form id="jawab-soal">
+                                            <input type="hidden" name="id" id="data" value="`+ d.abc +`">
+                                            <div class="form-group">
+                                                <label for="jawaban">Jawaban</label>
+                                                <label class="text-danger">(Jawaban yang telah diisi sebelumnya dapat diubah dengan mengisi ulang kolom jawaban)</label>
+                                                <textarea id="esai" class="form-control" name="jawaban" rows="3"></textarea>
+                                                <button type="button" class="btn btn-success mt-1"><i class="feather icon-check"></i> Submit</button>
+                                            </div>
+                                        </form>`);
+                    $('textarea').summernote({
+                        height: 200,
+                        toolbar: []
+                    });
                 }
 
                 var next = parseInt(awal) + 1;
-                $('#selanjutnya').html('<button type="button" class="btn btn-primary" data-value="'+ next +'"><i class="feather icon-arrow-right"></i> Selanjutnya</button>');
+                $('#selanjutnya').html('<button type="button" class="btn btn-primary navigasi" data-id="'+ next +'"><i class="feather icon-arrow-right"></i> Selanjutnya</button>');
             });
 
             $(document).on('click', '.navigasi', function(e) {
-                var id = $(this).attr('data-value');
                 var no = $(this).attr('data-id');
-                $.get( "/mahasiswa/data-soal/" + id, function( data ) {
+                $.get( "/mahasiswa/data-soal/" + no, function( data ) {
                     var d = JSON.parse(data);
                     
                     $('#pertanyaan').html(d.pertanyaan);
@@ -123,46 +155,73 @@
                     $('#gambar').hide();
                     if (d.media != null) {
                         $('#gambar').show();
-                        $('#gambar').html('<img src="/assets/images/soal/'+ d.media +'" class="img-fluid" style="height: 400px;" id="gambar"><br><br>');
+                        $('#gambar').html('<img src="/assets/images/soal/'+ d.media +'" class="img-fluid mb-1" style="height: 400px;" id="gambar"><br><br>');
                     }
 
-                    $('#jawaban li').remove();
-                    for (var i = 0; i < d['pilihan'].length; i++) {
-                        var cek = "";
-                        if (d.idPilihan == d['pilihan'][i].id) {
-                            cek = "checked"
+                    if (d.modelSoal != 4) {         
+                        $('#jawaban ul').remove();
+                        for (var i = 0; i < d['pilihan'].length; i++) {
+                            var cek = "";
+                            if (d.idPilihan == d['pilihan'][i].id) {
+                                cek = "checked"
+                            }
+                            $('#jawaban').append(`<ul class="list-unstyled mb-0">
+                                                    <li class="mr-2">
+                                                        <fieldset>
+                                                            <div class="vs-radio-con">
+                                                                <input type="radio" name="vueradio" class="data-jawaban" value="`+ d.id +`/`+ d['pilihan'][i].id +`" `+ cek +` data-value="`+ d.id +`">
+                                                                <span class="vs-radio">
+                                                                    <span class="vs-radio--border"></span>
+                                                                    <span class="vs-radio--circle"></span>
+                                                                </span>
+                                                                <span class="deskripsi">`+ d['pilihan'][i].deskripsi +`</span>
+                                                            </div>
+                                                        </fieldset>
+                                                    </li>
+                                                </ul>`);
                         }
-                        $('#jawaban').append(`<li class="mr-2">
-                                                <fieldset>
-                                                    <div class="vs-radio-con">
-                                                        <input type="radio" name="vueradio" class="data-jawaban" value="`+ d.id +`/`+ d['pilihan'][i].id +`" `+ cek +` data-value="`+ d.id +`">
-                                                        <span class="vs-radio">
-                                                            <span class="vs-radio--border"></span>
-                                                            <span class="vs-radio--circle"></span>
-                                                        </span>
-                                                        <span class="deskripsi">`+ d['pilihan'][i].deskripsi +`</span>
-                                                    </div>
-                                                </fieldset>
-                                            </li>`);
+                    } else {
+                        $('#jawaban-esai div').remove();
+                        if (d.jawaban_esai != null) {
+                            $('#jawaban-esai').html(`<div>
+                                                        <h5>Jawaban :</h5>
+                                                        `+ d.jawaban_esai +`
+                                                    </div>`);
+                        }
+
+                        $('#jawaban form').remove();
+                        $('#jawaban').append(`<form id="jawab-soal">
+                                                <input type="hidden" name="id" id="data" value="`+ d.abc +`">
+                                                <div class="form-group">
+                                                    <label for="jawaban">Jawaban</label>
+                                                    <label class="text-danger">(Jawaban yang telah diisi sebelumnya dapat diubah dengan mengisi ulang kolom jawaban)</label>
+                                                    <textarea id="esai" class="form-control" name="jawaban" rows="3"></textarea>
+                                                    <button type="button" class="btn btn-success mt-1"><i class="feather icon-check"></i> Submit</button>
+                                                </div>
+                                            </form>`);
+                        $('textarea').summernote({
+                            height: 200,
+                            toolbar: []
+                        });
                     }
 
                     var next = parseInt(no) + 1;
-                    var previous = parseInt(no) + 1;
+                    var previous = parseInt(no) - 1;
                     $('#sebelumnya button').remove();
                     $('#sebelumnya').hide();
                     $('#selanjutnya button').remove();
                     $('#selanjutnya').hide();
                     if (no == awal) {
                         $('#selanjutnya').show();
-                        $('#selanjutnya').html('<button type="button" class="btn btn-primary" data-value="'+ next +'"><i class="feather icon-arrow-right"></i> Selanjutnya</button>');
+                        $('#selanjutnya').html('<button type="button" class="btn btn-primary navigasi" data-id="'+ next +'"><i class="feather icon-arrow-right"></i> Selanjutnya</button>');
                     } else if (no == akhir) {
                         $('#sebelumnya').show();
-                        $('#sebelumnya').html('<button type="button" class="btn btn-primary" data-value="'+ previous +'"><i class="feather icon-arrow-left"></i> Sebelumnya</button>');
+                        $('#sebelumnya').html('<button type="button" class="btn btn-primary navigasi" data-id="'+ previous +'"><i class="feather icon-arrow-left"></i> Sebelumnya</button>');
                     } else {
                         $('#sebelumnya').show();
-                        $('#sebelumnya').html('<button type="button" class="btn btn-primary" data-value="'+ previous +'"><i class="feather icon-arrow-left"></i> Sebelumnya</button>');
+                        $('#sebelumnya').html('<button type="button" class="btn btn-primary navigasi" data-id="'+ previous +'"><i class="feather icon-arrow-left"></i> Sebelumnya</button>');
                         $('#selanjutnya').show();
-                        $('#selanjutnya').html('<button type="button" class="btn btn-primary" data-value="'+ next +'"><i class="feather icon-arrow-right"></i> Selanjutnya</button>');
+                        $('#selanjutnya').html('<button type="button" class="btn btn-primary navigasi" data-id="'+ next +'"><i class="feather icon-arrow-right"></i> Selanjutnya</button>');
                     }
                 });
             });
@@ -189,6 +248,37 @@
                     data: {
                         jawaban: jawaban
                     },
+                });
+            });
+
+            $(document).on('click', '#jawab-soal button', function() {
+                var jawaban_esai = $('#esai').val();
+                var id = $('#data').val();
+                console.log(id);
+
+                $('.navigasi[data-id = '+ id +']').removeClass('alert-primary');
+                $('.navigasi[data-id = '+ id +']').addClass('alert-success');
+
+                $.ajax({
+                    url: "{{ route('jawab') }}",
+                    type: "POST",
+                    data: {
+                        jawaban_esai: jawaban_esai,
+                        id: id
+                    },
+                });
+                
+                $('#jawaban-esai div').remove();
+                $('#jawaban-esai').html(`<div>
+                                            <h5>Jawaban :</h5>
+                                            `+ jawaban_esai +`
+                                        </div>`);
+
+                $('textarea').summernote('destroy');
+                $('textarea').val('');
+                $('textarea').summernote({
+                    height: 200,
+                    toolbar: []
                 });
             });
         });

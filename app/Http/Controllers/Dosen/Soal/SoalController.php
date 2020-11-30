@@ -70,7 +70,7 @@ class SoalController extends Controller
             $request->benar = 0;
         }
 
-        if ($request->modelSoal !== 4) {
+        if ($request->modelSoal != 4) {
             foreach ($jawaban as $key => $value) {
                 if ($value !== NULL) {
                     $data = Pilihan::storePilihan($soal->id, $value);
@@ -164,7 +164,7 @@ class SoalController extends Controller
 
         Soal::updateSoal($request, $id);
 
-        if ($request->modelSoal !== 4) {
+        if ($request->modelSoal != 4) {
             Pilihan::deletePilihan($id);
             
             foreach ($request->jawaban as $key => $value) {
