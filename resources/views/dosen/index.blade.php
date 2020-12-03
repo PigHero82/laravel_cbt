@@ -95,8 +95,20 @@
                                         <tr>
                                             <td><a href="{{ route('dosen.soal.show', $item->id) }}">{{ $item->nama }}</a></td>
                                             <td>{{ $item->jumlah }} Soal</td>
-                                            <td>{{ Carbon\Carbon::parse($item->tanggal)->formatLocalized('%d %B %Y') }}</td>
-                                            <td>{{ Carbon\Carbon::parse($item->waktuAwal)->formatLocalized('%H:%M') }} - {{ Carbon\Carbon::parse($item->waktuAkhir)->formatLocalized('%H:%M') }}</td>
+                                            <td>
+                                                @if ($item->tanggal_awal == $item->tanggal_akhir)
+                                                    {{ Carbon\Carbon::parse($item->tanggal_awal)->formatLocalized('%d %B %Y') }}
+                                                @else
+                                                    {{ Carbon\Carbon::parse($item->tanggal_awal)->formatLocalized('%d %B %Y') }} - {{ Carbon\Carbon::parse($item->tanggal_akhir)->formatLocalized('%d %B %Y') }}
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($item->waktu_awal == '00:00:00' && $item->waktu_akhir == '23:59:00')
+                                                    -
+                                                @else
+                                                    {{ Carbon\Carbon::parse($item->waktu_awal)->formatLocalized('%H:%M') }} - {{ Carbon\Carbon::parse($item->waktu_akhir)->formatLocalized('%H:%M') }}
+                                                @endif
+                                            </td>
                                             <td><div disabled class="badge badge-md badge-danger">{{ $item->durasi }} Menit</div></td>
                                             @if ( $item->status == 1)
                                                 <td class="text-center"><i class="feather icon-check text-success"></i></td>
