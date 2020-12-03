@@ -7,6 +7,7 @@
 @section('css')
     <link rel="stylesheet" type="text/css" href="{{ asset('/app-assets/vendors/css/tables/datatable/datatables.min.css') }}">
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{{ asset('/app-assets/vendors/css/extensions/sweetalert2.min.css') }}">
 @endsection
 
 @section('content')
@@ -90,9 +91,10 @@
                                                                 <fieldset class="form-group mb-0">
                                                                     <label for="basicInputFile">Gambar</label>
                                                                     <div class="custom-file">
-                                                                        <input type="file" class="custom-file-input" accept="image/*" name="gambar">
-                                                                        <label class="custom-file-label" for="inputGroupFile01">Pilih Gambar</label>
+                                                                        <input type="file" id="gambar" class="custom-file-input" accept="image/*" name="gambar">
+                                                                        <label class="custom-file-label" id="inputGroupFile01">Pilih Gambar</label>
                                                                     </div>
+                                                                    {{-- <input type="file" name="gambar" id="gambar" class="custom-file-input" accept="image/*"> --}}
                                                                 </fieldset>
                                                             </div>
                                                         </div>
@@ -197,10 +199,29 @@
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+    <script src="{{ asset('app-assets/vendors/js/extensions/sweetalert2.all.min.js') }}"></script>
     <script>
         $(document).ready(function() {
             $('.summernote').summernote({
                 height: 200
+            });
+
+            $(document).on('change', '#gambar', function(event) {
+                if (document.getElementById("gambar").files.length == 0) {
+                    $('#inputGroupFile01').text('Pilih Gambar');
+                } else {
+                    var FileSize = document.getElementById("gambar").files[0].size / 1024 / 1024;
+                    if (FileSize > 2) {
+                        Swal.fire({
+                            type: "error",
+                            title: 'Gagal!',
+                            text: 'Gambar tidak boleh lebih dari 2 MB',
+                            timer: 1000,
+                            showConfirmButton: false
+                        });
+                        $('#inputGroupFile01').text('Pilih Gambar');
+                    }
+                }
             });
         });
     </script>

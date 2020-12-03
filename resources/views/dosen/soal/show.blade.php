@@ -271,8 +271,8 @@
                                                                                 <fieldset class="form-group mb-0">
                                                                                     <label for="basicInputFile">Gambar</label>
                                                                                     <div class="custom-file">
-                                                                                        <input type="file" class="custom-file-input" accept="image/*" name="gambar">
-                                                                                        <label class="custom-file-label" for="inputGroupFile01">Pilih Gambar</label>
+                                                                                        <input type="file" class="custom-file-input" accept="image/*" id="gambar" name="gambar">
+                                                                                        <label class="custom-file-label" id="inputGroupFile01">Pilih Gambar</label>
                                                                                     </div>
                                                                                 </fieldset>
                                                                             </div>
@@ -658,6 +658,24 @@
                     id.submit();
                 }
             })
+        });
+
+        $(document).on('change', '#gambar', function(event) {
+            if (document.getElementById("gambar").files.length == 0) {
+                $('#inputGroupFile01').text('Pilih Gambar');
+            } else {
+                var FileSize = document.getElementById("gambar").files[0].size / 1024 / 1024;
+                if (FileSize > 2) {
+                    Swal.fire({
+                        type: "error",
+                        title: 'Gagal!',
+                        text: 'Gambar tidak boleh lebih dari 2 MB',
+                        timer: 1000,
+                        showConfirmButton: false
+                    });
+                    $('#inputGroupFile01').text('Pilih Gambar');
+                }
+            }
         });
     </script>
 @endsection

@@ -15,5 +15,6 @@
                 <li class="{{ (request()->is('admin/portal/kelas*')) ? 'active' : '' }}"><a href="{{ route('admin.portal.kelas.index') }}"><i></i><span class="menu-item">Data Kelas</span></a></li>
             </ul>
         </li>
+        <li class="nav-item {{ (request()->is('admin/pengaturan*')) ? 'active' : '' }}"><a href="{{ route('admin.pengaturan') }}"><i class="feather icon-settings"></i><span class="menu-title">Pengaturan</span></a></li>
     </ul>
 </div>

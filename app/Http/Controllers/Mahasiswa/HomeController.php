@@ -28,7 +28,7 @@ class HomeController extends Controller
     {
         $cek = Paket::cekPaketbyPeserta($id); 
         if (!isset($cek->id)) {
-            return redirect()->back()->with('danger', 'Anda tidak terdaftar dalam ujian');
+            return back()->with('danger', 'Anda tidak terdaftar dalam ujian');
         }
 
         $ujian = MulaiUjian::singleMulaiUjian($id);
@@ -44,6 +44,11 @@ class HomeController extends Controller
                 }
             }
         }
+        
+        $data_ujian = MulaiUjian::singleMulaiUjian($id);
+        if ($data_ujian->waktu < date('Y-m-d H:i:s')) {
+            return back()->with('danger', 'Waktu telah habis, anda tidak dapat melanjutkan ujian');
+        }
 
         $grup = Grup::getGrupId($id);
         foreach ($grup as $key => $value) {
@@ -54,7 +59,7 @@ class HomeController extends Controller
         }
         $no = 1;
 
-        return view('front.soal', compact('data', 'no'));
+        return view('front.soal', compact('data', 'no', 'data_ujian'));
     }
 
     public function data_soal($id)

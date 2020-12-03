@@ -12,6 +12,7 @@
         }
     </style>
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{{ asset('/app-assets/vendors/css/extensions/sweetalert2.min.css') }}">
 @endsection
 
 @section('content')
@@ -25,9 +26,10 @@
         <div class="card">
             <div class="card-body justify-content-between">
                 <h4 class="align-center">Tes Bahasa Indonesia
+                    <input type="hidden" id="waktu" value="{{ $data_ujian->waktu }}">
                     <div class="float-right">
                         <h5 class="d-inline">Waktu Tersisa : </h5>
-                        <div class="btn btn-danger d-inline">0:00:00</div>
+                        <p class="d-inline text-danger" id="demo"></p>
                     </div>
                 </h4>
             </div>
@@ -70,7 +72,9 @@
                         </div>
                     @endforeach
                 </div>
-                <button class="btn btn-block btn-success"><i class="feather icon-check"></i> Selesai</button>
+                <form action="/mahasiswa" method="get">
+                    <button type="button" class="btn btn-block btn-success keluar"><i class="feather icon-check"></i> Selesai</button>
+                </form>
             </div>
         </div>
     </div>
@@ -78,6 +82,7 @@
 
 @section('js')
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+    <script src="{{ asset('app-assets/vendors/js/extensions/sweetalert2.all.min.js') }}"></script>
     <script>
         $(document).ready( function () {
             var data = $('#awal').attr('data-id');
@@ -229,6 +234,27 @@
     </script>
     <script>
         $(document).ready(function() {
+            $(document).on('click', '.keluar', function () {
+                id = $(this).parent('form');
+                Swal.fire({
+                    title: 'Yakin ingin keluar dari tes?',
+                    text: "Anda masih dapat menjawab tes apabila masih ada waktu tersisa",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Ya',
+                    confirmButtonClass: 'btn btn-primary',
+                    cancelButtonText: 'Tidak',
+                    cancelButtonClass: 'btn btn-danger ml-1',
+                    buttonsStyling: false,
+                }).then(function (result) {
+                    if (result.value) {
+                        id.submit();
+                    }
+                })
+            });
+
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -283,4 +309,29 @@
             });
         });
     </script>
+    <script>
+        var waktu = $('#waktu').val();
+        console.log(waktu);
+        var countDownDate = new Date(waktu).getTime();
+        
+        var x = setInterval(function() {
+        
+          var now = new Date().getTime();
+            
+          var distance = countDownDate - now;
+            
+          var hours = Math.floor(distance / (1000 * 60 * 60));
+          var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+          var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            
+          document.getElementById("demo").innerHTML = hours + ":"
+          + minutes + ":" + seconds;
+            
+          if (distance < 0) {
+            clearInterval(x);
+            document.getElementById("demo").innerHTML = "WAKTU HABIS";
+            $('.keluar').parent('form').submit();
+          }
+        }, 3000);
+        </script>
 @endsection

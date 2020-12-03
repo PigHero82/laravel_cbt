@@ -5,10 +5,11 @@
 @endsection
 
 @section('content')
-    @if(session()->get('success'))
-        <div class ="alert alert-success">
-            {{ session()->get('success') }}  
-        </div><br />
+    @if ($message = Session::get('danger'))
+    <div class="alert alert-danger alert-block">
+        <button type="button" class="close" data-dismiss="alert"><i class="feather icon-x"></i></button>
+        {{ $message }}
+    </div>
     @endif
 
     <div class="sidebar-shop" id="ecommerce-sidebar-toggler">

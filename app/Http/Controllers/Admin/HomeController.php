@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Kelas;
 use App\MataKuliah;
+use App\Pengaturan;
 
 class HomeController extends Controller
 {
@@ -29,5 +30,33 @@ class HomeController extends Controller
         $mataKuliah = count(MataKuliah::getMataKuliah());
 
         return view('index', compact('mahasiswa', 'dosen', 'kelas', 'mataKuliah'));
+    }
+
+    public function pengaturan()
+    {
+        $data = Pengaturan::singlePengaturan();
+
+        return view('admin.pengaturan', compact('data'));
+    }
+
+    public function store_pengaturan(Request $request)
+    {
+        if ($request->file('logo') !== NULL) {
+            $image = $request->file('logo');
+            $gambar = rand() . '.' . $image->getClientOriginalExtension();
+            $image->move('assets/images/profile/', $gambar);
+
+            Pengaturan::updateGambar($gambar);
+        }
+
+        if ($request->nama !== NULL) {
+            Pengaturan::updateNama($request->nama);
+        }
+
+        if ($request->deskripsi !== NULL) {
+            Pengaturan::updateDeskripsi($request->deskripsi);
+        }
+
+        return back();
     }
 }

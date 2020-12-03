@@ -30,14 +30,16 @@ Route::namespace('Dosen')->name('dosen.')->prefix('dosen')->middleware('auth', '
     });
 });
 
-Route::name('admin.')->prefix('admin')->middleware('auth', 'role:admin')->group(function() {
-    Route::get('', 'Admin\HomeController@index')->name('index');
-    Route::name('portal.')->prefix('portal')->group(function() {
-        Route::resource('mahasiswa', 'Admin\Portal\MahasiswaController');
-        Route::resource('dosen', 'Admin\Portal\DosenController');
-        Route::resource('kelas', 'Admin\Portal\KelasController');
-        Route::resource('mata-kuliah', 'Admin\Portal\MataKuliahController');
-        Route::resource('kelas/detail', 'Admin\Portal\KelasMahasiswaController');
+Route::namespace('Admin')->name('admin.')->prefix('admin')->middleware('auth', 'role:admin')->group(function() {
+    Route::get('', 'HomeController@index')->name('index');
+    Route::get('pengaturan', 'HomeController@pengaturan')->name('pengaturan');
+    Route::post('pengaturan', 'HomeController@store_pengaturan')->name('store.pengaturan');
+    Route::namespace('Portal')->name('portal.')->prefix('portal')->group(function() {
+        Route::resource('mahasiswa', 'MahasiswaController');
+        Route::resource('dosen', 'DosenController');
+        Route::resource('kelas', 'KelasController');
+        Route::resource('mata-kuliah', 'MataKuliahController');
+        Route::resource('kelas/detail', 'KelasMahasiswaController');
         Route::view('pengumuman', 'pengumuman')->name('pengumuman');
     });
 });
