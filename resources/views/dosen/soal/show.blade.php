@@ -54,13 +54,15 @@
                             <dd class="col-lg-9" id="bank-text">{{ $data->durasi }} Menit</dd>
                         </dl>
                         
-                        <hr>
-                        
-                        <dl class="row mb-0">
-                            <div class="container">
-                                <p class="mb-0">{{ $data->deskripsi }}</p>
-                            </div>
-                        </dl>
+                        @if ($data->deskripsi != NULL)
+                            <hr>
+                            
+                            <dl class="row mb-0">
+                                <div class="container">
+                                    <p class="mb-0">{{ $data->deskripsi }}</p>
+                                </div>
+                            </dl>
+                        @endif
                         
                         <hr>
                         
@@ -92,7 +94,7 @@
                         <h3 class="d-inline">Daftar Soal</h3>
                         <div class="float-right d-inline">
                             <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalTambahGrup"><i class="feather icon-plus"></i> Tambah Grup</button>
-                            <button type="button" class="btn btn-primary"><i class="feather icon-upload"></i> Import Excel</button>
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalExcel"><i class="feather icon-upload"></i> Upload Excel</button>
                         </div>
                     </div>
                     <div class="card-body">
@@ -546,6 +548,65 @@
                         <div class="form-group float-right">
                             <button type="submit" class="btn btn-success"><i class="feather icon-check"></i> Submit</button>
                         </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="modalExcel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Tambah Mahasiswa</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <form action="{{ route('dosen.import') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>File Excel</label>
+                            <input type="file" name="file" class="form-control">
+                            <input type="hidden" name="id" value="{{ $soal }}">
+                        </div>
+
+                        <hr>
+                        
+                        <p>Sebelum mengunggah pastikan file yang akan anda unggah sudah dalam bentuk Ms. Excel dan format penulisan harus sesuai dengan yang telah ditentukan.</p>
+                        <strong>Grup wajib diisi sebelum memulai menulis soal</strong><br>
+                        <strong>Soal wajib diisi sebelum memulai menulis deskripsi jawaban</strong><br>
+                        <strong>Jawaban dapat diisi lebih dari 1 dan disertai dengan hasil Benar atau Salah</strong><br><br>
+                        
+                        <label>Ketentuan Data</label>
+                        
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>jenis</th>
+                                        <th>deskripsi</th>
+                                        <th>hasil</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Wajib diisi | Mengikuti format list yang telah ditentukan (Grup, Soal, Jawaban)</td>
+                                        <td>Wajib diisi | Nama Grup / Nama Soal / Deskripsi Opsi Jawaban</td>
+                                        <td>Wajib diisi | Hanya diisi pada Tipe Jawaban (Benar/Salah)</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <a href="#" class="btn btn-success">Download Format</a>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Tambah</button>
                     </div>
                 </form>
             </div>

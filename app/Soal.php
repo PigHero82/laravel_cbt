@@ -21,6 +21,15 @@ class Soal extends Model
         ]);
     }
 
+    static function importSoal($idGrup, $modelSoal, $pertanyaan)
+    {
+        return Soal::create([
+            'idGrup'     => $idGrup,
+            'modelSoal'  => $modelSoal,
+            'pertanyaan' => $pertanyaan
+        ]);
+    }
+
     static function updateSoal($request, $id)
     {
         Soal::whereId($id)->update([

@@ -32,6 +32,14 @@ class Grup extends Model
         ]);
     }
 
+    static function importGrupNama($idPaket, $nama)
+    {
+        return Grup::create([
+            'idPaket'   => $idPaket,
+            'nama'      => $nama
+        ]);
+    }
+
     static function getGrupId($id)
     {
         return Grup::select('id', 'nama')

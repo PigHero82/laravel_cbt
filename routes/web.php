@@ -13,7 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::view('/login', 'login')->name('login');
 Route::get('', 'HomeController@index')->middleware('auth')->name('home');
 
 Route::namespace('Dosen')->name('dosen.')->prefix('dosen')->middleware('auth', 'role:dosen')->group(function() {
@@ -23,10 +22,13 @@ Route::namespace('Dosen')->name('dosen.')->prefix('dosen')->middleware('auth', '
     Route::namespace('Soal')->group(function () {
         Route::resource('soal', 'SoalController')->except(['index']);
         Route::get('edit/{id}', 'SoalController@data_soal')->name('edit-soal');
+        Route::post('import', 'SoalController@import')->name('import');
         Route::patch('edit/{id}/update', 'SoalController@data_soal_update')->name('edit-soal.update');
         Route::delete('edit/{id}/delete', 'SoalController@data_soal_delete')->name('edit-soal.destroy');
         Route::resource('paket', 'PaketController');
         Route::resource('pilihan', 'PilihanController');
+        Route::get('laporan', 'SoalController@laporan_index')->name('laporan.index');
+        Route::get('laporan/{id}', 'SoalController@laporan_show')->name('laporan.show');
     });
 });
 

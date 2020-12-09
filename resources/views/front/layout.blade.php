@@ -9,10 +9,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
     <meta name="description" content="Computer Based Tes Politeknik Kesehatan Denpasar">
     <meta name="keywords" content="CBT, cbt, cbt poltekkes, poltekkes, politeknik kesehatan, politeknik kesehatan denpasar, politeknik kesehatan bali">
-    <meta name="author" content="PIXINVENT">
+    <meta name="author" content="Darma Wiryatama & Darma Wiryanata">
     <title>@yield('judul') - CBT Politeknik Kesehatan Bali</title>
-    <link rel="apple-touch-icon" href="{{ asset('logo.jpg') }}">
-    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('logo.jpg') }}">
+    <link rel="apple-touch-icon" href="{{ asset('assets/images/profile/logo.jpg') }}">
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('assets/images/profile/logo.jpg') }}">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600" rel="stylesheet">
 
     <!-- BEGIN: Vendor CSS-->

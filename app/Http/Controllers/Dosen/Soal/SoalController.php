@@ -3,12 +3,18 @@
 namespace App\Http\Controllers\Dosen\Soal;
 
 use App\Http\Controllers\Controller;
-use App\Soal;
-use Illuminate\Http\Request;
-
+use App\Imports\SoalImport;
+use App\Grup;
 use App\Paket;
 use App\Pilihan;
-use App\Grup;
+use App\Soal;
+use App\KelasMahasiswa;
+use App\ImportSoal;
+use Illuminate\Http\Request;
+
+use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Input;
+
 
 class SoalController extends Controller
 {
@@ -95,12 +101,17 @@ class SoalController extends Controller
     {
         $data = Paket::singlePaket($soal);
         $cek = Paket::cekPaketbyDosen($soal);
-        $grup = Grup::getGrup($soal);
 
         if ($cek == NULL) {
-            return redirect()->back()->with('danger', 'Data Paket Tidak Ditemukan');
+            return back()->with('danger', 'Data Paket Tidak Ditemukan');
         }
-        return view('dosen.soal.show', compact('data', 'grup'));
+        if ($data->tanggal_awal <= date('Y-m-d') && $data->tanggal_akhir >= date('Y-m-d') && $data->status == 1) {
+            return view('dosen.laporan.show');
+        } else {
+            $grup = Grup::getGrup($soal);
+
+            return view('dosen.soal.show', compact('data', 'grup', 'soal'));
+        }
     }
 
     /**
@@ -186,5 +197,79 @@ class SoalController extends Controller
         Soal::deleteSoal($id);
 
         return back();
+    }
+
+    public function import(Request $request)
+    {
+        ImportSoal::truncate();
+
+        // menangkap file excel
+		$file = $request->file('file');
+ 
+		// membuat nama file unik
+		$nama_file = rand().$file->getClientOriginalName();
+ 
+		// upload ke folder file_siswa di dalam folder public
+		$file->move('assets/import/soal/',$nama_file);
+ 
+		// import data
+		Excel::import(new SoalImport, public_path('/assets/import/soal/'.$nama_file));
+        
+        $data = ImportSoal::getImportSoal();
+
+        if ($data[0]->jenis != "Grup") {
+            $deskripsi = "Tes Soal";
+            $grup = Grup::importGrupNama($request->id, $deskripsi);
+        }
+
+        foreach ($data as $key => $value) {
+            if ($value->jenis == "Grup") {
+                $grup = Grup::importGrupNama($request->id, $value->deskripsi);
+            } elseif ($value->jenis == "Soal") {
+                if ($value->modelSoal == NULL || $value->modelSoal == "Pilihan Ganda") {
+                    $value->modelSoal = 1;
+                } else {
+                    $value->modelSoal = 4;
+                }
+
+                $soal = Soal::importSoal($grup->id, $value->modelSoal, $value->deskripsi);
+            } else {
+                if ($soal->id == NULL) {
+                    $value->modelSoal = 1;
+                    $value->deskripsi = "[Tanpa Soal]";
+                    $soal = Soal::importSoal($grup->id, $value->modelSoal, $value->deskripsi);
+                }
+
+                $pilihan = Pilihan::storePilihan($soal->id, $value->deskripsi);
+
+                if ($value->hasil == "Benar") {
+                    Soal::updateSoalJawaban($soal->id, $pilihan->id);
+                }
+            }
+        }
+
+        return back()->with('success', 'Soal berhasil diupload');
+    }
+
+    public function laporan_index()
+    {
+        $data = Paket::getPaketAktif();
+
+        return view('dosen.laporan.index', compact('data'));
+    }
+
+    public function laporan_show($id)
+    {
+        $data = Paket::singlePaket($id);
+        $cek = Paket::cekPaketbyDosen($id);
+        return $mahasiswa = KelasMahasiswa::getKelasMahasiswa($data->idKelas);
+
+        if ($cek == NULL) {
+            return back()->with('danger', 'Data Paket Tidak Ditemukan');
+        } elseif (!($data->tanggal_awal.' '.$data->waktu_awal <= date('Y-m-d H:i:s'))) {
+            return back()->with('danger', 'Ujian belum dimulai');
+        }
+
+        return view('dosen.laporan.show', compact('data'));
     }
 }
