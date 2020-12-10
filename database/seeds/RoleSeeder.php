@@ -18,13 +18,13 @@ class RoleSeeder extends Seeder
         ]);
 
         Role::create([
-            'name'          => 'dosen',
-            'description'   => 'Dosen'
+            'name'          => 'pengampu',
+            'description'   => 'Pengampu'
         ]);
 
         Role::create([
-            'name'          => 'mahasiswa',
-            'description'   => 'Mahasiswa'
+            'name'          => 'peserta',
+            'description'   => 'Peserta'
         ]);
     }
 }

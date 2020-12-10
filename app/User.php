@@ -88,6 +88,22 @@ class User extends Authenticatable
             ->attach(Role::where('name', 'dosen')->first());
     }
 
+    static function getUser()
+    {
+        $users = User::select('id')->get();
+        
+        if ($users->isNotEmpty()) {
+            foreach ($users as $key => $value) {
+                $data[$key] = User::firstUser($value->id);
+                $data[$key]['roles'] = ListRole::getRoles($value->id);
+            }
+            
+            return $data;
+        }
+
+        return $users;
+    }
+
     static function getMahasiswa()
     {
         return User::join('role_user', 'users.id', 'role_user.user_id')
@@ -111,9 +127,12 @@ class User extends Authenticatable
 
     static function firstUser($id)
     {
-        return User::select('id', 'username', 'name', 'gambar')
+        $user = User::select('id', 'username', 'name', 'gambar')
                     ->whereId($id)
                     ->first();
+        $user['roles'] = ListRole::getRoles($id);
+
+        return $user;
     }
 
     static function deleteUser($id)

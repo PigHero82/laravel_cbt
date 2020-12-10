@@ -41,8 +41,11 @@ Route::namespace('Admin')->name('admin.')->prefix('admin')->middleware('auth', '
     Route::get('pengaturan', 'HomeController@pengaturan')->name('pengaturan');
     Route::post('pengaturan', 'HomeController@store_pengaturan')->name('store.pengaturan');
     Route::namespace('Portal')->name('portal.')->prefix('portal')->group(function() {
-        Route::resource('mahasiswa', 'MahasiswaController');
-        Route::resource('dosen', 'DosenController');
+        Route::resource('user', 'UserController');
+        Route::name('user.')->prefix('user')->group(function () {
+            Route::get('role/{id}', 'UserController@showRole');
+            Route::post('role/{id}', 'UserController@role')->name('role');
+        });
         Route::resource('kelas', 'KelasController');
         Route::resource('mata-kuliah', 'MataKuliahController');
         Route::resource('kelas/detail', 'KelasMahasiswaController');

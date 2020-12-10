@@ -9,8 +9,7 @@
         <li class="nav-item {{ (request()->is('admin')) ? 'active' : '' }}"><a href="{{ route('admin.index') }}"><i class="feather icon-home"></i><span class="menu-title">Dashboard</span></a></li>
         <li class="nav-item"><a href="#"><i class="feather icon-codepen"></i><span class="menu-title">Portal</span></a>
             <ul class="menu-content">
-                <li class="{{ (request()->is('admin/portal/mahasiswa*')) ? 'active' : '' }}"><a href="{{ route('admin.portal.mahasiswa.index') }}"><i></i><span class="menu-item">Data Mahasiswa</span></a></li>
-                <li class="{{ (request()->is('admin/portal/dosen*')) ? 'active' : '' }}"><a href="{{ route('admin.portal.dosen.index') }}"><i></i><span class="menu-item">Data Dosen</span></a></li>
+                <li class="{{ (request()->is('admin/portal/user*')) ? 'active' : '' }}"><a href="{{ route('admin.portal.user.index') }}"><i></i><span class="menu-item">Data User</span></a></li>
                 <li class="{{ (request()->is('admin/portal/mata-kuliah*')) ? 'active' : '' }}"><a href="{{ route('admin.portal.mata-kuliah.index') }}"><i></i><span class="menu-item">Data Mata Kuliah</span></a></li>
                 <li class="{{ (request()->is('admin/portal/kelas*')) ? 'active' : '' }}"><a href="{{ route('admin.portal.kelas.index') }}"><i></i><span class="menu-item">Data Kelas</span></a></li>
             </ul>
