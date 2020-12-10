@@ -18,6 +18,28 @@ class KelasMahasiswa extends Model
                             ->get();
     }
 
+    static function getKelasMahasiswaLaporan($idKelas)
+    {
+        $mahasiswa = KelasMahasiswa::join('users', 'kelas_mahasiswa.idMahasiswa', 'users.id')
+                            ->select('idKelas', 'users.id as id', 'users.username as nim', 'users.name as nama', 'users.gambar', 'kelas_mahasiswa.id as iddata')
+                            ->where('idKelas', $idKelas)
+                            ->get();
+
+        foreach ($mahasiswa as $key => $value) {
+            $idKelas = $value->idKelas;
+            $id = $value->id;
+
+            $data = KelasMahasiswa::join('users', 'kelas_mahasiswa.idMahasiswa', 'users.id')
+                            ->select('idKelas', 'users.id as id', 'users.username as nim', 'users.name as nama', 'users.gambar', 'kelas_mahasiswa.id as iddata')
+                            ->where('idKelas', $idKelas)
+                            ->where('idMahasiswa', $id)
+                            ->get();
+            $data['ujian'] = KelasMahasiswa::join('mulai_ujian', 'kelas_mahasiswa.idMahasiswa', 'mulai_ujian.id');
+        }
+
+        return $data;
+    }
+
     static function firstKelasMahasiswaidKelasidMahasiswa($idKelas, $idMahasiswa)
     {
         return KelasMahasiswa::where('idKelas', $idKelas)
