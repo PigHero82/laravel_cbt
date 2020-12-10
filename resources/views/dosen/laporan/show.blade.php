@@ -159,6 +159,28 @@
                                 <h2>Tidak Ada Grup</h2>
                             </div>
                         @endif --}}
+                        <div class="table-responsive">
+                            <table class="table zero-configuration">
+                                <thead>
+                                    <tr>
+                                        <th>NIM</th>
+                                        <th>Nama</th>
+                                        <th>Nilai</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @forelse ($mahasiswa as $item)
+                                        <tr>
+                                            <td><a href="#modal" >{{ $item->nim }}</a></td>
+                                            <td>{{ $item->nama }}</td>
+                                            <td>{{ $item->nilai/$total * 100 }}</td>
+                                        </tr>
+                                    @empty
+                                        
+                                    @endforelse
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>

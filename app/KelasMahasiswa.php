@@ -18,26 +18,29 @@ class KelasMahasiswa extends Model
                             ->get();
     }
 
-    static function getKelasMahasiswaLaporan($idKelas)
+    static function getKelasMahasiswaLaporan($id, $idKelas)
     {
-        $mahasiswa = KelasMahasiswa::join('users', 'kelas_mahasiswa.idMahasiswa', 'users.id')
-                            ->select('idKelas', 'users.id as id', 'users.username as nim', 'users.name as nama', 'users.gambar', 'kelas_mahasiswa.id as iddata')
-                            ->where('idKelas', $idKelas)
-                            ->get();
+        $students = KelasMahasiswa::select('users.id as id')
+                                    ->join('users', 'kelas_mahasiswa.idMahasiswa', 'users.id')
+                                    ->join('kelas', 'kelas_mahasiswa.idKelas', 'kelas.id')
+                                    ->join('paket', 'kelas.id', 'paket.idKelas')
+                                    ->where('kelas_mahasiswa.idKelas', $idKelas)
+                                    ->where('paket.id', $id)
+                                    ->get();
 
-        foreach ($mahasiswa as $key => $value) {
-            $idKelas = $value->idKelas;
-            $id = $value->id;
+        if ($students->isNotEmpty()) {
+            foreach ($students as $key => $value) {
+                $data[$key] = KelasMahasiswa::join('users', 'kelas_mahasiswa.idMahasiswa', 'users.id')
+                                            ->select('idKelas', 'users.id as id', 'users.username as nim', 'users.name as nama', 'users.gambar', 'kelas_mahasiswa.id as iddata')
+                                            ->where('users.id', $value->id)
+                                            ->first();
+                $data[$key]['nilai'] = Jawaban::getNilai($id, $value->id);
+            }
 
-            $data = KelasMahasiswa::join('users', 'kelas_mahasiswa.idMahasiswa', 'users.id')
-                            ->select('idKelas', 'users.id as id', 'users.username as nim', 'users.name as nama', 'users.gambar', 'kelas_mahasiswa.id as iddata')
-                            ->where('idKelas', $idKelas)
-                            ->where('idMahasiswa', $id)
-                            ->get();
-            $data['ujian'] = KelasMahasiswa::join('mulai_ujian', 'kelas_mahasiswa.idMahasiswa', 'mulai_ujian.id');
+            return $data;
         }
 
-        return $data;
+        return $students;
     }
 
     static function firstKelasMahasiswaidKelasidMahasiswa($idKelas, $idMahasiswa)

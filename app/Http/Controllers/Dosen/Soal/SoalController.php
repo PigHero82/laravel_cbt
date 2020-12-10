@@ -5,11 +5,12 @@ namespace App\Http\Controllers\Dosen\Soal;
 use App\Http\Controllers\Controller;
 use App\Imports\SoalImport;
 use App\Grup;
+use App\ImportSoal;
+use App\KelasMahasiswa;
+use App\Jawaban;
 use App\Paket;
 use App\Pilihan;
 use App\Soal;
-use App\KelasMahasiswa;
-use App\ImportSoal;
 use Illuminate\Http\Request;
 
 use Maatwebsite\Excel\Facades\Excel;
@@ -105,8 +106,8 @@ class SoalController extends Controller
         if ($cek == NULL) {
             return back()->with('danger', 'Data Paket Tidak Ditemukan');
         }
-        if ($data->tanggal_awal <= date('Y-m-d') && $data->tanggal_akhir >= date('Y-m-d') && $data->status == 1) {
-            return view('dosen.laporan.show');
+        if ($data->tanggal_awal.' '.$data->waktu_awal <= date('Y-m-d H:i:s') && $data->tanggal_akhir.' '.$data->waktu_akhir >= date('Y-m-d-H:i:s') && $data->status == 1) {
+            return redirect()->route('dosen.laporan.show', $data->id)->with('danger', 'Ujian sedang berlangsung, soal tidak dapat diubah');
         } else {
             $grup = Grup::getGrup($soal);
 
@@ -262,7 +263,8 @@ class SoalController extends Controller
     {
         $data = Paket::singlePaket($id);
         $cek = Paket::cekPaketbyDosen($id);
-        return $mahasiswa = KelasMahasiswa::getKelasMahasiswa($data->idKelas);
+        $total = Paket::sumNilai($id)->jumlah * Paket::sumNilai($id)->bobot_benar;
+        $mahasiswa = KelasMahasiswa::getKelasMahasiswaLaporan($id, $data->idKelas);
 
         if ($cek == NULL) {
             return back()->with('danger', 'Data Paket Tidak Ditemukan');
@@ -270,6 +272,6 @@ class SoalController extends Controller
             return back()->with('danger', 'Ujian belum dimulai');
         }
 
-        return view('dosen.laporan.show', compact('data'));
+        return view('dosen.laporan.show', compact('data', 'mahasiswa', 'total'));
     }
 }

@@ -37,12 +37,24 @@ class Jawaban extends Model
 
     static function getDataSoal($idPaket)
     {
-        return $jawaban = Jawaban::join('soal', 'jawaban.idSoal', 'soal.id')
-                ->join('grup', 'soal.idGrup', 'grup.id')
-                ->select('jawaban.id', 'jawaban.idSoal', 'jawaban.idPilihan', 'jawaban.jawaban_esai')
-                ->where('idUser', Auth::id())
-                ->where('grup.id', $idPaket)
-                ->orderBy('jawaban.id', 'asc')
-                ->get();
+        return Jawaban::join('soal', 'jawaban.idSoal', 'soal.id')
+                        ->join('grup', 'soal.idGrup', 'grup.id')
+                        ->select('jawaban.id', 'jawaban.idSoal', 'jawaban.idPilihan', 'jawaban.jawaban_esai')
+                        ->where('idUser', Auth::id())
+                        ->where('grup.id', $idPaket)
+                        ->orderBy('jawaban.id', 'asc')
+                        ->get();
+    }
+
+    static function getNilai($id, $idUser)
+    {
+        return Jawaban::selectRaw('SUM(jawaban.skor) as jumlah_skor')
+                        ->join('soal', 'jawaban.idSoal', 'soal.id')
+                        ->join('grup', 'soal.idGrup', 'grup.id')
+                        ->join('paket', 'grup.idPaket', 'paket.id')
+                        ->where('paket.id', $id)
+                        ->where('jawaban.idUser', $idUser)
+                        ->pluck('jumlah_skor')
+                        ->first();
     }
 }

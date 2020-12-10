@@ -21,14 +21,18 @@ Route::namespace('Dosen')->name('dosen.')->prefix('dosen')->middleware('auth', '
     Route::view('cetak', 'dosen.cetak')->name('cetak');
     Route::namespace('Soal')->group(function () {
         Route::resource('soal', 'SoalController')->except(['index']);
-        Route::get('edit/{id}', 'SoalController@data_soal')->name('edit-soal');
+        Route::prefix('edit')->group(function () {
+            Route::get('{id}', 'SoalController@data_soal')->name('edit-soal');
+            Route::patch('{id}/update', 'SoalController@data_soal_update')->name('edit-soal.update');
+            Route::delete('{id}/delete', 'SoalController@data_soal_delete')->name('edit-soal.destroy');
+        });
         Route::post('import', 'SoalController@import')->name('import');
-        Route::patch('edit/{id}/update', 'SoalController@data_soal_update')->name('edit-soal.update');
-        Route::delete('edit/{id}/delete', 'SoalController@data_soal_delete')->name('edit-soal.destroy');
         Route::resource('paket', 'PaketController');
         Route::resource('pilihan', 'PilihanController');
-        Route::get('laporan', 'SoalController@laporan_index')->name('laporan.index');
-        Route::get('laporan/{id}', 'SoalController@laporan_show')->name('laporan.show');
+        Route::name('laporan.')->prefix('laporan')->group(function () {
+            Route::get('', 'SoalController@laporan_index')->name('index');
+            Route::get('{id}', 'SoalController@laporan_show')->name('show');
+        });
     });
 });
 

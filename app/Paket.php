@@ -91,6 +91,16 @@ class Paket extends Model
                     ->get();
     }
 
+    static function sumNilai($id)
+    {
+        return Paket::join('grup', 'paket.id', 'grup.idPaket')
+                    ->join('soal', 'grup.id', 'soal.idGrup')
+                    ->select('paket.bobot_benar')
+                    ->selectRaw('COUNT(soal.id) as jumlah')
+                    ->where('paket.id', $id)
+                    ->first();
+    }
+
     static function singlePaket($id)
     {
         return Paket::join('kelas', 'paket.idKelas', 'kelas.id')
