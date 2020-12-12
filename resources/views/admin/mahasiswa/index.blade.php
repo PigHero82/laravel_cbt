@@ -1,7 +1,7 @@
 @extends('layout')
 
 @section('judul')
-    Data Mahasiswa
+    Data User
 @endsection
 
 @section('css')
@@ -36,7 +36,7 @@
     <div class="card">
         <div class="card-header">
             <div class="d-inline">
-                <h3>Daftar Mahasiswa</h3>
+                <h3>Daftar User</h3>
             </div>
             <div class="d-inline">
                 <button type="button" data-toggle="modal" data-target="#modalTambah" class="btn btn-success px-1"><i class="feather icon-plus"></i> Tambah</button>
@@ -79,7 +79,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Tambah Mahasiswa</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Tambah User</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -151,7 +151,7 @@
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Tambah Mahasiswa</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Tambah User</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>

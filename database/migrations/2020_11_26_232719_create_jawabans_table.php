@@ -20,7 +20,7 @@ class CreateJawabansTable extends Migration
             $table->bigInteger('idPilihan')->nullable();
             $table->text('jawaban_esai')->nullable();
             $table->boolean('benar')->nullable();
-            $table->int('skor')->nullable();
+            $table->integer('skor')->nullable();
             $table->timestamps();
         });
     }

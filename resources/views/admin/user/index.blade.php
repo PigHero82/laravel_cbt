@@ -1,7 +1,7 @@
 @extends('layout')
 
 @section('judul')
-    Data Mahasiswa
+    Data User
 @endsection
 
 @section('css')
@@ -36,7 +36,7 @@
     <div class="card">
         <div class="card-header">
             <div class="d-inline">
-                <h3>Daftar Mahasiswa</h3>
+                <h3>Daftar User</h3>
             </div>
             <div class="d-inline">
                 <button type="button" data-toggle="modal" data-target="#modalTambah" class="btn btn-success px-1"><i class="feather icon-plus"></i> Tambah</button>
@@ -79,7 +79,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Tambah Mahasiswa</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Tambah User</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -90,12 +90,12 @@
                     <div class="modal-body">
                         <div class="form-group">
                             <label>Nama</label>
-                            <input type="text" name="nama" class="form-control" placeholder="Nama Mahasiswa" required>
+                            <input type="text" name="nama" class="form-control" placeholder="Nama User" required>
                         </div>
     
                         <div class="form-group">
                             <label>NIM</label>
-                            <input type="text" name="nim" class="form-control" maxlength="12" placeholder="NIM Mahasiswa" required>
+                            <input type="text" name="nim" class="form-control" maxlength="12" placeholder="NIM/NIDN User" required>
                         </div>
     
                         <div class="form-group">
@@ -124,17 +124,17 @@
     
                         <div class="form-group">
                             <label>Email</label>
-                            <input type="email" name="email" class="form-control" placeholder="Email Mahasiswa (input dengan email yang valid)">
+                            <input type="email" name="email" class="form-control" placeholder="Email User (input dengan email yang valid)">
                         </div>
     
                         <div class="form-group">
                             <label>No HP</label>
-                            <input type="number" name="hp" class="form-control" pattern="[0-9]+" maxlength="13" placeholder="No HP Mahasiswa (Maksimal diisi 13 digit | Diisi dengan angka)">
+                            <input type="number" name="hp" class="form-control" pattern="[0-9]+" maxlength="13" placeholder="No HP User (Maksimal diisi 13 digit | Diisi dengan angka)">
                         </div>
     
                         <div class="form-group">
                             <label>Alamat</label>
-                            <textarea name="alamat" cols="30" rows="10" class="form-control" placeholder="Alamat Mahasiswa"></textarea>
+                            <textarea name="alamat" cols="30" rows="10" class="form-control" placeholder="Alamat User"></textarea>
                         </div>
                     </div>
                     
@@ -151,7 +151,7 @@
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Tambah Mahasiswa</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Tambah User</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>

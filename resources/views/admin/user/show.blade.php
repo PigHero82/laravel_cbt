@@ -1,7 +1,7 @@
 @extends('layout')
 
 @section('judul')
-    Data Mahasiswa
+    Data User
 @endsection
 
 @section('css')
@@ -99,7 +99,7 @@
                                                 <div class="form-group">
                                                     <div class="controls">
                                                         <label for="email">Email</label>
-                                                        <input type="email" class="form-control" name="email" placeholder="Email Mahasiswa" value="{{ $info->email }}" required>
+                                                        <input type="email" class="form-control" name="email" placeholder="Email User" value="{{ $info->email }}" required>
                                                     </div>
                                                 </div>
                                             </div>
@@ -108,14 +108,14 @@
                                                 <div class="form-group">
                                                     <div class="controls">
                                                         <label for="hp">No. HP</label>
-                                                        <input type="text" class="form-control" pattern="[0-9]+" name="hp" placeholder="No HP Mahasiswa (Maksimal diisi 13 digit | Diisi dengan angka)" value="{{ $info->hp }}" maxlength="13" required>
+                                                        <input type="text" class="form-control" pattern="[0-9]+" name="hp" placeholder="No HP User (Maksimal diisi 13 digit | Diisi dengan angka)" value="{{ $info->hp }}" maxlength="13" required>
                                                     </div>
                                                 </div>
 
                                                 <div class="form-group">
                                                     <div class="controls">
                                                         <label for="alamat">Alamat</label>
-                                                        <textarea class="form-control" name="alamat" cols="30" rows="3" placeholder="Alamat Mahasiswa" required>{{ $info->alamat }}</textarea>
+                                                        <textarea class="form-control" name="alamat" cols="30" rows="3" placeholder="Alamat User" required>{{ $info->alamat }}</textarea>
                                                     </div>
                                                 </div>
                                             </div>

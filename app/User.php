@@ -66,7 +66,7 @@ class User extends Authenticatable
         return $this->belongsToMany(Role::class);
     }
 
-    static function storeMahasiswa($request)
+    static function storeUser($request)
     {
         User::create([
             'username'  => $request->nim,
@@ -74,7 +74,7 @@ class User extends Authenticatable
             'password'  => Hash::make($request->nim)
         ])
             ->roles()
-            ->attach(Role::where('name', 'mahasiswa')->first());
+            ->attach(Role::where('name', 'peserta')->first());
     }
 
     static function storeDosen($request)
