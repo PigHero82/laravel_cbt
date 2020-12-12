@@ -26,10 +26,10 @@ class HomeController extends Controller
     {
         if (Auth::user()->hasRole('admin')) {
             return redirect('/admin');
-        } elseif (Auth::user()->hasRole('dosen')) {
-            return redirect('/dosen');
-        } elseif (Auth::user()->hasRole('mahasiswa')) {
-            return redirect('/mahasiswa');
+        } elseif (Auth::user()->hasRole('pengampu')) {
+            return redirect('/pengampu');
+        } elseif (Auth::user()->hasRole('peserta')) {
+            return redirect('/peserta');
         }
     }
 }

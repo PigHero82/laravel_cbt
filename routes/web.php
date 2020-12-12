@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('', 'HomeController@index')->middleware('auth')->name('home');
 
-Route::namespace('Dosen')->name('dosen.')->prefix('dosen')->middleware('auth', 'role:dosen')->group(function() {
+Route::namespace('Dosen')->name('dosen.')->prefix('pengampu')->middleware('auth', 'role:pengampu')->group(function() {
     Route::get('', 'HomeController@index')->name('index');
     Route::get('mahasiswa', 'HomeController@mahasiswa')->name('mahasiswa');
     Route::view('cetak', 'dosen.cetak')->name('cetak');
@@ -53,11 +53,11 @@ Route::namespace('Admin')->name('admin.')->prefix('admin')->middleware('auth', '
     });
 });
 
-Route::namespace('Mahasiswa')->prefix('mahasiswa')->middleware('auth', 'role:mahasiswa')->group(function() {
+Route::namespace('Mahasiswa')->prefix('peserta')->middleware('auth', 'role:peserta')->group(function() {
     Route::get('', 'HomeController@index')->name('index');
     Route::get('soal/{id}', 'HomeController@soal')->name('soal');
     Route::get('data-soal/{id}', 'HomeController@data_soal');
     Route::post('jawab', 'HomeController@jawab')->name('jawab');
 });
 
-Auth::routes();
+Auth::routes(['register' => false]);
