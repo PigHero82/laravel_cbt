@@ -42,6 +42,7 @@ Route::namespace('Admin')->name('admin.')->prefix('admin')->middleware('auth', '
     Route::post('pengaturan', 'HomeController@store_pengaturan')->name('store.pengaturan');
     Route::namespace('Portal')->name('portal.')->prefix('portal')->group(function() {
         Route::resource('user', 'UserController');
+        Route::view('pengampu', 'admin.pengampu.index')->name('pengampu.index');
         Route::name('user.')->prefix('user')->group(function () {
             Route::get('role/{id}', 'UserController@showRole');
             Route::post('role/{id}', 'UserController@role')->name('role');

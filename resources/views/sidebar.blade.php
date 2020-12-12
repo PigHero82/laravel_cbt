@@ -10,6 +10,7 @@
         <li class="nav-item"><a href="#"><i class="feather icon-codepen"></i><span class="menu-title">Portal</span></a>
             <ul class="menu-content">
                 <li class="{{ (request()->is('admin/portal/user*')) ? 'active' : '' }}"><a href="{{ route('admin.portal.user.index') }}"><i></i><span class="menu-item">Data User</span></a></li>
+                <li class="{{ (request()->is('admin/portal/pengampu*')) ? 'active' : '' }}"><a href="{{ route('admin.portal.pengampu.index') }}"><i></i><span class="menu-item">Data Pengampu</span></a></li>
                 <li class="{{ (request()->is('admin/portal/mata-kuliah*')) ? 'active' : '' }}"><a href="{{ route('admin.portal.mata-kuliah.index') }}"><i></i><span class="menu-item">Data Mata Kuliah</span></a></li>
                 <li class="{{ (request()->is('admin/portal/kelas*')) ? 'active' : '' }}"><a href="{{ route('admin.portal.kelas.index') }}"><i></i><span class="menu-item">Data Kelas</span></a></li>
             </ul>

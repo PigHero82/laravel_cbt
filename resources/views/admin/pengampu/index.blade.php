@@ -1,11 +1,12 @@
 @extends('layout')
 
 @section('judul')
-    Data User
+    Data Pengampu
 @endsection
 
 @section('css')
     <link rel="stylesheet" type="text/css" href="{{ asset('/app-assets/vendors/css/tables/datatable/datatables.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('/app-assets/vendors/css/forms/select/select2.min.css') }}">
 @endsection
 
 @section('content')
@@ -36,7 +37,7 @@
     <div class="card">
         <div class="card-header">
             <div class="d-inline">
-                <h3>Daftar User</h3>
+                <h3>Daftar Pengampu</h3>
             </div>
             <div class="d-inline">
                 <button type="button" data-toggle="modal" data-target="#modalTambah" class="btn btn-success px-1"><i class="feather icon-plus"></i> Tambah</button>
@@ -45,96 +46,61 @@
         </div>
         <!-- /.card-header -->
         <div class="card-body">
-            @if (count($data) > 0)
+            {{-- @if (count($data) > 0) --}}
                 <div class="table-responsive">
                     <table id="myTable" class="table zero-configuration table-striped" style="width:100%">
                         <thead>
                             <tr>
-                                <th>NIM/NIDN</th>
+                                <th>NIM</th>
                                 <th>Nama</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($data as $item)
+                            {{-- @foreach ($data as $item)
                                 <tr>
                                     <td>{{ $item->username }}</td>
                                     <td><a href="{{ route('admin.portal.user.show', $item->id) }}">{{ $item->name }}</a></td>
                                 </tr>
-                            @endforeach
+                            @endforeach --}}
+                            <tr>
+                                <td>12312312331</td>
+                                <td><a href="#">Dosen</a></td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
-            @else
+            {{-- @else
                 <div class="error-template text-center">
                     <h1><i class="feather icon-slash"></i></h1>
                     <h2>Tidak Ada Data</h2>
                 </div> 
-            @endif
+            @endif --}}
         </div>
         <!-- /.card-body -->
     </div>
 
     <!-- Modal -->
     <div class="modal fade" id="modalTambah" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Tambah User</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Tambah Pengampu</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 
-                <form action="{{ route('admin.portal.user.store') }}" method="post">
+                <form action="#" method="post">
                     @csrf
                     <div class="modal-body">
                         <div class="form-group">
-                            <label>Nama</label>
-                            <input type="text" name="nama" class="form-control" placeholder="Nama User" required>
-                        </div>
-    
-                        <div class="form-group">
-                            <label>NIM/NIDN</label>
-                            <input type="text" name="nim" class="form-control" maxlength="12" placeholder="NIM/NIDN User" required>
-                        </div>
-    
-                        <div class="form-group">
-                            <label>Jenis Kelamin</label>
-                            <fieldset>
-                                <div class="vs-radio-con">
-                                    <input type="radio" name="jeniskelamin" checked value="1">
-                                    <span class="vs-radio">
-                                        <span class="vs-radio--border"></span>
-                                        <span class="vs-radio--circle"></span>
-                                    </span>
-                                    <span class="">Laki-laki</span>
-                                </div>
-                            </fieldset>
-                            <fieldset>
-                                <div class="vs-radio-con">
-                                    <input type="radio" name="jeniskelamin" value="0">
-                                    <span class="vs-radio">
-                                        <span class="vs-radio--border"></span>
-                                        <span class="vs-radio--circle"></span>
-                                    </span>
-                                    <span class="">Perempuan</span>
-                                </div>
-                            </fieldset>
-                        </div>
-    
-                        <div class="form-group">
-                            <label>Email</label>
-                            <input type="email" name="email" class="form-control" placeholder="Email User (input dengan email yang valid)">
-                        </div>
-    
-                        <div class="form-group">
-                            <label>No HP</label>
-                            <input type="number" name="hp" class="form-control" pattern="[0-9]+" maxlength="13" placeholder="No HP User (Maksimal diisi 13 digit | Diisi dengan angka)">
-                        </div>
-    
-                        <div class="form-group">
-                            <label>Alamat</label>
-                            <textarea name="alamat" cols="30" rows="10" class="form-control" placeholder="Alamat User"></textarea>
+                            <label>Pilih User</label>
+                            <select name="idMataKuliah" class="form-control select">
+                                {{-- @foreach ($matakuliah as $item)
+                                    <option value="{{ $item->id }}">{{ $item->nama }}</option>
+                                @endforeach --}}
+                                <option value="1">Dosen</option>
+                            </select>
                         </div>
                     </div>
                     
@@ -147,7 +113,7 @@
     </div>
 
     <!-- Modal -->
-    <div class="modal fade" id="modalExcel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    {{-- <div class="modal fade" id="modalExcel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -201,12 +167,13 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 @endsection
 
 @section('js')
     <script src="{{ asset('app-assets/vendors/js/tables/datatable/datatables.min.js') }}"></script>
     <script src="{{ asset('app-assets/vendors/js/tables/datatable/datatables.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('app-assets/vendors/js/forms/select/select2.full.min.js') }}"></script>
     <script>
         $(document).ready( function () {
             $('.zero-configuration').DataTable();
