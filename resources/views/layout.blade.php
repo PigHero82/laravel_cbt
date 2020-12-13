@@ -67,9 +67,7 @@
                                         @endif
                                     </span>
                                 </div>
-                                <span><div class="avatar bg-primary mr-1">
-                                    <span><img class="round" src="/assets/images/profile/{{ Auth::user()->gambar }}" alt="avatar" height="40" width="40"></span>
-                                </div></span>
+                                <span><img class="round" src="{{ asset('assets/images/profile/'. Auth::user()->gambar) }}" alt="avatar" height="40" width="40"></span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right">
                                 @foreach ($composerRole as $item)

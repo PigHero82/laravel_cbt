@@ -23,9 +23,17 @@
                 <ul class="nav navbar-nav float-right">
                     <li class="nav-item d-none d-lg-block"><a class="nav-link nav-link-expand"><i class="ficon feather icon-maximize"></i></a></li>
                     <li class="dropdown dropdown-user nav-item"><a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown">
-                            <div class="user-nav d-sm-flex d-none"><span class="user-name text-bold-600">{{ Auth::user()->name }}</span><span class="user-status">Peserta</span></div><span><img class="round" src="../../../app-assets/images/portrait/small/avatar-s-11.jpg" alt="avatar" height="40" width="40"></span>
+                            <div class="user-nav d-sm-flex d-none"><span class="user-name text-bold-600">{{ Auth::user()->name }}</span><span class="user-status">Peserta</span></div><span><img class="round" src="{{ asset('assets/images/profile/'. Auth::user()->gambar) }}" alt="avatar" height="40" width="40"></span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right">
+                            @foreach ($composerRole as $item)
+                                <a class="dropdown-item" href="{{ route('role.update', $item->id) }}" onclick="event.preventDefault();
+                                document.getElementById('role-{{ $item->id }}').submit();">{{ $item->description }}</a>
+                                <form id="role-{{ $item->id }}" action="{{ route('role.update', $item->id) }}" method="post" style="display: none">
+                                    @csrf
+                                </form>
+                            @endforeach
+                            <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                 <i class="feather icon-power"></i> Logout
                             </a>
