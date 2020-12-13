@@ -72,9 +72,17 @@
                                 </div></span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right">
+                                @foreach ($composerRole as $item)
+                                <a class="dropdown-item" href="{{ route('role.update', $item->id) }}" onclick="event.preventDefault();
+                                    document.getElementById('role-{{ $item->id }}').submit();">{{ $item->description }}</a>
+                                    <form id="role-{{ $item->id }}" action="{{ route('role.update', $item->id) }}" method="post" style="display: none">
+                                        @csrf
+                                    </form>
+                                @endforeach
+                                <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="{{ route('logout') }}"
                                     onclick="event.preventDefault();
-                                                    document.getElementById('logout-form').submit();">
+                                                document.getElementById('logout-form').submit();">
                                     Logout
                                 </a>
 

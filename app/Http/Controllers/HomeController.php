@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\ListRole;
+use App\RoleUser;
 use Auth;
 use Illuminate\Http\Request;
 
@@ -32,4 +34,19 @@ class HomeController extends Controller
             return redirect('/peserta');
         }
     }
+
+	public function update($id)
+	{
+		if (Auth::check()) {
+			$role = ListRole::firstRole(Auth::user()->id, $id);
+			if (isset($role)) {
+				RoleUser::updateRole(Auth::user()->id, $id);
+				return redirect('');
+			} else {
+				return back();
+			}
+		} else {
+			return redirect()->route('login');
+		}
+	}
 }

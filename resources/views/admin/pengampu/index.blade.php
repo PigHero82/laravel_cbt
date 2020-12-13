@@ -46,7 +46,7 @@
         </div>
         <!-- /.card-header -->
         <div class="card-body">
-            {{-- @if (count($data) > 0) --}}
+            @if (count($data) > 0)
                 <div class="table-responsive">
                     <table id="myTable" class="table zero-configuration table-striped" style="width:100%">
                         <thead>
@@ -56,25 +56,21 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {{-- @foreach ($data as $item)
+                            @foreach ($data as $item)
                                 <tr>
-                                    <td>{{ $item->username }}</td>
-                                    <td><a href="{{ route('admin.portal.user.show', $item->id) }}">{{ $item->name }}</a></td>
+                                    <td><a href="#">{{ $item->username }}</a></td>
+                                    <td>{{ $item->name }}</td>
                                 </tr>
-                            @endforeach --}}
-                            <tr>
-                                <td>12312312331</td>
-                                <td><a href="#">Dosen</a></td>
-                            </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
-            {{-- @else
+            @else
                 <div class="error-template text-center">
                     <h1><i class="feather icon-slash"></i></h1>
                     <h2>Tidak Ada Data</h2>
                 </div> 
-            @endif --}}
+            @endif
         </div>
         <!-- /.card-body -->
     </div>
@@ -90,16 +86,15 @@
                     </button>
                 </div>
                 
-                <form action="#" method="post">
+                <form action="{{ route('admin.portal.pengampu.store') }}" method="post">
                     @csrf
                     <div class="modal-body">
                         <div class="form-group">
                             <label>Pilih User</label>
-                            <select name="idMataKuliah" class="form-control select">
-                                {{-- @foreach ($matakuliah as $item)
-                                    <option value="{{ $item->id }}">{{ $item->nama }}</option>
-                                @endforeach --}}
-                                <option value="1">Dosen</option>
+                            <select name="id" class="form-control select">
+                                @foreach ($user as $item)
+                                    <option value="{{ $item->id }}">{{ $item->username }} | {{ $item->name }}</option>
+                                @endforeach
                             </select>
                         </div>
                     </div>

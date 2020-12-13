@@ -1,5 +1,6 @@
 <?php
 
+use App\ListRole;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,7 +14,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+View::composer(['*'], function ($view) {
+    if (Auth::user() !== NULL) {
+        $role = ListRole::getRole(Auth::user()->id);
+        View::share('composerRole', $role);
+    }
+});
+
 Route::get('', 'HomeController@index')->middleware('auth')->name('home');
+Route::post('role/{id}', 'HomeController@update')->name('role.update');
 
 Route::namespace('Dosen')->name('dosen.')->prefix('pengampu')->middleware('auth', 'role:pengampu')->group(function() {
     Route::get('', 'HomeController@index')->name('index');
@@ -42,7 +51,7 @@ Route::namespace('Admin')->name('admin.')->prefix('admin')->middleware('auth', '
     Route::post('pengaturan', 'HomeController@store_pengaturan')->name('store.pengaturan');
     Route::namespace('Portal')->name('portal.')->prefix('portal')->group(function() {
         Route::resource('user', 'UserController');
-        Route::view('pengampu', 'admin.pengampu.index')->name('pengampu.index');
+        Route::resource('pengampu', 'PengampuController');
         Route::name('user.')->prefix('user')->group(function () {
             Route::get('role/{id}', 'UserController@showRole');
             Route::post('role/{id}', 'UserController@role')->name('role');

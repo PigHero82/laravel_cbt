@@ -17,7 +17,7 @@
 
     <div class="row">
         <div class="col-xl-3 col-md-4 col-sm-6">
-            <a href="#">
+            <a href="{{ route('admin.portal.user.index') }}">
                 <div class="card text-center">
                     <div class="card-content">
                         <div class="card-body">
@@ -26,15 +26,15 @@
                                     <i class="feather icon-users text-info font-medium-5"></i>
                                 </div>
                             </div>
-                            <h2 class="text-bold-700">{{ $mahasiswa }}</h2>
-                            <p class="mb-0 line-ellipsis text-dark">Jumlah Mahasiswa</p>
+                            <h2 class="text-bold-700">{{ $user[1]->jumlah }}</h2>
+                            <p class="mb-0 line-ellipsis text-dark">Jumlah Peserta</p>
                         </div>
                     </div>
                 </div>
             </a>
         </div>
         <div class="col-xl-3 col-md-4 col-sm-6">
-            <a href="#">
+            <a href="{{ route('admin.portal.pengampu.index') }}">
                 <div class="card text-center">
                     <div class="card-content">
                         <div class="card-body">
@@ -43,8 +43,8 @@
                                     <i class="feather icon-user text-success font-medium-5"></i>
                                 </div>
                             </div>
-                            <h2 class="text-bold-700">{{ $dosen }}</h2>
-                            <p class="mb-0 line-ellipsis text-dark">Jumlah Dosen</p>
+                            <h2 class="text-bold-700">{{ $user[1]->jumlah }}</h2>
+                            <p class="mb-0 line-ellipsis text-dark">Jumlah Pengampu</p>
                         </div>
                     </div>
                 </div>

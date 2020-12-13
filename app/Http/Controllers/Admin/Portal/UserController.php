@@ -51,7 +51,11 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user = User::storeUser($request);
+        DataDiri::storeDataDiri($request, $user->id);
+        ListRole::storeRole($user->id, 3);
+
+        return back()->with('success', 'User berhasil ditambah');
     }
 
     /**

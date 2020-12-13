@@ -68,24 +68,15 @@ class User extends Authenticatable
 
     static function storeUser($request)
     {
-        User::create([
+        $user = User::create([
             'username'  => $request->nim,
             'name'      => $request->nama,
             'password'  => Hash::make($request->nim)
-        ])
-            ->roles()
-            ->attach(Role::where('name', 'peserta')->first());
-    }
-
-    static function storeDosen($request)
-    {
-        User::create([
-            'username'  => $request->nidn,
-            'name'      => $request->nama,
-            'password'  => Hash::make($request->nidn)
-        ])
-            ->roles()
-            ->attach(Role::where('name', 'dosen')->first());
+        ]);
+        $role = $user->roles()
+                     ->attach(Role::where('name', 'peserta')->first());
+        
+        return $user;
     }
 
     static function getUser()
@@ -138,5 +129,13 @@ class User extends Authenticatable
     static function deleteUser($id)
     {
         User::whereId($id)->delete();
+    }
+
+    static function getPengampu()
+    {
+        return User::join('list_roles', 'users.id', 'list_roles.user_id')
+                    ->select('users.id', 'users.username', 'users.name')
+                    ->where('list_roles.role_id', 2)
+                    ->get();
     }
 }

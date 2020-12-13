@@ -9,6 +9,7 @@ use App\User;
 use App\Kelas;
 use App\MataKuliah;
 use App\Pengaturan;
+use App\ListRole;
 
 class HomeController extends Controller
 {
@@ -24,12 +25,11 @@ class HomeController extends Controller
 
     public function index()
     {
-        $mahasiswa = count(User::getMahasiswa());
-        $dosen = count(User::getDosen());
+        $user = ListRole::countByRole();
         $kelas = count(Kelas::getKelas());
         $mataKuliah = count(MataKuliah::getMataKuliah());
 
-        return view('index', compact('mahasiswa', 'dosen', 'kelas', 'mataKuliah'));
+        return view('index', compact('user', 'kelas', 'mataKuliah'));
     }
 
     public function pengaturan()
