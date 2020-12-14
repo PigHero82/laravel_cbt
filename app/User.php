@@ -95,11 +95,21 @@ class User extends Authenticatable
         return $users;
     }
 
-    static function getMahasiswa()
+    static function getUserRole($id)
     {
-        return User::join('role_user', 'users.id', 'role_user.user_id')
-                    ->select('users.id as id', 'username as nim', 'name')
-                    ->where('role_user.role_id', 3)->get();
+        return User::join('list_roles', 'users.id', 'list_roles.user_id')
+                    ->select('users.id as id', 'username', 'name')
+                    ->where('list_roles.role_id', $id)
+                    ->get();
+    }
+
+    static function getlistPeserta($id)
+    {
+        return User::join('list_roles', 'users.id', 'list_roles.user_id')
+                    ->select('users.id as id', 'username', 'name')
+                    ->where('list_roles.role_id', 3)
+                    ->where('users.id', '!=', $id)
+                    ->get();
     }
 
     static function getDosen()

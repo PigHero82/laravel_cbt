@@ -42,15 +42,9 @@
             <div class="col-md-2 mb-2 mb-md-0">
                 <ul class="nav nav-pills flex-column mt-md-0 mt-1">
                     <li class="nav-item">
-                        <a class="nav-link d-flex py-75 active" id="account-pill-general" data-toggle="pill" href="#account-vertical-general" aria-expanded="true">
+                        <a class="nav-link d-flex py-75 active" id="mahasiswa" data-toggle="pill" href="#mahasiswa" aria-expanded="true">
                             <i class="feather icon-user mr-50 font-medium-3"></i>
                             Mahasiswa
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link d-flex py-75" id="account-pill-password" data-toggle="pill" href="#account-vertical-password" aria-expanded="false">
-                            <i class="feather icon-calendar mr-50 font-medium-3"></i>
-                            Kelas
                         </a>
                     </li>
                 </ul>
@@ -62,7 +56,7 @@
 
                         <div class="card-body">
                             <div class="tab-content">
-                                <div role="tabpanel" class="tab-pane active" id="account-vertical-general" aria-labelledby="account-pill-general" aria-expanded="true">
+                                <div role="tabpanel" class="tab-pane active" id="mahasiswa" aria-labelledby="account-pill-general" aria-expanded="true">
                                     <div class="card-title">
                                         <div class="row justify-content-between">
                                             <h3 class="col-md-6">Daftar Mahasiswa</h3>
@@ -112,42 +106,6 @@
                                         </div> 
                                     @endif
                                 </div>
-                                <div class="tab-pane fade " id="account-vertical-password" role="tabpanel" aria-labelledby="account-pill-password" aria-expanded="false">
-                                    <form novalidate>
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <div class="form-group">
-                                                    <div class="controls">
-                                                        <label for="account-old-password">Old Password</label>
-                                                        <input type="password" class="form-control" id="account-old-password" required placeholder="Old Password" data-validation-required-message="This old password field is required">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-12">
-                                                <div class="form-group">
-                                                    <div class="controls">
-                                                        <label for="account-new-password">New Password</label>
-                                                        <input type="password" name="password" id="account-new-password" class="form-control" placeholder="New Password" required data-validation-required-message="The password field is required" minlength="6">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-12">
-                                                <div class="form-group">
-                                                    <div class="controls">
-                                                        <label for="account-retype-new-password">Retype New
-                                                            Password</label>
-                                                        <input type="password" name="con-password" class="form-control" required id="account-retype-new-password" data-validation-match-match="password" placeholder="New Password" data-validation-required-message="The Confirm password field is required" minlength="6">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-12 d-flex flex-sm-row flex-column justify-content-end">
-                                                <button type="submit" class="btn btn-primary mr-sm-1 mb-1 mb-sm-0">Save
-                                                    changes</button>
-                                                <button type="reset" class="btn btn-outline-warning">Cancel</button>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -168,24 +126,31 @@
                     </button>
                 </div>
                 
-                <form action="{{ route('admin.portal.detail.store') }}" method="post">
-                    @csrf
-                    <input type="text" name="idKelas" value="{{ $info->id }}" hidden>
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label>Mahasiswa</label>
-                            <select name="idMahasiswa" class="form-control select">
-                                @foreach ($mahasiswa as $item)
-                                    <option value="{{ $item->id }}">{{ $item->nim }} | {{ $item->name }}</option>
-                                @endforeach
-                            </select>
+                @if (count($mahasiswa) > 0)
+                    <form action="{{ route('admin.portal.detail.store') }}" method="post">
+                        @csrf
+                        <input type="text" name="idKelas" value="{{ $info->id }}" hidden>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label>Mahasiswa</label>
+                                <select name="idMahasiswa" class="form-control select">
+                                    @foreach ($mahasiswa as $item)
+                                        <option value="{{ $item->id }}">{{ $item->username }} | {{ $item->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                         </div>
-                    </div>
-                    
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Tambah</button>
-                    </div>
-                </form>
+                        
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Tambah</button>
+                        </div>
+                    </form>
+                @else
+                    <div class="error-template text-center">
+                        <h1><i class="feather icon-slash"></i></h1>
+                        <h2>Tidak Ada Data</h2>
+                    </div> 
+                @endif
             </div>
         </div>
     </div>

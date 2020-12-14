@@ -589,6 +589,7 @@
                                     <tr>
                                         <th>jenis</th>
                                         <th>deskripsi</th>
+                                        <th>modelSoal</th>
                                         <th>hasil</th>
                                     </tr>
                                 </thead>
@@ -596,7 +597,8 @@
                                     <tr>
                                         <td>Wajib diisi | Mengikuti format list yang telah ditentukan (Grup, Soal, Jawaban)</td>
                                         <td>Wajib diisi | Nama Grup / Nama Soal / Deskripsi Opsi Jawaban</td>
-                                        <td>Wajib diisi | Hanya diisi pada Tipe Jawaban (Benar/Salah)</td>
+                                        <td>Wajib diisi | Hanya untuk soal (Pilihan Ganda/Esai)</td>
+                                        <td>Wajib diisi (Hanya pilihan ganda) | Hanya diisi pada Tipe Jawaban (Benar/Salah)</td>
                                     </tr>
                                 </tbody>
                             </table>

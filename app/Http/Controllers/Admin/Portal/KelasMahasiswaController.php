@@ -50,11 +50,11 @@ class KelasMahasiswaController extends Controller
     {
         $data = KelasMahasiswa::firstKelasMahasiswaidKelasidMahasiswa($request->idKelas, $request->idMahasiswa);
         if (isset($data->id)) {
-            return redirect()->back()->with('danger', 'Data Mahasiswa telah terdaftar');
+            return back()->with('danger', 'Data Peserta telah terdaftar');
         }
         else {
             KelasMahasiswa::storeKelasMahasiswa($request);
-            return redirect()->back()->with('success', 'Input Data Mahasiswa Berhasil');
+            return back()->with('success', 'Data Peserta berhasil ditambah');
         }
         
     }
@@ -69,7 +69,7 @@ class KelasMahasiswaController extends Controller
     {
         $info = Kelas::firstKelas($kelasMahasiswa);
         $data = KelasMahasiswa::getKelasMahasiswa($kelasMahasiswa);
-        $mahasiswa = User::getMahasiswa();
+        $mahasiswa = User::getListPeserta($info->idDosen);
 
         return view('admin.kelas.show', compact('info', 'data', 'mahasiswa'));
     }
