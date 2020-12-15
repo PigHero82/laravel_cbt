@@ -604,7 +604,7 @@
                             </table>
                         </div>
                         
-                        <a href="#" class="btn btn-success">Download Format</a>
+                        <a href="{{ asset('assets/import/format/soal.xlsx') }}" class="btn btn-success">Download Format</a>
                     </div>
 
                     <div class="modal-footer">
