@@ -9,6 +9,8 @@ use Illuminate\Notifications\Notifiable;
 use App\Role;
 use Illuminate\Support\Facades\Hash;
 
+use Auth;
+
 class User extends Authenticatable
 {
     use Notifiable;
@@ -147,5 +149,12 @@ class User extends Authenticatable
                     ->select('users.id', 'users.username', 'users.name')
                     ->where('list_roles.role_id', 2)
                     ->get();
+    }
+
+    static function updatePassword($id, $password)
+    {
+        User::whereId($id)->update([
+            'password'  => Hash::make($password)
+        ]);
     }
 }

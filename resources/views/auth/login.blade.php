@@ -83,7 +83,7 @@
                                                         </div>
                                                         @error('username')
                                                             <span class="invalid-feedback" role="alert">
-                                                                <strong>{{ $message }}</strong>
+                                                                <strong>Username dan Password tidak cocok/Username tidak terdaftar</strong>
                                                             </span>
                                                         @else
                                                             <label for="username">NIDN/NIM</label>

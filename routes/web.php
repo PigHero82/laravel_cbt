@@ -23,6 +23,7 @@ View::composer(['*'], function ($view) {
 
 Route::get('', 'HomeController@index')->middleware('auth')->name('home');
 Route::post('role/{id}', 'HomeController@update')->name('role.update');
+Route::resource('akun', 'AkunController');
 
 Route::namespace('Dosen')->name('dosen.')->prefix('pengampu')->middleware('auth', 'role:pengampu')->group(function() {
     Route::get('', 'HomeController@index')->name('index');

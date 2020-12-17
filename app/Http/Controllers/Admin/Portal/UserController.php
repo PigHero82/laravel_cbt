@@ -93,7 +93,13 @@ class UserController extends Controller
      */
     public function update(Request $request, $dataDiri)
     {
+        if (isset($request->password)) {
+            User::updatePassword($dataDiri, $request->password);
+
+            return back()->with('success', 'Password berhasil diubah');
+        }
         DataDiri::updateDataDiri($request, $dataDiri);
+
         return redirect()->back()->with('success', 'Data Berhasil diubah');
     }
 

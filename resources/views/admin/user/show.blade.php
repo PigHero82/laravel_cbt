@@ -70,10 +70,18 @@
                                             </div>
                                             <p class="text-muted ml-75 mt-50"><small>Format JPG, GIF atau PNG. Ukuran Maksimal 800kB</small></p>
                                         </div>
+                                        <div class="float-right">
+                                            <form action="{{ route('admin.portal.user.update', $data->id) }}" method="post">
+                                                @csrf
+                                                @method('PATCH')
+                                                <input type="hidden" name="password" value="{{ $data->username }}">
+                                                <button type="submit" class="btn btn-danger">Reset Password</button>
+                                            </form>
+                                        </div>
                                     </div>
                                     <hr>
                                     <p class="font-weight-bold">{{ $data->name }} <br>{{ $data->username }}</p>
-                                    <form action="{{ route('admin.portal.user.update', $info->idUser) }}" method="POST">
+                                    <form id="form" action="{{ route('admin.portal.user.update', $info->idUser) }}" method="POST">
                                         @csrf
                                         @method('PATCH')
                                         <div class="row">
@@ -99,7 +107,7 @@
                                                 <div class="form-group">
                                                     <div class="controls">
                                                         <label for="email">Email</label>
-                                                        <input type="email" class="form-control" name="email" placeholder="Email User" value="{{ $info->email }}" required>
+                                                        <input type="email" class="form-control" name="email" placeholder="Email User" value="{{ $info->email }}">
                                                     </div>
                                                 </div>
                                             </div>
@@ -108,18 +116,19 @@
                                                 <div class="form-group">
                                                     <div class="controls">
                                                         <label for="hp">No. HP</label>
-                                                        <input type="text" class="form-control" pattern="[0-9]+" name="hp" placeholder="No HP User (Maksimal diisi 13 digit | Diisi dengan angka)" value="{{ $info->hp }}" maxlength="13" required>
+                                                        <input type="text" class="form-control" pattern="[0-9]+" name="hp" placeholder="No HP User (Maksimal diisi 13 digit | Diisi dengan angka)" value="{{ $info->hp }}" maxlength="13">
                                                     </div>
                                                 </div>
 
                                                 <div class="form-group">
                                                     <div class="controls">
                                                         <label for="alamat">Alamat</label>
-                                                        <textarea class="form-control" name="alamat" cols="30" rows="3" placeholder="Alamat User" required>{{ $info->alamat }}</textarea>
+                                                        <textarea class="form-control" name="alamat" cols="30" rows="3" placeholder="Alamat User">{{ $info->alamat }}</textarea>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
+                                    
 
                                         <div class="row">
                                             <div class="col-12 d-flex flex-sm-row flex-column justify-content-end">

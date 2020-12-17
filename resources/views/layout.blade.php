@@ -55,7 +55,8 @@
                     </div>
                     <ul class="nav navbar-nav float-right">
                         <li class="nav-item d-none d-lg-block"><a class="nav-link nav-link-expand"><i class="ficon feather icon-maximize"></i></a></li>
-                        <li class="dropdown dropdown-user nav-item"><a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown">
+                        <li class="dropdown dropdown-user nav-item">
+                            <a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown">
                                 <div class="user-nav d-sm-flex d-none"><span class="user-name text-bold-600">{{ Auth::user()->name }}</span>
                                     <span class="user-status">{{ (request()->is('admin*') ? "Admin" : "Pengampu") }}</span>
                                 </div>
@@ -70,10 +71,11 @@
                                     </form>
                                 @endforeach
                                 <div class="dropdown-divider"></div>
+                                <a href="{{ route('akun.index') }}" class="dropdown-item"><i class="feather icon-settings"></i> Pengaturan</a>
                                 <a class="dropdown-item" href="{{ route('logout') }}"
                                     onclick="event.preventDefault();
                                                 document.getElementById('logout-form').submit();">
-                                    Logout
+                                    <i class="feather icon-log-out"></i> Logout
                                 </a>
 
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
@@ -93,21 +95,8 @@
     <div class="main-menu menu-fixed menu-light menu-accordion menu-shadow" data-scroll-to-active="true">
         <div class="navbar-header">
             <ul class="nav navbar-nav flex-row">
-                <li class="nav-item mr-auto"><a class="navbar-brand" href="
-                    @if (request()->is('admin*'))
-                        {{-- {{ route('admin.index') }} --}}#
-                    @elseif (request()->is('dosen*'))
-                        {{-- {{ route('dosen.index') }} --}}#
-                    @elseif (request()->is('pimpinan*'))
-                        #
-                    @elseif (request()->is('penelitian*'))
-                        #
-                    @elseif (request()->is('pengabdian*'))
-                        #
-                    @elseif (request()->is('reviewer'))
-                        #
-                    @endif
-                    ">
+                <li class="nav-item mr-auto">
+                    <a class="navbar-brand" href="/">
                         <img src="{{ asset('assets/images/profile/logo.jpg') }}" alt="Logo" class="img-fluid" style="max-width: 17%;">
                         <h2 class="brand-text mb-0">CBT</h2>
                     </a></li>
