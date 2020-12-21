@@ -55,8 +55,10 @@ class Kelas extends Model
                                                         ->where('idKelas', $id)
                                                         ->get();
             }
+            return $data;
+        } else {
+            return $kelas;
         }
-        return $data;
     }
 
     static function getKelasOnlyByDosen()
