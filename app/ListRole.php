@@ -68,8 +68,10 @@ class ListRole extends Model
 
     static function countbyRole()
     {
-        return ListRole::select('role_id')
+        return ListRole::join('users', 'list_roles.user_id', 'users.id')
+                        ->select('role_id')
                         ->selectRaw('COUNT(role_id) as jumlah')
+                        ->where('users.status', 1)
                         ->groupBy('role_id')
                         ->get();
     }

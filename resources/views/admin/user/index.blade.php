@@ -32,6 +32,14 @@
         </ul>
     </div>
     @endif
+    @php
+        $i = 0;
+        foreach ($data as $key => $item) {
+            if ($item->status == 0) {
+                $i++;
+            }
+        }
+    @endphp
 
     <div class="card">
         <div class="card-header">
@@ -41,6 +49,9 @@
             <div class="d-inline">
                 <button type="button" data-toggle="modal" data-target="#modalTambah" class="btn btn-success px-1"><i class="feather icon-plus"></i> Tambah</button>
                 <button type="button" data-toggle="modal" data-target="#modalExcel" class="btn btn-primary px-1"><i class="feather icon-upload"></i> Upload Excel</button>
+                @if ($i > 0)
+                    <button type="button" data-toggle="modal" data-target="#modalRequest" class="btn btn-outline-primary px-1"><span class="badge badge-danger">{{ $i }}</span> Request</button>
+                @endif
             </div>
         </div>
         <!-- /.card-header -->
@@ -56,10 +67,12 @@
                         </thead>
                         <tbody>
                             @foreach ($data as $item)
-                                <tr>
-                                    <td>{{ $item->username }}</td>
-                                    <td><a href="{{ route('admin.portal.user.show', $item->id) }}">{{ $item->name }}</a></td>
-                                </tr>
+                                @if ($item->status == 1)
+                                    <tr>
+                                        <td>{{ $item->username }}</td>
+                                        <td><a href="{{ route('admin.portal.user.show', $item->id) }}">{{ $item->name }}</a></td>
+                                    </tr>
+                                @endif
                             @endforeach
                         </tbody>
                     </table>
@@ -142,6 +155,64 @@
                         <button type="submit" class="btn btn-primary">Tambah</button>
                     </div>
                 </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="modalRequest" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Request User</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>NIM/NIDN</th>
+                                    <th>Nama</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($data as $item)
+                                    @if ($item->status == 0)
+                                    <tr>
+                                        <td>{{ $item->username }}</td>
+                                        <td>{{ $item->name }}</td>
+                                        <td>
+                                            <div class="row">
+                                                <div class="d-inline">
+                                                    <form action="{{ route('admin.portal.user.update', $item->id) }}" method="POST">
+                                                        @csrf
+                                                        @method('PATCH')
+                                                        <input type="hidden" name="status" value="1">
+                                                        <input type="hidden" name="username" value="{{ $item->username }}">
+                                                        <button type="submit" style="padding: 0; border: none; background: none;" class="text-success"><i class="feather icon-check"></i></button>
+                                                    </form>
+                                                </div>
+                                                <div class="d-inline ml-2">
+                                                    <form action="{{ route('admin.portal.user.destroy', $item->id) }}" method="POST">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" style="padding: 0; border: none; background: none;" class="text-danger"><i class="feather icon-trash"></i></button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    @endif
+                                @endforeach
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

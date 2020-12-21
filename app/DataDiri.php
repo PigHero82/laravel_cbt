@@ -35,4 +35,11 @@ class DataDiri extends Model
             'alamat'        => $request->alamat
         ]);
     }
+
+    static function firststoreDataDiri($id)
+    {
+        DataDiri::create([
+            'idUser'        => $id
+        ]);
+    }
 }

@@ -71,4 +71,4 @@ Route::namespace('Mahasiswa')->prefix('peserta')->middleware('auth', 'role:peser
     Route::post('jawab', 'HomeController@jawab')->name('jawab');
 });
 
-Auth::routes(['register' => false]);
+Auth::routes();

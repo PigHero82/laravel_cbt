@@ -26,12 +26,16 @@ class HomeController extends Controller
      */
     public function index()
     {
-        if (Auth::user()->hasRole('admin')) {
-            return redirect('/admin');
-        } elseif (Auth::user()->hasRole('pengampu')) {
-            return redirect('/pengampu');
-        } elseif (Auth::user()->hasRole('peserta')) {
-            return redirect('/peserta');
+        if (Auth::user()->status == 1) {
+            if (Auth::user()->hasRole('admin')) {
+                return redirect('/admin');
+            } elseif (Auth::user()->hasRole('pengampu')) {
+                return redirect('/pengampu');
+            } elseif (Auth::user()->hasRole('peserta')) {
+                return redirect('/peserta');
+            }
+        } else {
+            return view('aktivasi');
         }
     }
 

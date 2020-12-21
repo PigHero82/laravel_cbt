@@ -128,9 +128,17 @@ class User extends Authenticatable
                         ->first();
     }
 
+    static function firstUsernameAktif($username, $id)
+    {
+        return User::where('username', $username)
+                        ->where('id', '!=', $id)
+                        ->where('status', 1)
+                        ->first();
+    }
+
     static function firstUser($id)
     {
-        $user = User::select('id', 'username', 'name', 'gambar')
+        $user = User::select('id', 'username', 'name', 'gambar', 'status')
                     ->whereId($id)
                     ->first();
         $user['roles'] = ListRole::getRoles($id);
@@ -155,6 +163,13 @@ class User extends Authenticatable
     {
         User::whereId($id)->update([
             'password'  => Hash::make($password)
+        ]);
+    }
+
+    static function updateStatus($id)
+    {
+        User::whereId($id)->update([
+            'status' => 1
         ]);
     }
 }

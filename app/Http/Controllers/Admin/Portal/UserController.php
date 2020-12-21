@@ -98,6 +98,18 @@ class UserController extends Controller
 
             return back()->with('success', 'Password berhasil diubah');
         }
+        
+        if(isset($request->status)) {
+            $user = User::firstUsernameAktif($request->username, $dataDiri);
+            if (isset($user)) {
+                return back()->with('danger', 'NIM/NIDN telah terdaftar');
+            }
+            User::updateStatus($dataDiri);
+            DataDiri::firststoreDataDiri($dataDiri);
+
+            return back()->with('success', 'User diterima, User berhasil ditambah');
+        }
+        
         DataDiri::updateDataDiri($request, $dataDiri);
 
         return redirect()->back()->with('success', 'Data Berhasil diubah');
@@ -109,9 +121,13 @@ class UserController extends Controller
      * @param  \App\ListRole  $listRole
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ListRole $listRole)
+    public function destroy($listRole)
     {
-        //
+        User::deleteUser($listRole);
+        Role::deleteRole($listRole);
+        ListRole::destroyRoles($listRole);
+
+        return back()->with('danger', 'User ditolak');
     }
 
     public function role(Request $request, $id)

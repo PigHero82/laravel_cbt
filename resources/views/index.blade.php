@@ -26,7 +26,7 @@
                                     <i class="feather icon-users text-info font-medium-5"></i>
                                 </div>
                             </div>
-                            <h2 class="text-bold-700">{{ $user[1]->jumlah }}</h2>
+                            <h2 class="text-bold-700">{{ $user[2]->jumlah }}</h2>
                             <p class="mb-0 line-ellipsis text-dark">Jumlah Peserta</p>
                         </div>
                     </div>
