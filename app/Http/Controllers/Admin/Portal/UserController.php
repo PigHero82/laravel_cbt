@@ -134,7 +134,7 @@ class UserController extends Controller
     {
         ListRole::createRoles($request->role, $id);
         
-        $role = ListRole::firstRole($id);
+        $role = ListRole::firstRole($request->user_id, $id);
         DB::table('role_user')
             ->where('user_id', $id)
             ->update(['role_id' => $role->role_id]);

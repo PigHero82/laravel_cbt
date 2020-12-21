@@ -12,11 +12,11 @@ class ListRole extends Model
 
     static function firstRole($id, $roleId)
     {
-        return ListRole::select('list_roles.id', 'roles.description')
-                        ->leftJoin('roles', 'list_roles.id', 'roles.id')
+        return ListRole::select('list_roles.id', 'list_roles.role_id', 'roles.description')
+                        ->leftJoin('roles', 'list_roles.role_id', 'roles.id')
                         ->where('list_roles.user_id', $id)
                         ->where('list_roles.role_id', $roleId)
-                        ->get();
+                        ->first();
     }
 
     static function getRoles($id)
