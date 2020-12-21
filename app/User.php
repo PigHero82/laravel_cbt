@@ -173,4 +173,12 @@ class User extends Authenticatable
             'status' => 1
         ]);
     }
+
+    static function updateUser($id, $username, $name)
+    {
+        User::whereId($id)->update([
+            'username'  => $username,
+            'name'      => $name
+        ]);
+    }
 }

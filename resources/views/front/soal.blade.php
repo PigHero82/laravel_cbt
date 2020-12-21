@@ -72,7 +72,7 @@
                         </div>
                     @endforeach
                 </div>
-                <form action="/mahasiswa" method="get">
+                <form action="/peserta" method="get">
                     <button type="button" class="btn btn-block btn-success keluar"><i class="feather icon-check"></i> Selesai</button>
                 </form>
             </div>
@@ -88,7 +88,7 @@
             var data = $('#awal').attr('data-id');
             var awal = $('#awal').attr('data-id');
             var akhir = {{ $nourut }};
-            $.get( "/mahasiswa/data-soal/" + data, function( data ) {
+            $.get( "/peserta/data-soal/" + data, function( data ) {
                 var d = JSON.parse(data);
                 console.log(d);
                 
@@ -151,11 +151,13 @@
 
             $(document).on('click', '.navigasi', function(e) {
                 var no = $(this).attr('data-id');
-                $.get( "/mahasiswa/data-soal/" + no, function( data ) {
+                $.get( "/peserta/data-soal/" + no, function( data ) {
                     var d = JSON.parse(data);
                     
                     $('#pertanyaan').html(d.pertanyaan);
 
+                    $('#jawaban form').hide();
+                    $('#jawaban ul').hide();
                     $('#gambar img').remove();
                     $('#gambar').hide();
                     if (d.media != null) {
@@ -165,6 +167,7 @@
 
                     if (d.modelSoal != 4) {         
                         $('#jawaban ul').remove();
+                        $('#jawaban-esai div').remove();
                         for (var i = 0; i < d['pilihan'].length; i++) {
                             var cek = "";
                             if (d.idPilihan == d['pilihan'][i].id) {
@@ -186,9 +189,8 @@
                                                 </ul>`);
                         }
                     } else {
-                        $('#jawaban-esai div').remove();
                         if (d.jawaban_esai != null) {
-                            $('#jawaban-esai').html(`<div>
+                            $('#jawaban-esai').html(`<div class="mt-1">
                                                         <h5>Jawaban :</h5>
                                                         `+ d.jawaban_esai +`
                                                     </div>`);
@@ -332,6 +334,6 @@
             document.getElementById("demo").innerHTML = "WAKTU HABIS";
             $('.keluar').parent('form').submit();
           }
-        }, 3000);
+        }, 1000);
         </script>
 @endsection

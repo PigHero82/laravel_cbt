@@ -19,6 +19,14 @@ class ListRole extends Model
                         ->first();
     }
 
+    static function firstRoleId($id)
+    {
+        return ListRole::select('list_roles.id', 'list_roles.role_id', 'roles.description')
+                        ->leftJoin('roles', 'list_roles.role_id', 'roles.id')
+                        ->where('list_roles.user_id', $id)
+                        ->first();
+    }
+
     static function getRoles($id)
     {
         return ListRole::select('list_roles.role_id', 'roles.description')

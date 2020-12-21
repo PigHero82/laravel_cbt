@@ -90,10 +90,10 @@ class MataKuliahController extends Controller
     {
         $data = MataKuliah::firstMataKuliahNama(strtolower($request->nama));
         if (isset($data->nama) && $mataKuliah->nama != $data->nama) {
-            return redirect()->back()->with('danger', 'Data '. $request->nama .' sudah ada');
+            return redirect()->back()->with('danger', 'Mata Kuliah '. $request->nama .' sudah ada');
         }
         MataKuliah::updateMataKuliah($request, $mataKuliah->id);
-        return redirect()->back()->with('success', 'Data Berhasil diubah');
+        return redirect()->back()->with('success', 'Mata Kuliah Berhasil diubah');
     }
 
     /**

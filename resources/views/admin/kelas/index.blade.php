@@ -115,7 +115,7 @@
                         </div>
     
                         <div class="form-group">
-                            <label>Dosen</label>
+                            <label>Pengampu</label>
                             <select name="idDosen" class="form-control select">
                                 @foreach ($dosen as $item)
                                     <option value="{{ $item->id }}">{{ $item->name }}</option>
@@ -163,7 +163,7 @@
                         </div>
     
                         <div class="form-group">
-                            <label>Dosen</label>
+                            <label>Pengampu</label>
                             <select name="idDosen" class="form-control" id="idDosen">
                                 @foreach ($dosen as $item)
                                     <option value="{{ $item->id }}">{{ $item->nama }}</option>
@@ -193,7 +193,7 @@
                 
                 <div class="modal-body">
                     <div class="form-group">
-                        <label>Dosen</label>
+                        <label>Pengampu</label>
                         <input readonly type="text" name="kode" id="dosen" class="form-control" placeholder="Dosen">
                     </div>
 

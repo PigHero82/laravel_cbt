@@ -6,6 +6,7 @@
 
 @section('css')
     <link rel="stylesheet" type="text/css" href="{{ asset('/app-assets/vendors/css/tables/datatable/datatables.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('/app-assets/vendors/css/extensions/sweetalert2.min.css') }}">
 @endsection
 
 @section('content')
@@ -48,7 +49,7 @@
             </div>
             <div class="d-inline">
                 <button type="button" data-toggle="modal" data-target="#modalTambah" class="btn btn-success px-1"><i class="feather icon-plus"></i> Tambah</button>
-                <button type="button" data-toggle="modal" data-target="#modalExcel" class="btn btn-primary px-1"><i class="feather icon-upload"></i> Upload Excel</button>
+                <button type="button" data-toggle="modal" data-target="#" class="btn btn-primary px-1"><i class="feather icon-upload"></i> Upload Excel</button>
                 @if ($i > 0)
                     <button type="button" data-toggle="modal" data-target="#modalRequest" class="btn btn-outline-primary px-1"><span class="badge badge-danger">{{ $i }}</span> Request</button>
                 @endif
@@ -63,6 +64,7 @@
                             <tr>
                                 <th>NIM/NIDN</th>
                                 <th>Nama</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -71,6 +73,14 @@
                                     <tr>
                                         <td>{{ $item->username }}</td>
                                         <td><a href="{{ route('admin.portal.user.show', $item->id) }}">{{ $item->name }}</a></td>
+                                        <td>
+                                            <form action="{{ route('admin.portal.user.destroy', $item->id) }}" class="form" method="post">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="button" data-toggle="modal" data-target="#modalUbah" data-value="{{ $item->id }}" class="btn btn-warning px-1"><i class="feather icon-edit-1"></i></button>
+                                                <button type="button" class="btn btn-danger px-1 hapus"><i class="feather icon-trash-2"></i></button>
+                                            </form>
+                                        </td>
                                     </tr>
                                 @endif
                             @endforeach
@@ -218,6 +228,41 @@
     </div>
 
     <!-- Modal -->
+    <div class="modal fade" id="modalUbah" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="judul">Ubah User</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <form id="form" method="POST">
+                    @csrf
+                    @method('PATCH')
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="username">NIM/NIDN</label>
+                            <input type="number" name="username" id="username" class="form-control" placeholder="NIM/NIDN User" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="name">Nama</label>
+                            <input type="text" name="name" id="name" class="form-control" placeholder="Nama User" required>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Ubah User</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
     <div class="modal fade" id="modalExcel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
@@ -278,12 +323,53 @@
 @section('js')
     <script src="{{ asset('app-assets/vendors/js/tables/datatable/datatables.min.js') }}"></script>
     <script src="{{ asset('app-assets/vendors/js/tables/datatable/datatables.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('app-assets/vendors/js/extensions/sweetalert2.all.min.js') }}"></script>
     <script>
         $(document).ready( function () {
             $('.zero-configuration').DataTable();
 
             $('form').submit(function() {
                 $(this).find("button[type='submit']").prop('disabled', true);
+            });
+
+            $(document).on('click', '.hapus', function () {
+                id = $(this).parent('form');
+                Swal.fire({
+                    title: 'Yakin ingin hapus?',
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Ya',
+                    confirmButtonClass: 'btn btn-primary',
+                    cancelButtonText: 'Tidak',
+                    cancelButtonClass: 'btn btn-danger ml-1',
+                    buttonsStyling: false,
+                }).then(function (result) {
+                    if (result.value) {
+                        Swal.fire({
+                            type: "success",
+                            title: 'Terhapus!',
+                            text: 'Data telah dihapus.',
+                            timer: 1000,
+                            showConfirmButton: false
+                        });
+                        id.submit();
+                    }
+                })
+            });
+
+            $(document).on('click', '#myTable tbody tr td button', function(e) {
+                var id = $(this).attr('data-value');
+                console.log(id);
+                $.get( "/admin/portal/user/role/" + id, function( data ) {
+                    console.log(JSON.parse(data));
+                    var d = JSON.parse(data);
+                    $('#judul').text("Ubah User | "+ d.name);
+                    $('#form').attr("action", "user/"+ d.id);
+                    $('#username').val(d.username);
+                    $('#name').val(d.name);
+                });
             });
         } );
     </script>

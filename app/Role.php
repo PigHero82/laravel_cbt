@@ -15,9 +15,4 @@ class Role extends Model
     {
         return Role::all();
     }
-
-    static function deleteRole($id)
-    {
-        Role::whereId($id)->delete();
-    }
 }

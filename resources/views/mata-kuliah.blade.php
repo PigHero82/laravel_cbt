@@ -123,7 +123,7 @@
                     </button>
                 </div>
                 
-                <form action="{{ route('admin.portal.mata-kuliah.update', 1) }}" method="post">
+                <form id="form" method="post">
                     @csrf
                     @method('PATCH')
                     <input type="text" name="id" id="id" hidden>
@@ -185,6 +185,7 @@
                     console.log(JSON.parse(data));
                     var d = JSON.parse(data);
                     $('.judul').text("Ubah Mata Kuliah | "+ d.nama);
+                    $('#form').attr("action", "mata-kuliah/"+ d.id);
                     $('#id').val(d.id);
                     $('#nama').val(d.nama);
                 });

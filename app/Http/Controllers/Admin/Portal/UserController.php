@@ -93,6 +93,18 @@ class UserController extends Controller
      */
     public function update(Request $request, $dataDiri)
     {
+        if (isset($request->name)) {
+            $user = User::firstUsername($request->username, $dataDiri);
+
+            if (isset($user)) {
+                return back()->with('danger', 'NIM/NIDN telah terdaftar'); 
+            } else {
+                User::updateUser($dataDiri, $request->username, $request->name);
+
+                return back()->with('success', 'Data User berhasil diubah'); 
+            }
+        }
+
         if (isset($request->password)) {
             User::updatePassword($dataDiri, $request->password);
 
@@ -124,17 +136,16 @@ class UserController extends Controller
     public function destroy($listRole)
     {
         User::deleteUser($listRole);
-        Role::deleteRole($listRole);
         ListRole::destroyRoles($listRole);
 
-        return back()->with('danger', 'User ditolak');
+        return back()->with('danger', 'User dihapus');
     }
 
     public function role(Request $request, $id)
     {
         ListRole::createRoles($request->role, $id);
-        
-        $role = ListRole::firstRole($request->user_id, $id);
+
+        $role = ListRole::firstRoleId($id);
         DB::table('role_user')
             ->where('user_id', $id)
             ->update(['role_id' => $role->role_id]);
