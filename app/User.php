@@ -73,7 +73,8 @@ class User extends Authenticatable
         $user = User::create([
             'username'  => $request->nim,
             'name'      => $request->nama,
-            'password'  => Hash::make($request->nim)
+            'password'  => Hash::make($request->nim),
+            'status'    => 1
         ]);
         $role = $user->roles()
                      ->attach(Role::where('name', 'peserta')->first());

@@ -19,7 +19,7 @@ class CreateUsersTable extends Migration
             $table->char('username', 12);
             $table->string('password');
             $table->string('gambar')->default('blank.png');
-            $table->boolean('status')->default(1);
+            $table->boolean('status')->default(0);
             $table->rememberToken();
             $table->timestamps();
         });
