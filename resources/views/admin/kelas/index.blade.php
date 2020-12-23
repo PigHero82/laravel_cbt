@@ -100,28 +100,40 @@
                 <form action="{{ route('admin.portal.kelas.store') }}" method="post">
                     @csrf
                     <div class="modal-body">
-                        <div class="form-group">
-                            <label>Kode</label>
-                            <input type="text" name="kode" maxlength="3" class="form-control" placeholder="Kode Kelas (Contoh : A, B, DB, dsb.)" required>
-                        </div>
-    
-                        <div class="form-group">
-                            <label>Mata Kuliah</label>
-                            <select name="idMataKuliah" class="form-control select">
-                                @foreach ($matakuliah as $item)
-                                    <option value="{{ $item->id }}">{{ $item->nama }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-    
-                        <div class="form-group">
-                            <label>Pengampu</label>
-                            <select name="idDosen" class="form-control select">
-                                @foreach ($dosen as $item)
-                                    <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
+                        @if (count($matakuliah) == 0)
+                            <div class="error-template text-center">
+                                <h1><i class="feather icon-slash"></i></h1>
+                                <h2>Tidak ada Mata Kuliah</h2>
+                            </div> 
+                        @elseif(count($dosen) == 0)
+                            <div class="error-template text-center">
+                                <h1><i class="feather icon-slash"></i></h1>
+                                <h2>Tidak Ada Pengampu</h2>
+                            </div>
+                        @else
+                            <div class="form-group">
+                                <label>Kode</label>
+                                <input type="text" name="kode" maxlength="3" class="form-control" placeholder="Kode Kelas (Contoh : A, B, DB, dsb.)" required>
+                            </div>
+        
+                            <div class="form-group">
+                                <label>Mata Kuliah</label>
+                                <select name="idMataKuliah" class="form-control select">
+                                    @foreach ($matakuliah as $item)
+                                        <option value="{{ $item->id }}">{{ $item->nama }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+        
+                            <div class="form-group">
+                                <label>Pengampu</label>
+                                <select name="idDosen" class="form-control select">
+                                    @foreach ($dosen as $item)
+                                        <option value="{{ $item->id }}">{{ $item->username }} | {{ $item->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        @endif
                     </div>
                     
                     <div class="modal-footer">
@@ -196,6 +208,22 @@
                         <label>Pengampu</label>
                         <input readonly type="text" name="kode" id="dosen" class="form-control" placeholder="Dosen">
                     </div>
+                    
+                    <form action="{{ route('admin.portal.detail.store') }}" method="post" class="mb-2">
+                        @csrf
+                        <input type="hidden" name="idKelas" id="idKelas">
+
+                        <div class="form-group">
+                            <label for="peserta">Tambah Peserta</label>
+                            <select class="form-control select" name="idMahasiswa" id="peserta">
+                                @foreach ($peserta as $item)
+                                    <option value="{{ $item->id }}">{{ $item->username }} | {{ $item->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn btn-success"><i class="feather icon-check"></i> Tambah</button>
+                    </form>
 
                     <table class="table table-striped">
                         <thead class="thead-light">
@@ -244,7 +272,7 @@
                     $('#id').val(d.id);
                     $('#kode').val(d.kode);
                     $('#idMataKuliah').select2().val(d.idMataKuliah).trigger('change');
-                    $('#idDosen').select2().val(d.idDosen).trigger('change');;
+                    $('#idDosen').select2().val(d.idDosen).trigger('change');
                 });
             });
             
@@ -255,6 +283,7 @@
                     var d = JSON.parse(data);
                     $('#judulKelasModal').text("Detail Kelas | "+ d.kode +"-"+ d.nama);
                     $('#dosen').val(d.dosen);
+                    $('#idKelas').val(id);
                     $('#button').html('<a href="/admin/portal/kelas/detail/'+ d.id +'" class="btn btn-primary">Lihat Detail</a>');
                 });
                 $.get( "/admin/portal/kelas/detail/" + id +"/edit", function( data ) {

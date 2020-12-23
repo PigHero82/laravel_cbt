@@ -30,7 +30,8 @@ class UserController extends Controller
     public function index()
     {
         $data = User::getUser();
-        return view('admin.user.index', compact('data'));
+        $roles = Role::getRoles();
+        return view('admin.user.index', compact('data', 'roles'));
     }
 
     /**
@@ -53,7 +54,7 @@ class UserController extends Controller
     {
         $user = User::storeUser($request);
         DataDiri::storeDataDiri($request, $user->id);
-        ListRole::storeRole($user->id, 3);
+        ListRole::storeRole($user->id, $request->role);
 
         return back()->with('success', 'User berhasil ditambah');
     }

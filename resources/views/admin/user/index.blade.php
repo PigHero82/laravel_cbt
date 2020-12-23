@@ -159,6 +159,26 @@
                             <label>Alamat</label>
                             <textarea name="alamat" cols="30" rows="10" class="form-control" placeholder="Alamat User"></textarea>
                         </div>
+
+                        <div class="form-group">
+                            <label>Role</label>
+                            
+                            @forelse ($roles as $item)
+                                <fieldset>
+                                    <div class="vs-checkbox-con vs-checkbox-primary">
+                                        <input type="checkbox" id="{{ $item->name }}-cek" name="role[]" value="{{ $item->id }}">
+                                        <span class="vs-checkbox">
+                                            <span class="vs-checkbox--check">
+                                                <i class="vs-icon feather icon-check"></i>
+                                            </span>
+                                        </span>
+                                        <span class="">{{ $item->description }}</span>
+                                    </div>
+                                </fieldset>
+                            @empty
+                                
+                            @endforelse
+                        </div>
                     </div>
                     
                     <div class="modal-footer">

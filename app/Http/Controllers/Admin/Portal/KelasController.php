@@ -29,8 +29,9 @@ class KelasController extends Controller
     {
         $data = Kelas::getKelas();
         $matakuliah = MataKuliah::getMataKuliah();
-        $dosen = User::getDosen();
-        return view('admin.kelas.index', compact('data', 'matakuliah', 'dosen'));
+        $dosen = User::getUserRole(2);
+        $peserta = User::getUserRole(3);
+        return view('admin.kelas.index', compact('data', 'matakuliah', 'dosen', 'peserta'));
     }
 
     /**
@@ -109,6 +110,7 @@ class KelasController extends Controller
     public function destroy($kelas)
     {
         Kelas::deleteKelas($kelas);
+        
         return redirect()->back();
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App;
 
+use DB;
 use Illuminate\Database\Eloquent\Model;
 
 class ListRole extends Model
@@ -61,10 +62,17 @@ class ListRole extends Model
 
     static function storeRole($id, $role)
     {
-        ListRole::create([
-            'role_id' => $role,
-            'user_id' => $id
-        ]);
+        foreach ($role as $key => $value) {
+            ListRole::create([
+                'role_id' => $value,
+                'user_id' => $id
+            ]);
+        }
+
+        $role = ListRole::firstRoleId($id);
+        DB::table('role_user')
+            ->where('user_id', $id)
+            ->update(['role_id' => $role->role_id]);
     }
 
     static function cekRole($id, $role)
