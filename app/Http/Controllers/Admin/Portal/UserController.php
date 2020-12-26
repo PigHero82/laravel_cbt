@@ -52,6 +52,11 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        $data = User::firstUsername($request->nim, 0);
+        if (isset($data)) {
+            return back()->with('danger', 'NIM/NIDN telah terdaftar');
+        }
+
         $user = User::storeUser($request);
         DataDiri::storeDataDiri($request, $user->id);
         ListRole::storeRole($user->id, $request->role);

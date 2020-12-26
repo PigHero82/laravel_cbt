@@ -74,12 +74,11 @@
                                                         </div>
                                                     @endif
                                                 </div>
-                
+                                                
+                                                <hr class="m-0">
                                                 <div id="collapse{{ $item->id }}" class="collapse" data-parent="#accordion-soal">
                                                     <div class="card-body">
                                                         {!! $item->deskripsi !!}
-                                                        <hr>
-
                                                         <label class="font-weight-bold">Kelas</label>
                                                         <p>{{ $item->kode }}</p>
 
@@ -117,13 +116,13 @@
                                                 </div>
                                             </div>
                                         @endif
-                                        @if ($jumlah == 0)
-                                            <div class="error-template text-center">
-                                                <h1><i class="feather icon-slash"></i></h1>
-                                                <h2>Belum Ada Data Ujian</h2>
-                                            </div> 
-                                        @endif
                                     @endforeach
+                                    @if (count($ujian) == 0 || $jumlah == 0)
+                                        <div class="error-template text-center">
+                                            <h1><i class="feather icon-slash"></i></h1>
+                                            <h2>Belum Ada Data Ujian</h2>
+                                        </div> 
+                                    @endif
                                     @php $jumlah = 0; @endphp
                                 </div>
                             </div>
@@ -138,11 +137,11 @@
                                                         {{ $item->nama }}
                                                     </span>
                                                 </div>
-                
+
+                                                <hr class="m-0">
                                                 <div id="collapse{{ $item->id }}" class="collapse" data-parent="#accordion-riwayat">
                                                     <div class="card-body">
                                                         {!! $item->deskripsi !!}
-                                                        <hr>
                                                         <label class="font-weight-bold">Kelas</label>
                                                         <p>{{ $item->kode }}</p>
                                                         <label class="font-weight-bold">Nama Dosen</label>
@@ -159,13 +158,13 @@
                                                 </div>
                                             </div>
                                         @endif
-                                        @if ($jumlah == 0)
-                                            <div class="error-template text-center">
-                                                <h1><i class="feather icon-slash"></i></h1>
-                                                <h2>Belum Ada Data Ujian</h2>
-                                            </div> 
-                                        @endif
                                     @endforeach
+                                    @if (count($ujian) == 0 || $jumlah == 0)
+                                        <div class="error-template text-center">
+                                            <h1><i class="feather icon-slash"></i></h1>
+                                            <h2>Belum Ada Data Ujian</h2>
+                                        </div> 
+                                    @endif
                                     @php $jumlah = 0; @endphp
                                 </div>
                             </div>
@@ -181,10 +180,10 @@
                                                     </span>
                                                 </div>
                 
+                                                <hr class="m-0">
                                                 <div id="collapse{{ $item->id }}" class="collapse" data-parent="#accordion-datang">
                                                     <div class="card-body">
                                                         {!! $item->deskripsi !!}
-                                                        <hr>
                                                         <label class="font-weight-bold">Kelas</label>
                                                         <p>{{ $item->kode }}</p>
                                                         <label class="font-weight-bold">Nama Dosen</label>
@@ -201,13 +200,13 @@
                                                 </div>
                                             </div>
                                         @endif
-                                        @if ($jumlah == 0)
-                                            <div class="error-template text-center">
-                                                <h1><i class="feather icon-slash"></i></h1>
-                                                <h2>Belum Ada Data Ujian</h2>
-                                            </div> 
-                                        @endif
                                     @endforeach
+                                    @if (count($ujian) == 0 || $jumlah == 0)
+                                        <div class="error-template text-center">
+                                            <h1><i class="feather icon-slash"></i></h1>
+                                            <h2>Belum Ada Data Ujian</h2>
+                                        </div> 
+                                    @endif
                                     @php $jumlah = 0; @endphp
                                 </div>
                             </div>

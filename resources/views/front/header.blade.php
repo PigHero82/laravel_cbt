@@ -34,6 +34,7 @@
                                 </form>
                             @endforeach
                             <div class="dropdown-divider"></div>
+                            <a href="{{ route('akun.index') }}" class="dropdown-item"><i class="feather icon-settings"></i> Pengaturan</a>
                             <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                 <i class="feather icon-power"></i> Logout
                             </a>
