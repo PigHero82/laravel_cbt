@@ -194,6 +194,8 @@
                                                         <h5>Jawaban :</h5>
                                                         `+ d.jawaban_esai +`
                                                     </div>`);
+                        } else {
+                            $('#jawaban-esai').html(``);
                         }
 
                         $('#jawaban form').remove();

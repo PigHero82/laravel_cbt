@@ -268,10 +268,16 @@ class SoalController extends Controller
 
         if ($cek == NULL) {
             return back()->with('danger', 'Data Paket Tidak Ditemukan');
-        } elseif (!($data->tanggal_awal.' '.$data->waktu_awal <= date('Y-m-d H:i:s'))) {
-            return back()->with('danger', 'Ujian belum dimulai');
         }
 
         return view('dosen.laporan.show', compact('data', 'mahasiswa', 'total'));
+    }
+
+    public function laporanjawaban_show($id)
+    {
+        $data = Jawaban::getJawaban($id);
+        $soal = count(Soal::getSoalOnly($id));
+
+        return view('dosen.laporan.jawaban', compact('data', 'soal'));
     }
 }

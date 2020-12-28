@@ -138,4 +138,12 @@ class Soal extends Model
 
         return $hasil;        
     }
+
+    static function getSoalOnly($id)
+    {
+        return Soal::join('grup', 'soal.idGrup', 'grup.id')
+                    ->select('soal.id')
+                    ->where('grup.idPaket', $id)
+                    ->get();
+    }
 }

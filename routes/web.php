@@ -42,6 +42,7 @@ Route::namespace('Dosen')->name('dosen.')->prefix('pengampu')->middleware('auth'
         Route::name('laporan.')->prefix('laporan')->group(function () {
             Route::get('', 'SoalController@laporan_index')->name('index');
             Route::get('{id}', 'SoalController@laporan_show')->name('show');
+            Route::get('jawaban/{id}', 'SoalController@laporanjawaban_show')->name('jawaban.show');
         });
     });
 });
@@ -62,6 +63,7 @@ Route::namespace('Admin')->name('admin.')->prefix('admin')->middleware('auth', '
         Route::resource('kelas/detail', 'KelasMahasiswaController');
         Route::view('pengumuman', 'pengumuman')->name('pengumuman');
     });
+    Route::view('laporan', 'admin.laporan.index')->name('laporan.index');
 });
 
 Route::namespace('Mahasiswa')->prefix('peserta')->middleware('auth', 'role:peserta')->group(function() {

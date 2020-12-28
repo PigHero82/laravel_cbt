@@ -57,4 +57,35 @@ class Jawaban extends Model
                         ->pluck('jumlah_skor')
                         ->first();
     }
+
+    static function getJawaban($id)
+    {
+        $jawaban = Jawaban::join('soal', 'jawaban.idSoal', 'soal.id')
+                        ->join('grup', 'soal.idGrup', 'grup.id')
+                        ->select('jawaban.idUser')
+                        ->groupBy('jawaban.idUser')
+                        ->where('grup.idPaket', $id)
+                        ->get();
+
+        if ($jawaban->isNotEmpty()) {
+            foreach ($jawaban as $key => $value) {
+                $id = $value->idUser;
+
+                $data[$key] = Jawaban::join('soal', 'jawaban.idSoal', 'soal.id')
+                                    ->join('grup', 'soal.idGrup', 'grup.id')
+                                    ->join('users', 'jawaban.idUser', 'users.id')
+                                    ->select('jawaban.idUser as id', 'users.name', 'users.username')
+                                    ->groupBy('jawaban.idUser')
+                                    ->where('jawaban.idUser', $id)
+                                    ->first();
+                
+                $data[$key]['jawaban'] = Jawaban::join('soal', 'jawaban.idSoal', 'soal.id')
+                                                ->select('skor')
+                                                ->orderBy('soal.idGrup')
+                                                ->orderBy('idSoal')
+                                                ->get();
+            }
+            return $data;
+        }
+    }
 }

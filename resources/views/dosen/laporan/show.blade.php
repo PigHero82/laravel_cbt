@@ -1,7 +1,7 @@
 @extends('layout')
 
 @section('judul')
-    Ubah Soal
+    Hasil Tes
 @endsection
 
 @section('css')
@@ -58,7 +58,10 @@
                 <h6 class="filter-heading d-none d-lg-block">Peserta</h6>
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="d-inline">Daftar Peserta</h3>
+                        <h3 class="d-inline">Hasil Tes</h3>
+                        <div class="float-right">
+                            <a class="btn btn-primary" href="{{ route('dosen.laporan.jawaban.show', $data->id) }}"><i class="feather icon-file-text"></i> Lihat Jawaban Peserta</a>
+                        </div>
                     </div>
                     <div class="card-body">
                         {{-- @if (count($grup) > 0)
@@ -169,15 +172,13 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse ($mahasiswa as $item)
+                                    @foreach ($mahasiswa as $item)
                                         <tr>
-                                            <td><a href="#modal" >{{ $item->nim }}</a></td>
+                                            <td>{{ $item->nim }}</td>
                                             <td>{{ $item->nama }}</td>
-                                            <td>{{ $item->nilai/$total * 100 }}</td>
-                                        </tr>
-                                    @empty
-                                        
-                                    @endforelse
+                                            <td>{{ number_format($item->nilai/$total * 100, 2) }}</td>
+                                        </tr>                                        
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
