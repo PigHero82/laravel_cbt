@@ -6,6 +6,11 @@
 
 @section('css')
     <link rel="stylesheet" type="text/css" href="{{ asset('/app-assets/vendors/css/tables/datatable/datatables.min.css') }}">
+    <style>
+        .soal p {
+            margin: 0%;
+        }
+    </style>
 @endsection
 
 @section('content')
@@ -64,104 +69,6 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        {{-- @if (count($grup) > 0)
-                            <div class="accordion" id="accordionExample" data-toggle-hover="true">
-                                @foreach ($grup as $item)
-                                    <div class="collapse-margin">
-                                        <div class="card-header" id="heading{{ $item->id }}" data-toggle="collapse" role="button" data-target="#collapse{{ $item->id }}">
-                                            <span class="lead collapse-title @if ($loop->first) collapsed @endif">
-                                                {{ $item->nama }}
-                                            </span>
-                                            <div class="float-right">
-                                                <form action="{{ route('dosen.soal.destroy', $item->id) }}" method="post">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="button" class="btn btn-success modalSoal" data-toggle="modal" data-target="#modalTambah" data-value="{{ $item->id }}">
-                                                        <i class="feather icon-plus" data-toggle="tooltip" data-placement="top" title="Tambah Soal"></i>
-                                                    </button>
-                                                    <button type="button" class="btn btn-warning modalUbahGrup" data-toggle="modal" data-target="#modalUbahGrup" data-value="{{ $item->id }}" data-nama="{{ $item->nama }}">
-                                                        <i class="feather icon-edit-1" data-toggle="tooltip" data-placement="top" title="Ubah Grup"></i>
-                                                    </button>
-                                                    <button type="button" class="btn btn-danger hapus">
-                                                        <i class="feather icon-trash-2" data-toggle="tooltip" data-placement="top" title="Hapus Grup"></i>
-                                                    </button>
-                                                </form>
-                                            </div>
-                                        </div>
-
-                                        <div id="collapse{{ $item->id }}" class="collapse @if ($loop->first) show @endif" data-parent="#accordionExample">
-                                            <div class="card-body">
-                                                @if (count($item['soal']) > 0)
-                                                    <div class="table-responsive">
-                                                        <table class="table table-striped">
-                                                            <thead>
-                                                                <tr class="text-center">
-                                                                    <th>Soal</th>
-                                                                    <th>Jenis</th>
-                                                                    <th>Jawaban</th>
-                                                                    <th></th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                @foreach ($item['soal'] as $soal)
-                                                                    <tr>
-                                                                        <td>{!! $soal->pertanyaan !!}</td>
-                                                                        <td class="text-center">
-                                                                            @if ($soal->modelSoal == 1)
-                                                                                Pilihan Ganda
-                                                                            @elseif ($soal->modelSoal == 2)
-                                                                                Sebab Akibat
-                                                                            @elseif ($soal->modelSoal == 3)
-                                                                                Benar Salah
-                                                                            @elseif ($soal->modelSoal == 4)
-                                                                                Esai
-                                                                            @endif
-                                                                        </td>
-                                                                        <td class="text-center">{!! $soal->deskripsi !!}</td>
-                                                                        <td class="text-center">
-                                                                            <form action="{{ route('dosen.edit-soal.destroy', $soal->id) }}" method="post">
-                                                                                @csrf
-                                                                                @method('DELETE')
-                                                                                <input type="hidden" name="hapus_soal" value="1">
-                                                                                <a href="{{ route('dosen.edit-soal', $soal->id) }}" class="btn btn-warning px-1 modalUbahSoal">
-                                                                                    <i class="feather icon-edit-1" data-toggle="tooltip" data-placement="top" title="Ubah Soal"></i>
-                                                                                </a>
-                                                                                <button type="button" class="btn btn-danger px-1 hapus">
-                                                                                    <i class="feather icon-trash" data-toggle="tooltip" data-placement="top" title="Hapus Soal"></i>
-                                                                                </button>
-                                                                            </form>
-                                                                        </td>
-                                                                    </tr>
-                                                                @endforeach
-                                                            </tbody>
-                                                            <tfoot>
-                                                                <tr class="text-center">
-                                                                    <th>Soal</th>
-                                                                    <th>Jenis</th>
-                                                                    <th>Jawaban</th>
-                                                                    <th></th>
-                                                                </tr>
-                                                            </tfoot>
-                                                        </table>
-                                                    </div>
-                                                @else
-                                                    <div class="error-template text-center">
-                                                        <h1><i class="feather icon-slash"></i></h1>
-                                                        <h2>Tidak Ada Soal</h2>
-                                                        <button type="button" class="btn btn-success modalSoal" data-toggle="modal" data-target="#modalTambah" data-value="{{ $item->id }}"><i class="feather icon-plus"></i> Tambah Soal</button>
-                                                    </div> 
-                                                @endif
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endforeach
-                            </div>
-                        @else
-                            <div class="error-template text-center">
-                                <h1><i class="feather icon-slash"></i></h1>
-                                <h2>Tidak Ada Grup</h2>
-                            </div>
-                        @endif --}}
                         <div class="table-responsive">
                             <table class="table zero-configuration">
                                 <thead>
@@ -169,6 +76,8 @@
                                         <th>NIM</th>
                                         <th>Nama</th>
                                         <th>Nilai</th>
+                                        <th>Status</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -177,6 +86,18 @@
                                             <td>{{ $item->nim }}</td>
                                             <td>{{ $item->nama }}</td>
                                             <td>{{ number_format($item->nilai/$total * 100, 2) }}</td>
+                                            <td>
+                                                @if ($item->jumlah > 0)
+                                                    <span class="badge badge-md badge-danger">{{ $item->jumlah }} Jawaban belum dikoreksi</span>
+                                                @else
+                                                    <span class="badge badge-md badge-success">Jawaban telah dikoreksi</span>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                <button type="button" class="btn btn-primary px-1" data-toggle="tooltip" data-placement="bottom" data-original-title="Koreksi Jawaban">
+                                                    <i class="feather icon-edit-2" data-toggle="modal" data-target="#modalKoreksi" data-value="{{ $item->id }}" data-id="{{ $data->id }}"></i>
+                                                </button>
+                                            </td>
                                         </tr>                                        
                                     @endforeach
                                 </tbody>
@@ -184,6 +105,44 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="modalKoreksi" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Hasil Jawaban Peserta</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                
+                <form action="{{ route('dosen.laporan.store') }}" method="post">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Pertanyaan</th>
+                                        <th>Jawaban</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="data">
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success"><i class="feather icon-check"></i> Simpan</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -196,5 +155,40 @@
         $(document).ready( function () {
             $('.zero-configuration').DataTable();
         } );
+
+        $(document).on('click', 'table tbody tr td button i', function(e) {
+            var id = $(this).attr('data-value');
+            var paket = $(this).attr('data-id');
+            console.log(id);
+            $.get( "data/" + paket + "/" + id, function( data ) {
+                console.log(JSON.parse(data));
+                var d = JSON.parse(data);
+                $('#data tr').remove();
+                for (let i = 0; i < d.length; i++) {
+                    if (d[i].modelSoal == 4) {
+                        var soal = d[i].jawaban_esai;
+                    } else {
+                        var soal = d[i].deskripsi;
+                    }
+
+                    if (d[i].benar == null) {
+                        var benar = `<select name="data[`+ d[i].id +`]" class="form-control">
+                                        <option value="" hidden>- Pilih Hasil -</option>
+                                        <option value="`+ d[i].id +`/1">Benar</option>
+                                        <option value="`+ d[i].id +`/0">Salah</option>
+                                    </select>`;
+                    } else {
+                        var benar = `<input type="text" class="form-control" value="`+ d[i].benar +`" disabled>`;
+                    }
+
+                    $('#data').append(`<tr>
+                                            <td>`+ d[i].pertanyaan +`</td>
+                                            <td class="soal">`+ soal +`</td>
+                                            <td>`+ benar +`</td>
+                                        </tr>`);
+                }
+            });
+        });
     </script>
+    
 @endsection

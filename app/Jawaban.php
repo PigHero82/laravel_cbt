@@ -28,6 +28,14 @@ class Jawaban extends Model
         ]);
     }
 
+    static function updateRekapanJawaban($id, $benar, $skor)
+    {
+        Jawaban::whereId($id)->update([
+            'benar'     => $benar,
+            'skor'      => $skor
+        ]);
+    }
+
     static function updateJawabanEsai($jawaban, $id)
     {
         Jawaban::whereId($id)->update([
@@ -87,5 +95,19 @@ class Jawaban extends Model
             }
             return $data;
         }
+    }
+
+    static function getJawabanOrderByPaket($id, $user)
+    {
+        return Jawaban::join('soal', 'jawaban.idSoal', 'soal.id')
+                        ->join('grup', 'soal.idGrup', 'grup.id')
+                        ->leftJoin('pilihan', 'jawaban.idPilihan', 'pilihan.id')
+                        ->select('jawaban.id', 'soal.pertanyaan', 'jawaban.idSoal', 'soal.modelSoal', 'jawaban.idPilihan', 'jawaban_esai', 'pilihan.deskripsi')
+                        ->selectRaw('(CASE benar WHEN 1 THEN "Benar" WHEN 0 THEN "Salah" END) as benar')
+                        ->where('grup.idPaket', $id)
+                        ->where('jawaban.idUser', $user)
+                        ->orderBy('grup.id')
+                        ->orderBy('idSoal')
+                        ->get();
     }
 }

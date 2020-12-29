@@ -139,6 +139,15 @@ class Soal extends Model
         return $hasil;        
     }
 
+    static function cekBobot($idSoal)
+    {
+        return Soal::join('grup', 'soal.idGrup', 'grup.id')
+                    ->join('paket', 'grup.idPaket', 'paket.id')
+                    ->select('soal.id', 'paket.bobot_benar', 'paket.bobot_salah')
+                    ->where('soal.id', $idSoal)
+                    ->first();       
+    }
+
     static function getSoalOnly($id)
     {
         return Soal::join('grup', 'soal.idGrup', 'grup.id')

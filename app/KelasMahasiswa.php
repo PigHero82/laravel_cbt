@@ -31,8 +31,12 @@ class KelasMahasiswa extends Model
         if ($students->isNotEmpty()) {
             foreach ($students as $key => $value) {
                 $data[$key] = KelasMahasiswa::join('users', 'kelas_mahasiswa.idMahasiswa', 'users.id')
+                                            ->join('jawaban', 'users.id', 'jawaban.idUser')
                                             ->select('idKelas', 'users.id as id', 'users.username as nim', 'users.name as nama', 'users.gambar', 'kelas_mahasiswa.id as iddata')
+                                            ->selectRaw('COUNT(jawaban.id) as jumlah')
+                                            ->groupBy('jawaban.idUser')
                                             ->where('users.id', $value->id)
+                                            ->where('benar', null)
                                             ->first();
                 $data[$key]['nilai'] = Jawaban::getNilai($id, $value->id);
             }

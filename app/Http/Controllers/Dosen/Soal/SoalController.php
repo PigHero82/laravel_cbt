@@ -280,4 +280,27 @@ class SoalController extends Controller
 
         return view('dosen.laporan.jawaban', compact('data', 'soal'));
     }
+
+    public function data_jawaban($id, $user)
+    {
+        return json_encode(Jawaban::getJawabanOrderByPaket($id, $user));
+    }
+
+    public function data_jawaban_store(Request $request)
+    {
+        $data = Soal::cekBobot($request['data']);
+
+        foreach ($request['data'] as $key => $value) {
+            if ($value != NULL) {
+                $hasil = explode("/", $value);
+                if ($hasil[1] == 1) {
+                    Jawaban::updateRekapanJawaban($hasil[0], $hasil[1], $data->bobot_benar);
+                } else {
+                    Jawaban::updateRekapanJawaban($hasil[0], $hasil[1], $data->bobot_salah);
+                }
+            }
+        }
+
+        return back()->with('success', 'Koreksi hasil jawaban berhasil diubah');
+    }
 }
