@@ -129,7 +129,7 @@
                             <div class="tab-pane" id="riwayat" aria-labelledby="riwayat-tab" role="tabpanel">
                                 <div class="accordion" id="accordion-riwayat" data-toggle-hover="true">
                                     @foreach ($ujian as $item)
-                                        @if ($item->tanggal_awal.' '.$item->waktu_awal <= date('Y-m-d H:i:s') && $item->tanggal_akhir.' '.$item->waktu_akhir <= date('Y-m-d-H:i:s'))
+                                        @if ($item->tanggal_awal.' '.$item->waktu_awal < date('Y-m-d H:i:s') && $item->tanggal_akhir.' '.$item->waktu_akhir < date('Y-m-d-H:i:s'))
                                             @php $jumlah++ @endphp
                                             <div class="collapse-margin">
                                                 <div class="card-header" id="heading{{ $item->id }}" data-toggle="collapse" role="button" data-target="#collapse{{ $item->id }}">
