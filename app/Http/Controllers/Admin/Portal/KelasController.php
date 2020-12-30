@@ -31,6 +31,7 @@ class KelasController extends Controller
         $matakuliah = MataKuliah::getMataKuliah();
         $dosen = User::getUserRole(2);
         $peserta = User::getUserRole(3);
+
         return view('admin.kelas.index', compact('data', 'matakuliah', 'dosen', 'peserta'));
     }
 

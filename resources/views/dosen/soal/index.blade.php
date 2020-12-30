@@ -85,7 +85,7 @@
                                             <td class="text-center"><i class="feather icon-slash text-danger"></i></td>
                                         @endif
                                         <td>
-                                            @if ($item->tanggal_awal.' '.$item->waktu_awal <= date('Y-m-d H:i:s') && $item->tanggal_akhir.' '.$item->waktu_akhir >= date('Y-m-d-H:i:s') && $item->status == 1)
+                                            @if ($item->tanggal_awal.' '.$item->waktu_awal < date('Y-m-d H:i:s') && $item->tanggal_akhir.' '.$item->waktu_akhir > date('Y-m-d H:i:s') && $item->status == 1)
                                                 <h5><span class="badge badge-success">Ujian sedang berlangsung</span></h5>
                                             @else
                                                 <form action="{{ route('dosen.paket.destroy', $item->id) }}" class="form" method="post">
@@ -159,7 +159,7 @@
                                     <div class="form-group">
                                         <div class="controls">
                                             <label for="">Tanggal Awal</label>
-                                            <input type="date" class="form-control" name="tanggal_awal" required>
+                                            <input type="date" class="form-control tanggal_awal" name="tanggal_awal" required>
                                         </div>
                                     </div>
                                 </div>
@@ -167,7 +167,7 @@
                                     <div class="form-group">
                                         <div class="controls">
                                             <label for="">Tanggal Akhir</label>
-                                            <input type="date" class="form-control" name="tanggal_akhir" required>
+                                            <input type="date" class="form-control tanggal_akhir" name="tanggal_akhir" required>
                                         </div>
                                     </div>
                                 </div>
@@ -175,7 +175,7 @@
                                     <div class="form-group">
                                         <div class="controls">
                                             <label for="">Waktu Awal</label>
-                                            <input type="time" class="form-control" name="waktu_awal" value="00:00" required>
+                                            <input type="time" class="form-control waktu_awal" name="waktu_awal" value="00:00" required>
                                         </div>
                                     </div>
                                 </div>
@@ -183,7 +183,7 @@
                                     <div class="form-group">
                                         <div class="controls">
                                             <label for="">Waktu Akhir</label>
-                                            <input type="time" class="form-control" name="waktu_akhir" value="23:59" required>
+                                            <input type="time" class="form-control waktu_akhir" name="waktu_akhir" value="23:59" required>
                                         </div>
                                     </div>
                                 </div>
@@ -351,6 +351,46 @@
                 dropdownAutoWidth: true,
                 width: '100%'
             });
+
+            $(document).on('change', '.tanggal_awal', function(e) {
+                $('.tanggal_akhir').val('');
+                $('.tanggal_akhir').attr('min', $('.tanggal_awal').val());
+            });
+
+            $(document).on('change', '#tanggal_awal', function(e) {
+                $('#tanggal_akhir').val('');
+                $('#tanggal_akhir').attr('min', $('#tanggal_awal').val());
+            });
+
+            $(document).on('change', '.waktu_awal', function(e) {
+                $('.waktu_akhir').val('');
+                reset_waktu();
+            });
+            $(document).on('change', '.waktu_akhir', function(e) {
+                reset_waktu();
+            });
+            function reset_waktu() {
+                if ($('.tanggal_awal').val() == $('.tanggal_akhir').val()) {
+                    if ($('.waktu_awal').val() > $('.waktu_akhir').val()) {
+                        $('.waktu_akhir').val('');
+                    }
+                }
+            }
+
+            $(document).on('change', '#waktu_awal', function(e) {
+                $('#waktu_akhir').val('');
+                reset_waktu();
+            });
+            $(document).on('change', '#waktu_akhir', function(e) {
+                reset_waktu();
+            });
+            function reset_waktu() {
+                if ($('#tanggal_awal').val() == $('#tanggal_akhir').val()) {
+                    if ($('#waktu_awal').val() > $('#waktu_akhir').val()) {
+                        $('#waktu_akhir').val('');
+                    }
+                }
+            }
 
             $(document).on('click', '.table-striped tbody tr td button', function(e) {
                 var id = $(this).attr('data-value');
