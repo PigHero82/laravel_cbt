@@ -56,9 +56,9 @@
                                             @endif
                                         </td>
                                         <td><div disabled class="badge badge-md badge-danger">{{ $item->durasi }} Menit</div></td>
-                                        @if ($item->tanggal_awal.' '.$item->waktu_awal <= date('Y-m-d H:i:s') && $item->tanggal_akhir.' '.$item->waktu_akhir >= date('Y-m-d-H:i:s'))
+                                        @if ($item->tanggal_awal.' '.$item->waktu_awal < date('Y-m-d H:i:s') && $item->tanggal_akhir.' '.$item->waktu_akhir > date('Y-m-d H:i:s'))
                                             <td><h5><span class="badge badge-primary">Ujian sedang berlangsung</span></h5></td>
-                                        @elseif ($item->tanggal_awal.' '.$item->waktu_awal < date('Y-m-d H:i:s') && $item->tanggal_akhir.' '.$item->waktu_akhir < date('Y-m-d-H:i:s'))
+                                        @elseif ($item->tanggal_akhir.' '.$item->waktu_akhir < date('Y-m-d H:i:s'))
                                             <td><h5><span class="badge badge-success">Ujian telah selesai</span></h5></td>
                                         @else
                                         <td><h5><span class="badge badge-danger">Ujian belum dimulai</span></h5></td>
