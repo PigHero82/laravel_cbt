@@ -57,6 +57,7 @@ Route::namespace('Admin')->name('admin.')->prefix('admin')->middleware('auth', '
         Route::resource('user', 'UserController');
         Route::resource('pengampu', 'PengampuController');
         Route::name('user.')->prefix('user')->group(function () {
+            Route::post('import', 'UserController@import')->name('import');
             Route::get('role/{id}', 'UserController@showRole');
             Route::post('role/{id}', 'UserController@role')->name('role');
         });

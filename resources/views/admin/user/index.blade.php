@@ -49,7 +49,7 @@
             </div>
             <div class="d-inline">
                 <button type="button" data-toggle="modal" data-target="#modalTambah" class="btn btn-success px-1"><i class="feather icon-plus"></i> Tambah</button>
-                <button type="button" data-toggle="modal" data-target="#" class="btn btn-primary px-1"><i class="feather icon-upload"></i> Upload Excel</button>
+                <button type="button" data-toggle="modal" data-target="#modalExcel" class="btn btn-primary px-1"><i class="feather icon-upload"></i> Upload Excel</button>
                 @if ($i > 0)
                     <button type="button" data-toggle="modal" data-target="#modalRequest" class="btn btn-outline-primary px-1"><span class="badge badge-danger">{{ $i }}</span> Request</button>
                 @endif
@@ -293,48 +293,50 @@
                     </button>
                 </div>
 
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label>File Excel</label>
-                        <input type="file" name="gambar" class="form-control">
+                <form action="{{ route('admin.portal.user.import') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>File Excel</label>
+                            <input type="file" name="file" class="form-control">
+                        </div>
+
+                        <hr>
+                        
+                        <p>Sebelum mengunggah pastikan file yang akan anda unggah sudah dalam bentuk Ms. Excel dan format penulisan harus sesuai dengan yang telah ditentukan.</p>
+
+                        <label>Ketentuan Data</label>
+                        
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>no_induk</th>
+                                        <th>nama</th>
+                                        <th>jenis_kelamin</th>
+                                        <th>email</th>
+                                        <th>hp</th>
+                                        <th>alamat</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Wajib diisi | Maksimal 12 Karakter</td>
+                                        <td>Wajib diisi</td>
+                                        <td>Wajib diisi | Laki-laki/Perempuan</td>
+                                        <td colspan="3">Boleh Dikosongkan</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <a href="{{ asset('assets/import/format/user.xlsx') }}" class="btn btn-success">Download Format</a>
                     </div>
 
-                    <hr>
-                    <p>Sebelum mengunggah pastikan file yang akan anda unggah sudah dalam bentuk Ms. Excel 97-2003 Workbook (.xls) dan format penulisan harus sesuai dengan yang telah ditentukan.</p>
-                    <label>Ketentuan Data</label>
-                    <div class="table-responsive">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>nim</th>
-                                    <th>nama</th>
-                                    <th>jeniskelamin</th>
-                                    <th>email</th>
-                                    <th>hp</th>
-                                    <th>alamat</th>
-                                    <th>alamatasal</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Wajib diisi</td>
-                                    <td>Wajib diisi</td>
-                                    <td>Hanya diisi dengan angka 1 & 0 (1 = Laki-laki & 2 = Perempuan) | Wajib diisi</td>
-                                    <td>Tidak Wajib diisi</td>
-                                    <td>Dibatasi hingga 13 digit angka | Tidak wajib diisi</td>
-                                    <td>Tidak wajib diisi</td>
-                                    <td>Tidak wajib diisi</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Tambah</button>
                     </div>
-
-                    <a href="#" class="btn btn-success">Download Format</a>
-                </div>
-
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Tambah</button>
-                </div>
+                </form>
             </div>
         </div>
     </div>

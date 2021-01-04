@@ -10,6 +10,11 @@ use App\User;
 use DB;
 use Illuminate\Http\Request;
 
+use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Input;
+use App\ImportUser;
+use App\Imports\UsersImport;
+
 class UserController extends Controller
 {
     /**
@@ -162,5 +167,50 @@ class UserController extends Controller
     public function showRole($id)
     {
         return json_encode(User::firstUser($id));
+    }
+
+    public function import(Request $request)
+    {
+        ImportUser::truncate();
+
+        // menangkap file excel
+		$file = $request->file('file');
+ 
+		// membuat nama file unik
+		$nama_file = rand().$file->getClientOriginalName();
+ 
+		// upload ke folder file_siswa di dalam folder public
+		$file->move('assets/import/user/',$nama_file);
+ 
+		// import data
+		Excel::import(new UsersImport, public_path('/assets/import/user/'.$nama_file));
+        
+        $data = ImportUser::getImportUser();
+        foreach ($data as $key => $value) {
+            if ($value->no_induk != null) {
+                if (User::firstUsername($value->no_induk, 0) == null) {
+                    if ($value->nama == null) {
+                        $value->nama = "Nama User";
+                    }
+
+                    $value->nim = $value->no_induk;
+                    $user = User::storeUser($value);
+                    ListRole::create([
+                        'role_id' => 3,
+                        'user_id' => $user->id
+                    ]);
+
+                    if ($value->jenis_kelamin == null || $value->jenis_kelamin == "Laki-laki") {
+                        $value->jeniskelamin = 1;
+                    } else {
+                        $value->jeniskelamin = 2;
+                    }
+
+                    DataDiri::storeDataDiri($value, $user->id);
+                }
+            }
+        }
+
+        return back()->with('success', 'User berhasil diupload');
     }
 }

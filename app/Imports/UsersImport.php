@@ -2,23 +2,26 @@
 
 namespace App\Imports;
 
-use Illuminate\Support\Collection;
-use Maatwebsite\Excel\Concerns\ToCollection;
+use App\ImportSoal;
+use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
-use App\User;
+use App\ImportUser;
 
-class UsersImport implements ToCollection, WithHeadingRow
+class UsersImport implements ToModel, WithHeadingRow
 {
     /**
     * @param Collection $collection
     */
-    public function collection(Collection $collection)
+    public function model(array $row)
     {
-        return new User([
-            'name'     => $collection[0],
-            'email'    => $collection[1],
-            'password' => bcrypt('password'),
+        return new ImportUser([
+            'no_induk'      => $row['no_induk'],
+            'nama'          => $row['nama'],
+            'jenis_kelamin' => $row['jenis_kelamin'],
+            'email'         => $row['email'],
+            'hp'            => $row['hp'],
+            'alamat'        => $row['alamat'],
         ]);
     }
 }
