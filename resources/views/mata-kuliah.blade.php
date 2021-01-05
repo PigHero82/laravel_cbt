@@ -181,7 +181,7 @@
 
             $(document).on('click', '#myTable tbody tr td button', function(e) {
                 var id = $(this).attr('data-value');
-                $.get( "/admin/portal/mata-kuliah/" + id, function( data ) {
+                $.get( "mata-kuliah/" + id, function( data ) {
                     console.log(JSON.parse(data));
                     var d = JSON.parse(data);
                     $('.judul').text("Ubah Mata Kuliah | "+ d.nama);

@@ -72,7 +72,7 @@
                         </div>
                     @endforeach
                 </div>
-                <form action="/peserta" method="get">
+                <form action="{{ route('index') }}" method="get">
                     <button type="button" class="btn btn-block btn-success keluar"><i class="feather icon-check"></i> Selesai</button>
                 </form>
             </div>
@@ -88,9 +88,9 @@
             var data = $('#awal').attr('data-id');
             var awal = $('#awal').attr('data-id');
             var akhir = {{ $nourut }};
-            $.get( "/peserta/data-soal/" + data, function( data ) {
+            var getData = "{{ url('peserta/data-soal') }}";
+            $.get(getData + "/" + data, function( data ) {
                 var d = JSON.parse(data);
-                console.log(d);
                 
                 $('#pertanyaan').html(d.pertanyaan);
 
@@ -151,7 +151,7 @@
 
             $(document).on('click', '.navigasi', function(e) {
                 var no = $(this).attr('data-id');
-                $.get( "/peserta/data-soal/" + no, function( data ) {
+                $.get(getData + "/" + no, function( data ) {
                     var d = JSON.parse(data);
                     
                     $('#pertanyaan').html(d.pertanyaan);

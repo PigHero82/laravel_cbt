@@ -265,7 +265,7 @@
             $(document).on('click', '#myTable tbody tr td button', function(e) {
                 var id = $(this).attr('data-value');
                 console.log(id);
-                $.get( "/admin/portal/kelas/" + id, function( data ) {
+                $.get( "kelas/" + id, function( data ) {
                     console.log(JSON.parse(data));
                     var d = JSON.parse(data);
                     $('#judulModal').text("Ubah Kelas | "+ d.kode +"-"+ d.nama);
@@ -278,15 +278,15 @@
             
             $(document).on('click', '#myTable tbody tr td a', function(e) {
                 var id = $(this).attr('data-kelas');
-                $.get( "/admin/portal/kelas/" + id, function( data ) {
+                $.get( "kelas/" + id, function( data ) {
                     console.log(JSON.parse(data));
                     var d = JSON.parse(data);
                     $('#judulKelasModal').text("Detail Kelas | "+ d.kode +"-"+ d.nama);
                     $('#dosen').val(d.dosen);
                     $('#idKelas').val(id);
-                    $('#button').html('<a href="/admin/portal/kelas/detail/'+ d.id +'" class="btn btn-primary">Lihat Detail</a>');
+                    $('#button').html('<a href="kelas/detail/'+ d.id +'" class="btn btn-primary">Lihat Detail</a>');
                 });
-                $.get( "/admin/portal/kelas/detail/" + id +"/edit", function( data ) {
+                $.get( "kelas/detail/" + id +"/edit", function( data ) {
                     console.log(JSON.parse(data));
                     var d = JSON.parse(data);
                     $('#mahasiswa tr').remove();

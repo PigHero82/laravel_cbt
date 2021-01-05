@@ -84,7 +84,7 @@ Route::name('admin.')->prefix('admin')->middleware('auth', 'role:admin')->group(
 Route::namespace('Mahasiswa')->prefix('peserta')->middleware('auth', 'role:peserta')->group(function() {
     Route::get('', 'HomeController@index')->name('index');
     Route::get('soal/{id}', 'HomeController@soal')->name('soal');
-    Route::get('data-soal/{id}', 'HomeController@data_soal');
+    Route::get('data-soal/{id}', 'HomeController@data_soal')->name('data');
     Route::post('jawab', 'HomeController@jawab')->name('jawab');
 });
 

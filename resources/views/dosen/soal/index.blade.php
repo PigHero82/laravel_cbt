@@ -395,10 +395,10 @@
             $(document).on('click', '.table-striped tbody tr td button', function(e) {
                 var id = $(this).attr('data-value');
                 console.log(id);
-                $.get( "/pengampu/paket/" + id, function( data ) {
+                $.get( "paket/" + id, function( data ) {
                     console.log(JSON.parse(data));
                     var d = JSON.parse(data);
-                    $('#storeData').attr("action", "/pengampu/soal/"+ d.id);
+                    $('#storeData').attr("action", "soal/"+ d.id);
                     $('#exampleModalLabel').text("Ubah Paket Soal | "+ d.nama);
                     $('#id').val(d.id);
                     $('#nama').val(d.nama);
@@ -411,7 +411,7 @@
                     $('#bobot_salah').val(d.bobot_salah);
                     $('#deskripsi').val(d.deskripsi);
                     $('#idKelas').select2().val(d.idKelas).trigger('change');
-                    $('#update').attr("action", "/pengampu/paket/"+ d.id);
+                    $('#update').attr("action", "paket/"+ d.id);
                 });
             });
 
