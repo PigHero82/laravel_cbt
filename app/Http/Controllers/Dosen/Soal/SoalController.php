@@ -270,7 +270,7 @@ class SoalController extends Controller
             return back()->with('danger', 'Data Paket Tidak Ditemukan');
         }
 
-        return view('dosen.laporan.show', compact('data', 'mahasiswa', 'total'));
+        return view('dosen.laporan.show', compact('data', 'mahasiswa', 'total', 'cek'));
     }
 
     public function laporanjawaban_show($id)

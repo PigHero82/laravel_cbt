@@ -65,14 +65,17 @@ class Paket extends Model
 
     static function getPaketAktif()
     {
-        return Paket::join('kelas', 'paket.idKelas', 'kelas.id')
+        $data = Paket::join('kelas', 'paket.idKelas', 'kelas.id')
+                    ->join('users', 'kelas.idDosen', 'users.id')
                     ->leftJoin('grup', 'paket.id', 'grup.idPaket')
                     ->leftJoin('soal', 'grup.id', 'soal.idGrup')
-                    ->select('paket.id', 'paket.nama', 'durasi', 'paket.tanggal_awal', 'paket.tanggal_akhir', 'waktu_awal', 'waktu_akhir')
+                    ->select('paket.id', 'paket.nama', 'durasi', 'paket.tanggal_awal', 'paket.tanggal_akhir', 'waktu_awal', 'waktu_akhir', 'kelas.kode', 'users.name')
                     ->selectRaw('COUNT(soal.id) as jumlah')
-                    ->groupBy('paket.id')
-                    ->where('kelas.idDosen', Auth::id())
-                    ->where('paket.status', 1)
+                    ->groupBy('paket.id');
+                    if (Auth::user()->hasRole('pengampu')) {
+                        $data->where('kelas.idDosen', Auth::id());
+                    }
+                    return $data->where('paket.status', 1)
                     ->get();
     }
 
@@ -111,11 +114,14 @@ class Paket extends Model
 
     static function cekPaketbyDosen($id)
     {
-        return Paket::join('kelas', 'paket.idKelas', 'kelas.id')
-                    ->select('paket.id', 'kelas.idDosen')
-                    ->where('paket.id', $id)
-                    ->where('kelas.idDosen', Auth::id())
-                    ->first();
+        $data = Paket::join('kelas', 'paket.idKelas', 'kelas.id')
+                    ->join('users', 'kelas.idDosen', 'users.id')
+                    ->select('paket.id', 'kelas.idDosen', 'users.username', 'users.name')
+                    ->where('paket.id', $id);
+                    if (Auth::user()->hasRole('pengampu')) {
+                        $data->where('kelas.idDosen', Auth::id());
+                    }
+                    return $data->first();
     }
 
     static function cekPaketbyPeserta($id)

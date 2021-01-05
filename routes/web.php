@@ -49,24 +49,36 @@ Route::namespace('Dosen')->name('dosen.')->prefix('pengampu')->middleware('auth'
     });
 });
 
-Route::namespace('Admin')->name('admin.')->prefix('admin')->middleware('auth', 'role:admin')->group(function() {
-    Route::get('', 'HomeController@index')->name('index');
-    Route::get('pengaturan', 'HomeController@pengaturan')->name('pengaturan');
-    Route::post('pengaturan', 'HomeController@store_pengaturan')->name('store.pengaturan');
-    Route::namespace('Portal')->name('portal.')->prefix('portal')->group(function() {
-        Route::resource('user', 'UserController');
-        Route::resource('pengampu', 'PengampuController');
-        Route::name('user.')->prefix('user')->group(function () {
-            Route::post('import', 'UserController@import')->name('import');
-            Route::get('role/{id}', 'UserController@showRole');
-            Route::post('role/{id}', 'UserController@role')->name('role');
+Route::name('admin.')->prefix('admin')->middleware('auth', 'role:admin')->group(function() {
+    Route::namespace('Admin')->group(function () {
+        Route::get('', 'HomeController@index')->name('index');
+        Route::get('pengaturan', 'HomeController@pengaturan')->name('pengaturan');
+        Route::post('pengaturan', 'HomeController@store_pengaturan')->name('store.pengaturan');
+        Route::namespace('Portal')->name('portal.')->prefix('portal')->group(function() {
+            Route::resource('user', 'UserController');
+            Route::resource('pengampu', 'PengampuController');
+            Route::name('user.')->prefix('user')->group(function () {
+                Route::post('import', 'UserController@import')->name('import');
+                Route::get('role/{id}', 'UserController@showRole');
+                Route::post('role/{id}', 'UserController@role')->name('role');
+            });
+            Route::resource('kelas', 'KelasController');
+            Route::resource('mata-kuliah', 'MataKuliahController');
+            Route::resource('kelas/detail', 'KelasMahasiswaController');
+            Route::view('pengumuman', 'pengumuman')->name('pengumuman');
         });
-        Route::resource('kelas', 'KelasController');
-        Route::resource('mata-kuliah', 'MataKuliahController');
-        Route::resource('kelas/detail', 'KelasMahasiswaController');
-        Route::view('pengumuman', 'pengumuman')->name('pengumuman');
+        Route::view('laporan', 'admin.laporan.index')->name('laporan.index');
     });
-    Route::view('laporan', 'admin.laporan.index')->name('laporan.index');
+
+    Route::namespace('Dosen\Soal')->group(function () {
+        Route::name('laporan.')->prefix('laporan')->group(function () {
+            Route::get('', 'SoalController@laporan_index')->name('index');
+            Route::get('{id}', 'SoalController@laporan_show')->name('show');
+            Route::get('data/{id}/{user}', 'SoalController@data_jawaban');
+            Route::post('data', 'SoalController@data_jawaban_store')->name('store');
+            Route::get('jawaban/{id}', 'SoalController@laporanjawaban_show')->name('jawaban.show');
+        });
+    });
 });
 
 Route::namespace('Mahasiswa')->prefix('peserta')->middleware('auth', 'role:peserta')->group(function() {

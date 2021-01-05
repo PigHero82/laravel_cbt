@@ -21,14 +21,20 @@
                 <div class="card">
                     <div class="card-body">
                         <dl class="row">
-                            <dt class="col-lg-3">Nama</dt>
-                            <dd class="col-lg-9" id="name-text">{{ $data->nama }}</dd>                          
+                            <dt class="col-lg-4">Pengampu</dt>
+                            <dd class="col-lg-8">{{ $cek->name }}</dd>                          
                             
-                            <dt class="col-lg-3">Kelas</dt>
-                            <dd class="col-lg-9" id="code-text">{{ $data->kode }}</dd>
+                            <dt class="col-lg-4">No Induk</dt>
+                            <dd class="col-lg-8">{{ $cek->username }}</dd>                          
                             
-                            <dt class="col-lg-3">Tanggal</dt>
-                            <dd class="col-lg-9" id="address-text">
+                            <dt class="col-lg-4">Nama Kelas</dt>
+                            <dd class="col-lg-8" id="name-text">{{ $data->nama }}</dd>                          
+                            
+                            <dt class="col-lg-4">Kelas</dt>
+                            <dd class="col-lg-8" id="code-text">{{ $data->kode }}</dd>
+                            
+                            <dt class="col-lg-4">Tanggal</dt>
+                            <dd class="col-lg-8" id="address-text">
                                 @if ($data->tanggal_awal == $data->tanggal_akhir)
                                     {{ Carbon\Carbon::parse($data->tanggal_awal)->formatLocalized('%d %B %Y') }}
                                 @else
@@ -37,14 +43,14 @@
                             </dd>                          
                             
                             @if ($data->waktu_awal !== '00:00:00' && $data->waktu_akhir !== '23:59:00')
-                                <dt class="col-lg-3">Waktu</dt>
-                                <dd class="col-lg-9" id="bank-text">
+                                <dt class="col-lg-4">Waktu</dt>
+                                <dd class="col-lg-8" id="bank-text">
                                     {{ Carbon\Carbon::parse($data->waktu_awal)->formatLocalized('%H:%M') }} - {{ Carbon\Carbon::parse($data->waktu_akhir)->formatLocalized('%H:%M') }}
                                 </dd>
                             @endif
 
-                            <dt class="col-lg-3">Durasi</dt>
-                            <dd class="col-lg-9" id="bank-text">{{ $data->durasi }} Menit</dd>
+                            <dt class="col-lg-4">Durasi</dt>
+                            <dd class="col-lg-8" id="bank-text">{{ $data->durasi }} Menit</dd>
                         </dl>
                         
                         @if ($data->deskripsi != NULL)
@@ -65,7 +71,7 @@
                     <div class="card-header">
                         <h3 class="d-inline">Hasil Tes</h3>
                         <div class="float-right">
-                            <a class="btn btn-primary" href="{{ route('dosen.laporan.jawaban.show', $data->id) }}"><i class="feather icon-file-text"></i> Lihat Jawaban Peserta</a>
+                            <a class="btn btn-primary" href="{{ route(Auth::user()->hasRole('admin') ? 'admin.laporan.jawaban.show' : 'dosen.laporan.jawaban.show', $data->id) }}"><i class="feather icon-file-text"></i> Lihat Jawaban Peserta</a>
                         </div>
                     </div>
                     <div class="card-body">
@@ -77,7 +83,9 @@
                                         <th>Nama</th>
                                         <th>Nilai</th>
                                         <th>Status</th>
-                                        <th></th>
+                                        @if (Auth::user()->hasRole('pengampu'))
+                                            <th></th>
+                                        @endif
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -93,11 +101,13 @@
                                                     <span class="badge badge-md badge-success">Jawaban telah dikoreksi</span>
                                                 @endif
                                             </td>
-                                            <td>
-                                                <button type="button" class="btn btn-primary px-1" data-toggle="tooltip" data-placement="bottom" data-original-title="Koreksi Jawaban">
-                                                    <i class="feather icon-edit-2" data-toggle="modal" data-target="#modalKoreksi" data-value="{{ $item->id }}" data-id="{{ $data->id }}"></i>
-                                                </button>
-                                            </td>
+                                            @if (Auth::user()->hasRole('pengampu'))
+                                                <td>
+                                                    <button type="button" class="btn btn-primary px-1" data-toggle="tooltip" data-placement="bottom" data-original-title="Koreksi Jawaban">
+                                                        <i class="feather icon-edit-2" data-toggle="modal" data-target="#modalKoreksi" data-value="{{ $item->id }}" data-id="{{ $data->id }}"></i>
+                                                    </button>
+                                                </td>
+                                            @endif
                                         </tr>                                        
                                     @endforeach
                                 </tbody>

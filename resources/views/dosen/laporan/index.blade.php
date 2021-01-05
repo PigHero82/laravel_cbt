@@ -28,7 +28,11 @@
                         <table class="table table-striped">
                             <thead>
                                 <tr>
-                                    <th>Nama</th>
+                                    @if (Auth::user()->hasRole('admin'))
+                                        <th>Kelas</th>
+                                        <th>Pengampu</th>
+                                    @endif
+                                    <th>Paket</th>
                                     <th>Jumlah Soal</th>
                                     <th>Tanggal</th>
                                     <th>Waktu</th>
@@ -39,7 +43,11 @@
                             <tbody>
                                 @foreach ($data as $item)
                                     <tr>
-                                        <td><a href="{{ route('dosen.laporan.show', $item->id) }}">{{ $item->nama }}</a></td>
+                                        @if (Auth::user()->hasRole('admin'))
+                                            <td>{{ $item->kode }}</td>
+                                            <td>{{ $item->name }}</td>
+                                        @endif
+                                        <td><a href="{{ route(Auth::user()->hasRole('admin') ? 'admin.laporan.show' : 'dosen.laporan.show', $item->id) }}">{{ $item->nama }}</a></td>
                                         <td>{{ $item->jumlah }} Soal</td>
                                         <td>
                                             @if ($item->tanggal_awal == $item->tanggal_akhir)
