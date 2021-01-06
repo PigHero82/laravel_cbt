@@ -115,9 +115,9 @@ class KelasController extends Controller
         return redirect()->back();
     }
 
-    public function data_peserta()
+    public function data_peserta(Request $request)
     {
-        $data = (User::getUserRoleLoad(3));
+        $data = (User::getUserRoleLoad(3, $request->search));
         foreach ($data as $key => $value) {
             $abc['results'][$key]['id'] = $value->id;
             $abc['results'][$key]['text'] = $value->username . " | " . $value->name;

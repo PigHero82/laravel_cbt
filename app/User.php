@@ -106,10 +106,13 @@ class User extends Authenticatable
                     ->get();
     }
 
-    static function getUserRoleLoad($id)
+    static function getUserRoleLoad($id, $search)
     {
         return User::join('list_roles', 'users.id', 'list_roles.user_id')
                     ->select('users.id as id', 'username', 'name')
+                    ->where('list_roles.role_id', $id)
+                    ->where('users.name','like',"%".$search."%")
+                    ->orWhere('users.username','like',"%".$search."%")
                     ->where('list_roles.role_id', $id)
                     ->paginate(20);
     }

@@ -260,7 +260,6 @@
 
             $('.js-data-example-ajax').select2({
                 placeholder: "Pilih peserta",
-                minimumResultsForSearch: Infinity,
                 dropdownAutoWidth: true,
                 width: '100%',
                 ajax: {
