@@ -63,6 +63,7 @@ Route::name('admin.')->prefix('admin')->middleware('auth', 'role:admin')->group(
                 Route::post('role/{id}', 'UserController@role')->name('role');
             });
             Route::resource('kelas', 'KelasController');
+            Route::get('data/kelas', 'KelasController@data_peserta');
             Route::resource('mata-kuliah', 'MataKuliahController');
             Route::resource('kelas/detail', 'KelasMahasiswaController');
             Route::view('pengumuman', 'pengumuman')->name('pengumuman');

@@ -114,4 +114,21 @@ class KelasController extends Controller
         
         return redirect()->back();
     }
+
+    public function data_peserta()
+    {
+        $data = (User::getUserRoleLoad(3));
+        foreach ($data as $key => $value) {
+            $abc['results'][$key]['id'] = $value->id;
+            $abc['results'][$key]['text'] = $value->username . " | " . $value->name;
+        }
+
+        if ($data->nextPageUrl() != NULL) {
+            $abc['pagination'] = ['more' => true];
+        } else {
+            $abc['pagination'] = ['more' => false];
+        }
+
+        return $abc;
+    }
 }

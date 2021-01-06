@@ -213,28 +213,24 @@
                         @csrf
                         <input type="hidden" name="idKelas" id="idKelas">
 
+                        <table class="table table-striped">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>NIM</th>
+                                    <th>Nama</th>
+                                </tr>
+                            </thead>
+                            <tbody id="mahasiswa">
+                            </tbody>
+                        </table>
+
                         <div class="form-group">
                             <label for="peserta">Tambah Peserta</label>
-                            <select class="form-control select" name="idMahasiswa" id="peserta">
-                                @foreach ($peserta as $item)
-                                    <option value="{{ $item->id }}">{{ $item->username }} | {{ $item->name }}</option>
-                                @endforeach
-                            </select>
+                            <select class="js-data-example-ajax form-control" name="idMahasiswa"></select>
                         </div>
 
                         <button type="submit" class="btn btn-success"><i class="feather icon-check"></i> Tambah</button>
                     </form>
-
-                    <table class="table table-striped">
-                        <thead class="thead-light">
-                            <tr>
-                                <th>NIM</th>
-                                <th>Nama</th>
-                            </tr>
-                        </thead>
-                        <tbody id="mahasiswa">
-                        </tbody>
-                    </table>
                 </div>
                 
                 <div class="modal-footer" id="button">
@@ -261,6 +257,24 @@
                 dropdownAutoWidth: true,
                 width: '100%'
             });
+
+            $('.js-data-example-ajax').select2({
+                placeholder: "Pilih peserta",
+                minimumResultsForSearch: Infinity,
+                dropdownAutoWidth: true,
+                width: '100%',
+                ajax: {
+                    url: '{{ url("/admin/portal/data/kelas") }}',
+                    data: function (params) {
+                        var query = {
+                            search: params.term,
+                            page: params.page || 1
+                        }
+
+                        return query;
+                    }
+                }
+            });
             
             $(document).on('click', '#myTable tbody tr td button', function(e) {
                 var id = $(this).attr('data-value');
@@ -279,7 +293,6 @@
             $(document).on('click', '#myTable tbody tr td a', function(e) {
                 var id = $(this).attr('data-kelas');
                 $.get( "kelas/" + id, function( data ) {
-                    console.log(JSON.parse(data));
                     var d = JSON.parse(data);
                     $('#judulKelasModal').text("Detail Kelas | "+ d.kode +"-"+ d.nama);
                     $('#dosen').val(d.dosen);
@@ -287,7 +300,6 @@
                     $('#button').html('<a href="kelas/detail/'+ d.id +'" class="btn btn-primary">Lihat Detail</a>');
                 });
                 $.get( "kelas/detail/" + id +"/edit", function( data ) {
-                    console.log(JSON.parse(data));
                     var d = JSON.parse(data);
                     $('#mahasiswa tr').remove();
                     for (var i = 0; i < d.length; i++) { 
