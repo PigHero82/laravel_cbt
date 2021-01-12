@@ -95,7 +95,7 @@
                 $('#pertanyaan').html(d.pertanyaan);
 
                 if (d.media != null) {
-                    $('#gambar').html('<img src="/assets/images/soal/'+ d.media +'" class="img-fluid mb-1" style="height: 400px;" id="gambar">');
+                    $('#gambar').html('<img src="{{ url('/assets/images/soal') }}/'+ d.media +'" class="img-fluid mb-1" style="height: 400px;" id="gambar">');
                 }
 
                 if (d.modelSoal != 4) { 
