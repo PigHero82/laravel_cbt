@@ -41,7 +41,6 @@
                     <h3 class="card-title">Mata Kuliah</h3>
                     <div class="float-right">
                         <button type="button" data-toggle="modal" data-target="#modalTambah" class="btn btn-success px-1"><i class="feather icon-plus"></i> Tambah</button>
-                        <button type="button" data-toggle="modal" data-target="#modalExcel" class="btn btn-primary px-1"><i class="feather icon-upload"></i> Upload Excel</button>
                     </div>
                 </div>
                 <!-- /.card-header -->

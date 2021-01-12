@@ -64,7 +64,6 @@
                                             <div class="col-md-6">
                                                 <div class="float-md-right">
                                                     <button type="button" data-toggle="modal" data-target="#modalTambah" class="btn btn-success px-1"><i class="feather icon-plus"></i> Tambah</button>
-                                                    <button type="button" data-toggle="modal" data-target="#modalExcel" class="btn btn-primary px-1"><i class="feather icon-upload"></i> Upload Excel</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -133,11 +132,7 @@
                         <div class="modal-body">
                             <div class="form-group">
                                 <label>Mahasiswa</label>
-                                <select name="idMahasiswa" class="form-control select">
-                                    @foreach ($mahasiswa as $item)
-                                        <option value="{{ $item->id }}">{{ $item->username }} | {{ $item->name }}</option>
-                                    @endforeach
-                                </select>
+                                <select class="js-data-example-ajax form-control" name="idMahasiswa"></select>
                             </div>
                         </div>
                         
@@ -165,9 +160,21 @@
         $(document).ready( function () {
             $('.zero-configuration').DataTable();
 
-            $(".select").select2({
+            $('.js-data-example-ajax').select2({
+                placeholder: "Pilih peserta",
                 dropdownAutoWidth: true,
-                width: '100%'
+                width: '100%',
+                ajax: {
+                    url: '{{ url("/admin/portal/data/kelas") }}',
+                    data: function (params) {
+                        var query = {
+                            search: params.term,
+                            page: params.page || 1
+                        }
+
+                        return query;
+                    }
+                }
             });
             
             $(document).on('click', '.hapus', function () {

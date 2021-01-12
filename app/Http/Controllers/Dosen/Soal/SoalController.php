@@ -171,7 +171,7 @@ class SoalController extends Controller
             $gambar = rand() . '.' . $image->getClientOriginalExtension();
             $image->move('assets/images/soal/', $gambar);
 
-            Soal::updateGambarSoal($soal->id, $gambar);
+            Soal::updateSoalGambar($id, $gambar);
         }
 
         Soal::updateSoal($request, $id);
