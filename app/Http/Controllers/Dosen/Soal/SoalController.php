@@ -73,7 +73,7 @@ class SoalController extends Controller
             $jawaban = $request->benarsalah;
         }
 
-        if ($request->benar != null) {
+        if ($request->benar == NULL) {
             $request->benar = 0;
         }
 

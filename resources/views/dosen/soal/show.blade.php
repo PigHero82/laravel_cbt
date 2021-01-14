@@ -668,18 +668,18 @@
         var digit = 1;
         var no = 2;
         $(document).on('click', '.tambah-pertanyaan', function(e) {
-            $('.pertanyaan').append(`<fieldset class="form-group">
-                                        <label>Jawaban `+ no +`</label>
-                                        <textarea class="form-control pertanyaan`+ digit +`" rows="3" placeholder="Deskripsi Jawaban" name="jawaban[`+ digit +`]"></textarea>
-                                        <div class="vs-radio-con">
-                                            <input type="radio" name="benar" value="`+ digit +`">
-                                            <span class="vs-radio">
-                                                <span class="vs-radio--border"></span>
-                                                <span class="vs-radio--circle"></span>
-                                            </span>
-                                            <span class="">Jawaban Benar</span>
-                                        </div>
-                                    </fieldset>`);
+            $('#data-jawaban div div .pertanyaan').append(`<fieldset class="form-group">
+                                                            <label>Jawaban `+ no +`</label>
+                                                            <textarea class="form-control pertanyaan`+ digit +`" rows="3" placeholder="Deskripsi Jawaban" name="jawaban[`+ digit +`]"></textarea>
+                                                            <div class="vs-radio-con">
+                                                                <input type="radio" name="benar" value="`+ digit +`">
+                                                                <span class="vs-radio">
+                                                                    <span class="vs-radio--border"></span>
+                                                                    <span class="vs-radio--circle"></span>
+                                                                </span>
+                                                                <span class="">Jawaban Benar</span>
+                                                            </div>
+                                                        </fieldset>`);
 
             $('.pertanyaan'+ digit).summernote({
                 height: 100
