@@ -28,13 +28,13 @@
                             <ul class="nav nav-tabs" role="tablist">
                                 @foreach ($data as $item)
                                     <li class="nav-item">
-                                        <a class="nav-link @if ($loop->first) active @endif" id="{{ $item->id }}-tab" data-toggle="tab" href="#{{ $item->id }}" aria-controls="{{ $item->id }}" role="tab" aria-selected="@if ($loop->first) true @else false @endif">{{ $item->kode }}</a>
+                                        <a class="nav-link @if ($loop->first) active @endif" id="data{{ $item->id }}-tab" data-toggle="tab" href="#data{{ $item->id }}" aria-controls="data{{ $item->id }}" role="tab" aria-selected="@if ($loop->first) true @else false @endif">{{ $item->kode }}</a>
                                     </li>
                                 @endforeach
                             </ul>
                             <div class="tab-content">
                                 @foreach ($data as $item)
-                                    <div class="tab-pane @if ($loop->first) active @endif" id="{{ $item->id }}" aria-labelledby="{{ $item->id }}-tab" role="tabpanel">
+                                    <div class="tab-pane fade @if ($loop->first) show active @endif" id="data{{ $item->id }}" aria-labelledby="data{{ $item->id }}-tab" role="tabpanel">
                                         {{ $item->kode }} | {{ $item->nama }}
                                         <table class="table table-striped">
                                             <thead>
