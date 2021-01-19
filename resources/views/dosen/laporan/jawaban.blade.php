@@ -30,7 +30,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @if (count($data) > 0)
+                            @if (isset($data))
                                 @foreach ($data as $item)
                                     <tr>
                                         <td>{{ $item['username'] }}</td>
