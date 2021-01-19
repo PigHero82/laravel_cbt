@@ -30,15 +30,51 @@ class KelasMahasiswa extends Model
 
         if ($students->isNotEmpty()) {
             foreach ($students as $key => $value) {
-                $data[$key] = KelasMahasiswa::join('users', 'kelas_mahasiswa.idMahasiswa', 'users.id')
-                                            ->join('jawaban', 'users.id', 'jawaban.idUser')
-                                            ->select('idKelas', 'users.id as id', 'users.username as nim', 'users.name as nama', 'users.gambar', 'kelas_mahasiswa.id as iddata')
-                                            ->selectRaw('COUNT(jawaban.id) as jumlah')
-                                            ->groupBy('jawaban.idUser')
-                                            ->where('users.id', $value->id)
-                                            ->where('benar', null)
+                $idValue = $value->id;
+
+                // $data[$key] = KelasMahasiswa::join('users', 'kelas_mahasiswa.idMahasiswa', 'users.id')
+                //                             ->join('kelas', 'kelas_mahasiswa.idKelas', 'kelas.id')
+                //                             ->join('paket', 'kelas.id', 'paket.idKelas')
+                //                             ->join('jawaban', 'users.id', 'jawaban.idUser')
+                //                             ->select('kelas_mahasiswa.idKelas', 'users.id as id', 'users.username as nim', 'users.name as nama', 'users.gambar', 'kelas_mahasiswa.id as iddata')
+                //                             ->selectRaw('COUNT(jawaban.id) as jumlah')
+                //                             ->groupBy('jawaban.idUser')
+                //                             ->where('kelas_mahasiswa.idMahasiswa', $idValue)
+                //                             ->where('benar', null)
+                //                             ->where('paket.id', $id)
+                //                             ->first();
+                $data[$key] = KelasMahasiswa::select('kelas_mahasiswa.idKelas', 'users.id as id', 'users.username as nim', 'users.name as nama', 'users.gambar', 'kelas_mahasiswa.id as iddata')
+                                            ->join('users', 'kelas_mahasiswa.idMahasiswa', 'users.id')
+                                            ->where('kelas_mahasiswa.idMahasiswa', $idValue)
                                             ->first();
-                $data[$key]['nilai'] = Jawaban::getNilai($id, $value->id);
+
+                $status = KelasMahasiswa::join('jawaban', 'kelas_mahasiswa.idMahasiswa', 'jawaban.idUser')
+                                        ->join('soal', 'jawaban.idSoal', 'soal.id')
+                                        ->join('grup', 'soal.idGrup', 'grup.id')
+                                        ->select('jawaban.id')
+                                        ->groupBy('jawaban.idUser')
+                                        ->where('idUser', $data[$key]->id)
+                                        ->where('grup.idPaket', $id)
+                                        ->get();
+
+                if ($status->isNotEmpty()) {
+                    $data[$key]['status'] = count(KelasMahasiswa::join('jawaban', 'kelas_mahasiswa.idMahasiswa', 'jawaban.idUser')
+                                                                ->join('soal', 'jawaban.idSoal', 'soal.id')
+                                                                ->join('grup', 'soal.idGrup', 'grup.id')
+                                                                ->select('jawaban.id')
+                                                                ->groupBy('jawaban.idUser')
+                                                                ->where('idUser', $data[$key]->id)
+                                                                ->where('benar', null)
+                                                                ->where('grup.idPaket', $id)
+                                                                ->get());
+                } else {
+                    $data[$key]['status'] = NULL;
+                }
+                
+                $data[$key]['nilai'] = Jawaban::getNilai($id, $idValue);
+                if ($data[$key]['nilai'] == NULL) {
+                    $data[$key]['nilai'] = 0;
+                }
             }
 
             return $data;

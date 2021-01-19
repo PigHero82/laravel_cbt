@@ -79,7 +79,7 @@
                             <table class="table zero-configuration">
                                 <thead>
                                     <tr>
-                                        <th>NIM</th>
+                                        <th>No Induk</th>
                                         <th>Nama</th>
                                         <th>Nilai</th>
                                         <th>Status</th>
@@ -95,17 +95,21 @@
                                             <td>{{ $item->nama }}</td>
                                             <td>{{ number_format($item->nilai/$total * 100, 2) }}</td>
                                             <td>
-                                                @if ($item->jumlah > 0)
-                                                    <span class="badge badge-md badge-danger">{{ $item->jumlah }} Jawaban belum dikoreksi</span>
-                                                @else
+                                                @if ($item->status > 0)
+                                                    <span class="badge badge-md badge-danger">{{ $item->status }} Jawaban belum dikoreksi</span>
+                                                @elseif ($item->status === 0)
                                                     <span class="badge badge-md badge-success">Jawaban telah dikoreksi</span>
+                                                @elseif ($item->status == NULL)
+                                                    <span class="badge badge-md badge-danger">Belum memulai ujian</span>
                                                 @endif
                                             </td>
                                             @if (Auth::user()->hasRole('pengampu'))
                                                 <td>
-                                                    <button type="button" class="btn btn-primary px-1" data-toggle="tooltip" data-placement="bottom" data-original-title="Koreksi Jawaban">
-                                                        <i class="feather icon-edit-2" data-toggle="modal" data-target="#modalKoreksi" data-value="{{ $item->id }}" data-id="{{ $data->id }}"></i>
-                                                    </button>
+                                                    @if ($item->status !== NULL)
+                                                        <button type="button" class="btn btn-primary px-1" data-toggle="tooltip" data-placement="bottom" data-original-title="Koreksi Jawaban">
+                                                            <i class="feather icon-edit-2" data-toggle="modal" data-target="#modalKoreksi" data-value="{{ $item->id }}" data-id="{{ $data->id }}"></i>
+                                                        </button>
+                                                    @endif
                                                 </td>
                                             @endif
                                         </tr>                                        
@@ -121,7 +125,7 @@
 
     <!-- Modal -->
     <div class="modal fade" id="modalKoreksi" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Hasil Jawaban Peserta</h5>
@@ -139,7 +143,7 @@
                                     <tr>
                                         <th>Pertanyaan</th>
                                         <th>Jawaban</th>
-                                        <th></th>
+                                        <th style="width: 20%"></th>
                                     </tr>
                                 </thead>
                                 <tbody id="data">

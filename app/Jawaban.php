@@ -77,20 +77,24 @@ class Jawaban extends Model
 
         if ($jawaban->isNotEmpty()) {
             foreach ($jawaban as $key => $value) {
-                $id = $value->idUser;
+                $idValue = $value->idUser;
 
                 $data[$key] = Jawaban::join('soal', 'jawaban.idSoal', 'soal.id')
                                     ->join('grup', 'soal.idGrup', 'grup.id')
                                     ->join('users', 'jawaban.idUser', 'users.id')
                                     ->select('jawaban.idUser as id', 'users.name', 'users.username')
                                     ->groupBy('jawaban.idUser')
-                                    ->where('jawaban.idUser', $id)
+                                    ->where('jawaban.idUser', $idValue)
                                     ->first();
                 
                 $data[$key]['jawaban'] = Jawaban::join('soal', 'jawaban.idSoal', 'soal.id')
+                                                ->join('grup', 'soal.idGrup', 'grup.id')
+                                                ->join('users', 'jawaban.idUser', 'users.id')
                                                 ->select('skor')
                                                 ->orderBy('soal.idGrup')
                                                 ->orderBy('idSoal')
+                                                ->where('jawaban.idUser', $idValue)
+                                                ->where('grup.idPaket', $id)
                                                 ->get();
             }
             return $data;
@@ -102,7 +106,7 @@ class Jawaban extends Model
         return Jawaban::join('soal', 'jawaban.idSoal', 'soal.id')
                         ->join('grup', 'soal.idGrup', 'grup.id')
                         ->leftJoin('pilihan', 'jawaban.idPilihan', 'pilihan.id')
-                        ->select('jawaban.id', 'soal.pertanyaan', 'jawaban.idSoal', 'soal.modelSoal', 'jawaban.idPilihan', 'jawaban_esai', 'pilihan.deskripsi')
+                        ->select('grup.idPaket', 'jawaban.id', 'soal.pertanyaan', 'jawaban.idSoal', 'soal.modelSoal', 'jawaban.idPilihan', 'jawaban_esai', 'pilihan.deskripsi')
                         ->selectRaw('(CASE benar WHEN 1 THEN "Benar" WHEN 0 THEN "Salah" END) as benar')
                         ->where('grup.idPaket', $id)
                         ->where('jawaban.idUser', $user)
