@@ -30,15 +30,17 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($data as $item)
-                                <tr>
-                                    <td>{{ $item['username'] }}</td>
-                                    <td>{{ $item['name'] }}</td>
-                                    @foreach ($item['jawaban'] as $jawaban)
-                                        <td>{{ $jawaban['skor'] }}</td>
-                                    @endforeach
-                                </tr>                                        
-                            @endforeach
+                            @if (count($data) > 0)
+                                @foreach ($data as $item)
+                                    <tr>
+                                        <td>{{ $item['username'] }}</td>
+                                        <td>{{ $item['name'] }}</td>
+                                        @foreach ($item['jawaban'] as $jawaban)
+                                            <td>{{ $jawaban['skor'] }}</td>
+                                        @endforeach
+                                    </tr>                                        
+                                @endforeach
+                            @endif
                         </tbody>
                     </table>
                 </div>
