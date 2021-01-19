@@ -32,17 +32,6 @@ class KelasMahasiswa extends Model
             foreach ($students as $key => $value) {
                 $idValue = $value->id;
 
-                // $data[$key] = KelasMahasiswa::join('users', 'kelas_mahasiswa.idMahasiswa', 'users.id')
-                //                             ->join('kelas', 'kelas_mahasiswa.idKelas', 'kelas.id')
-                //                             ->join('paket', 'kelas.id', 'paket.idKelas')
-                //                             ->join('jawaban', 'users.id', 'jawaban.idUser')
-                //                             ->select('kelas_mahasiswa.idKelas', 'users.id as id', 'users.username as nim', 'users.name as nama', 'users.gambar', 'kelas_mahasiswa.id as iddata')
-                //                             ->selectRaw('COUNT(jawaban.id) as jumlah')
-                //                             ->groupBy('jawaban.idUser')
-                //                             ->where('kelas_mahasiswa.idMahasiswa', $idValue)
-                //                             ->where('benar', null)
-                //                             ->where('paket.id', $id)
-                //                             ->first();
                 $data[$key] = KelasMahasiswa::select('kelas_mahasiswa.idKelas', 'users.id as id', 'users.username as nim', 'users.name as nama', 'users.gambar', 'kelas_mahasiswa.id as iddata')
                                             ->join('users', 'kelas_mahasiswa.idMahasiswa', 'users.id')
                                             ->where('kelas_mahasiswa.idMahasiswa', $idValue)
@@ -62,7 +51,7 @@ class KelasMahasiswa extends Model
                                                                 ->join('soal', 'jawaban.idSoal', 'soal.id')
                                                                 ->join('grup', 'soal.idGrup', 'grup.id')
                                                                 ->select('jawaban.id')
-                                                                ->groupBy('jawaban.idUser')
+                                                                ->groupBy('jawaban.id')
                                                                 ->where('idUser', $data[$key]->id)
                                                                 ->where('benar', null)
                                                                 ->where('grup.idPaket', $id)

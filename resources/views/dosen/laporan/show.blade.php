@@ -185,6 +185,10 @@
                         var soal = d[i].deskripsi;
                     }
 
+                    if (soal == null) {
+                        soal = "Belum Terjawab";
+                    }
+
                     if (d[i].benar == null) {
                         var benar = `<select name="data[`+ d[i].id +`]" class="form-control">
                                         <option value="" hidden>- Pilih Hasil -</option>

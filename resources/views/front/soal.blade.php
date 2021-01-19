@@ -109,7 +109,7 @@
                                                 <li class="mr-2">
                                                     <fieldset>
                                                         <div class="vs-radio-con">
-                                                            <input type="radio" name="vueradio" class="data-jawaban" value="`+ d.id +`/`+ d['pilihan'][i].id +`" `+ cek +`>
+                                                            <input type="radio" name="vueradio" class="data-jawaban" value="`+ d.id +`/`+ d['pilihan'][i].id +`" data-value="`+ d.id +`" `+ cek +`>
                                                             <span class="vs-radio">
                                                                 <span class="vs-radio--border"></span>
                                                                 <span class="vs-radio--circle"></span>
