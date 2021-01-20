@@ -85,16 +85,12 @@
                                             <td class="text-center"><i class="feather icon-slash text-danger"></i></td>
                                         @endif
                                         <td>
-                                            @if ($item->tanggal_awal.' '.$item->waktu_awal < date('Y-m-d H:i:s') && $item->tanggal_akhir.' '.$item->waktu_akhir > date('Y-m-d H:i:s') && $item->status == 1)
-                                                <h5><span class="badge badge-success">Ujian sedang berlangsung</span></h5>
-                                            @else
-                                                <form action="{{ route('dosen.paket.destroy', $item->id) }}" class="form" method="post">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="button" class="btn badge badge-lg badge-warning" data-toggle="modal" data-target="#modalUbah" data-value="{{ $item->id }}"><i class="feather icon-edit-1"></i></button>
-                                                    <button type="button" class="btn badge badge-lg badge-danger hapus"><i class="feather icon-trash-2"></i></button>
-                                                </form>
-                                            @endif
+                                            <form action="{{ route('dosen.paket.destroy', $item->id) }}" class="form" method="post">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="button" class="btn badge badge-lg badge-warning" data-toggle="modal" data-target="#modalUbah" data-value="{{ $item->id }}"><i class="feather icon-edit-1"></i></button>
+                                                <button type="button" class="btn badge badge-lg badge-danger hapus"><i class="feather icon-trash-2"></i></button>
+                                            </form>
                                         </td>
                                     </tr>
                                 @endforeach

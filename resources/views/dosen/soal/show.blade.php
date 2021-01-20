@@ -21,6 +21,12 @@
         </div><br />
     @endif
 
+    @if ($status == 1)
+        <div class ="alert alert-danger">
+            Ujian sedang berlangsung, pertambahan soal tidak akan merubah soal pada ujian peserta
+        </div><br />
+    @endif
+
     <div class="sidebar-shop" id="ecommerce-sidebar-toggler">
         <div class="row">
             <div class="col-md-4">

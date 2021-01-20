@@ -106,13 +106,16 @@ class SoalController extends Controller
         if ($cek == NULL) {
             return back()->with('danger', 'Data Paket Tidak Ditemukan');
         }
-        if ($data->tanggal_awal.' '.$data->waktu_awal <= date('Y-m-d H:i:s') && $data->tanggal_akhir.' '.$data->waktu_akhir >= date('Y-m-d-H:i:s') && $data->status == 1) {
-            return redirect()->route('dosen.laporan.show', $data->id)->with('danger', 'Ujian sedang berlangsung, soal tidak dapat diubah');
-        } else {
-            $grup = Grup::getGrup($soal);
 
-            return view('dosen.soal.show', compact('data', 'grup', 'soal'));
+        if ($data->tanggal_awal.' '.$data->waktu_awal <= date('Y-m-d H:i:s') && $data->tanggal_akhir.' '.$data->waktu_akhir >= date('Y-m-d H:i:s') && $data->status == 1) {
+            $status = 1;
+        } else {
+            $status = 0;
         }
+
+        $grup = Grup::getGrup($soal);
+
+        return view('dosen.soal.show', compact('data', 'grup', 'soal', 'status'));
     }
 
     /**
