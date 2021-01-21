@@ -6,7 +6,7 @@
 @endsection
 
 @section('judul')
-    Data Mata Kuliah
+    Data Program Studi
 @endsection
 
 @section('content')
@@ -38,7 +38,7 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Mata Kuliah</h3>
+                    <h3 class="card-title">Program Studi</h3>
                     <div class="float-right">
                         <button type="button" data-toggle="modal" data-target="#modalTambah" class="btn btn-success px-1"><i class="feather icon-plus"></i> Tambah</button>
                     </div>
@@ -49,20 +49,16 @@
                         <table id="myTable" class="table zero-configuration table-striped" style="width:100%">
                             <thead>
                                 <tr>
-                                    <th>Kode</th>
                                     <th>Nama</th>
-                                    <th>Prodi</th>
                                     <th></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($data as $item)
                                     <tr>
-                                        <td>{{ $item->kode }}</td>
                                         <td>{{ $item->nama }}</td>
-                                        <td>{{ $item->nama_prodi }}</td>
                                         <td>
-                                            <form action="{{ route('admin.portal.mata-kuliah.destroy', $item->id) }}" class="form" method="post">
+                                            <form action="{{ route('admin.portal.prodi.destroy', $item->id) }}" class="form" method="post">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="button" data-toggle="modal" data-target="#modalUbah" data-value="{{ $item->id }}" class="btn btn-warning px-1"><i class="feather icon-edit-1"></i></button>
@@ -90,49 +86,25 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Tambah Mata Kuliah</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Tambah Program Studi</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 
-                @if (count($prodi) > 0)
-                    <form action="{{ route('admin.portal.mata-kuliah.store') }}" method="post">
-                        @csrf
-                        <div class="modal-body">
-                            <div class="form-group">
-                                <label>Kode</label>
-                                <input type="text" name="kode" class="form-control" placeholder="Kode Mata Kuliah" required>
-                            </div>
-
-                            <div class="form-group">
-                                <label>Nama</label>
-                                <input type="text" name="nama" class="form-control" placeholder="Nama Mata Kuliah" required>
-                            </div>
-
-                            <div class="form-group">
-                                <label>Prodi</label>
-                                <select name="prodi" class="form-control" required>
-                                    <option value="" hidden>-- Pilih Prodi --</option>
-                                    @foreach ($prodi as $item)
-                                        <option value="{{ $item->id }}">{{ $item->nama }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary">Tambah</button>
-                        </div>
-                    </form>
-                @else
+                <form action="{{ route('admin.portal.prodi.store') }}" method="post">
+                    @csrf
                     <div class="modal-body">
-                        <div class="error-template text-center">
-                            <h1><i class="feather icon-slash"></i></h1>
-                            <h2>Tidak Ada Prodi</h2>
+                        <div class="form-group">
+                            <label>Nama</label>
+                            <input type="text" name="nama" class="form-control" placeholder="Nama Program Studi" required>
                         </div>
                     </div>
-                @endif
+                    
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Tambah</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -142,51 +114,26 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title judul" id="exampleModalLabel">Ubah Mata Kuliah | </h5>
+                    <h5 class="modal-title judul" id="exampleModalLabel">Ubah Program Studi | </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 
-                @if (count($prodi) > 0)
-                    <form id="form" method="post">
-                        @csrf
-                        @method('PATCH')
-                        <input type="text" name="id" id="id" hidden>
-                        <div class="modal-body">
-                            <div class="form-group">
-                                <label>Kode</label>
-                                <input type="text" name="kode" id="kode" class="form-control" placeholder="Kode Mata Kuliah" required>
-                            </div>
-
-                            <div class="form-group">
-                                <label>Nama</label>
-                                <input type="text" name="nama" id="nama" class="form-control" placeholder="Nama Mata Kuliah" required>
-                            </div>
-
-                            <div class="form-group">
-                                <label>Prodi</label>
-                                <select name="prodi" id="prodi" class="form-control" required>
-                                    <option value="" hidden>-- Pilih Prodi --</option>
-                                    @foreach ($prodi as $item)
-                                        <option value="{{ $item->id }}">{{ $item->nama }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary">Ubah</button>
-                        </div>
-                    </form>
-                @else
+                <form id="form" method="post">
+                    @csrf
+                    @method('PATCH')
                     <div class="modal-body">
-                        <div class="error-template text-center">
-                            <h1><i class="feather icon-slash"></i></h1>
-                            <h2>Tidak Ada Prodi</h2>
+                        <div class="form-group">
+                            <label>Nama</label>
+                            <input type="text" name="nama" id="nama" class="form-control" placeholder="Nama Program Studi" required>
                         </div>
                     </div>
-                @endif
+                    
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Ubah</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -232,15 +179,12 @@
 
             $(document).on('click', '#myTable tbody tr td button', function(e) {
                 var id = $(this).attr('data-value');
-                $.get( "mata-kuliah/" + id, function( data ) {
+                $.get( "prodi/" + id, function( data ) {
                     console.log(JSON.parse(data));
                     var d = JSON.parse(data);
-                    $('.judul').text("Ubah Mata Kuliah | "+ d.nama);
-                    $('#form').attr("action", "mata-kuliah/"+ d.id);
-                    $('#id').val(d.id);
+                    $('.judul').text("Ubah Program Studi | "+ d.nama);
+                    $('#form').attr("action", "prodi/"+ d.id);
                     $('#nama').val(d.nama);
-                    $('#kode').val(d.kode);
-                    $('#prodi').val(d.idProdi);
                 });
             });
         } );

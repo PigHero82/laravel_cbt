@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\MataKuliah;
 use Illuminate\Http\Request;
 
+use App\Prodi;
+
 class MataKuliahController extends Controller
 {
     /**
@@ -26,7 +28,9 @@ class MataKuliahController extends Controller
     public function index()
     {
         $data = MataKuliah::getMataKuliah();
-        return view('mata-kuliah', compact('data'));
+        $prodi = Prodi::getProdi();
+
+        return view('mata-kuliah', compact('data', 'prodi'));
     }
 
     /**

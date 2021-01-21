@@ -16,7 +16,7 @@ class Kelas extends Model
         return Kelas::join('mata_kuliah', 'kelas.idMataKuliah', 'mata_kuliah.id')
                     ->join('users', 'kelas.idDosen', 'users.id')
                     ->leftjoin('kelas_mahasiswa', 'kelas.id', 'kelas_mahasiswa.idKelas')
-                    ->select('kelas.id', 'kode', 'mata_kuliah.nama', 'users.name as dosen')
+                    ->select('kelas.id', 'kelas.kode', 'mata_kuliah.nama', 'users.name as dosen')
                     ->selectRaw('count(kelas_mahasiswa.id) as jumlah')
                     ->groupBy('kode')
                     ->groupBy('mata_kuliah.nama')

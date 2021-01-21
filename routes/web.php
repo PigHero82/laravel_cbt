@@ -66,6 +66,7 @@ Route::name('admin.')->prefix('admin')->middleware('auth', 'role:admin')->group(
             Route::get('data/kelas', 'KelasController@data_peserta');
             Route::resource('mata-kuliah', 'MataKuliahController');
             Route::resource('kelas/detail', 'KelasMahasiswaController');
+            Route::resource('prodi', 'ProdiController');
             Route::view('pengumuman', 'pengumuman')->name('pengumuman');
         });
         Route::view('laporan', 'admin.laporan.index')->name('laporan.index');

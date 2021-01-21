@@ -6,13 +6,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class MataKuliah extends Model
 {
-    protected $fillable = ['nama', 'status'];
+    protected $fillable = ['nama', 'kode', 'idProdi', 'status'];
 
     protected $table = 'mata_kuliah';
 
+    protected $hidden = ['created_at', 'updated_at'];
+
     static function getMataKuliah()
     {
-        return MataKuliah::all();
+        return MataKuliah::join('prodi', 'mata_kuliah.idProdi', 'prodi.id')
+                        ->select('mata_kuliah.*', 'prodi.nama as nama_prodi')
+                        ->get();
     }
 
     static function firstMataKuliahNama($nama)
@@ -22,20 +26,26 @@ class MataKuliah extends Model
 
     static function firstMataKuliah($id)
     {
-        return MataKuliah::findOrFail($id);
+        return MataKuliah::join('prodi', 'mata_kuliah.idProdi', 'prodi.id')
+                        ->select('mata_kuliah.*', 'prodi.nama as nama_prodi')
+                        ->findOrFail($id);
     }
     
     static function storeMataKuliah($request)
     {
         MataKuliah::create([
-            'nama' => $request->nama
+            'kode'      => $request->kode,
+            'nama'      => $request->nama,
+            'idProdi'   => $request->prodi
         ]);
     }
     
     static function updateMataKuliah($request, $id)
     {
         MataKuliah::whereId($id)->update([
-            'nama' => $request->nama
+            'kode'      => $request->kode,
+            'nama'      => $request->nama,
+            'idProdi'   => $request->prodi
         ]);
     }
     

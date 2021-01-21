@@ -13,6 +13,7 @@
                 <li class="{{ (request()->is('admin/portal/pengampu*')) ? 'active' : '' }}"><a href="{{ route('admin.portal.pengampu.index') }}"><i></i><span class="menu-item">Data Pengampu</span></a></li>
                 <li class="{{ (request()->is('admin/portal/mata-kuliah*')) ? 'active' : '' }}"><a href="{{ route('admin.portal.mata-kuliah.index') }}"><i></i><span class="menu-item">Data Mata Kuliah</span></a></li>
                 <li class="{{ (request()->is('admin/portal/kelas*')) ? 'active' : '' }}"><a href="{{ route('admin.portal.kelas.index') }}"><i></i><span class="menu-item">Data Kelas</span></a></li>
+                <li class="{{ (request()->is('admin/portal/prodi*')) ? 'active' : '' }}"><a href="{{ route('admin.portal.prodi.index') }}"><i></i><span class="menu-item">Data Prodi</span></a></li>
             </ul>
         </li>
         <li class="nav-item {{ (request()->is('admin/laporan*')) ? 'active' : '' }}"><a href="{{ route('admin.laporan.index') }}"><i class="feather icon-printer"></i><span class="menu-title">Laporan</span></a></li>
