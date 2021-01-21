@@ -126,7 +126,7 @@
     
                         <div class="form-group">
                             <label>NIM/NIDN</label>
-                            <input type="text" name="nim" class="form-control" maxlength="12" placeholder="NIM/NIDN User" required>
+                            <input type="text" name="nim" class="form-control" maxlength="20" placeholder="NIM/NIDN User" required>
                         </div>
     
                         <div class="form-group">
