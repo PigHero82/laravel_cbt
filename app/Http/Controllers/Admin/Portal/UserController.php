@@ -36,6 +36,7 @@ class UserController extends Controller
     {
         $data = User::getUser();
         $roles = Role::getRoles();
+        
         return view('admin.user.index', compact('data', 'roles'));
     }
 

@@ -64,6 +64,7 @@
                             <tr>
                                 <th>NIM/NIDN</th>
                                 <th>Nama</th>
+                                <th>Role</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -74,6 +75,13 @@
                                         <td>{{ $item->username }}</td>
                                         <td><a href="{{ route('admin.portal.user.show', $item->id) }}">{{ $item->name }}</a></td>
                                         <td>
+                                            <ul class="list-group">
+                                                @foreach ($item['roles'] as $role)
+                                                    <li class="list-group-item">{{ $role['description'] }}</li>
+                                                @endforeach
+                                            </ul>
+                                        </td>
+                                        <td>
                                             <form action="{{ route('admin.portal.user.destroy', $item->id) }}" class="form" method="post">
                                                 @csrf
                                                 @method('DELETE')
@@ -81,7 +89,7 @@
                                                 <button type="button" class="btn btn-danger px-1 hapus"><i class="feather icon-trash-2"></i></button>
                                             </form>
                                         </td>
-                                    </tr>
+                                   </tr>
                                 @endif
                             @endforeach
                         </tbody>
