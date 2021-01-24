@@ -25,12 +25,14 @@ class HomeController extends Controller
         $kelas = Kelas::getKelasCount();
         $mahasiswa = Kelas::getKelasMahasiswaCount();
         $paket = Paket::getPaket();
+        
         return view('dosen.index', compact('kelas', 'mahasiswa', 'paket'));
     }
 
     public function mahasiswa()
     {
         $data = Kelas::getKelasByDosen();
+        
         return view('dosen.mahasiswa', compact('data'));
     }
 }

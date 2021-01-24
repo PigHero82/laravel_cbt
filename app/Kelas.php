@@ -46,7 +46,7 @@ class Kelas extends Model
 
                 $data[$key] = Kelas::join('mata_kuliah', 'kelas.idMataKuliah', 'mata_kuliah.id')
                                     ->join('users', 'kelas.idDosen', 'users.id')
-                                    ->select('kelas.id', 'kode', 'mata_kuliah.nama', 'users.name as dosen')
+                                    ->select('kelas.id', 'kelas.kode', 'mata_kuliah.nama', 'users.name as dosen')
                                     ->where('kelas.id', $id)
                                     ->first();
 
@@ -65,7 +65,7 @@ class Kelas extends Model
     {
         return Kelas::join('mata_kuliah', 'kelas.idMataKuliah', 'mata_kuliah.id')
                     ->join('users', 'kelas.idDosen', 'users.id')
-                    ->select('kelas.id', 'kode', 'mata_kuliah.nama', 'users.name as dosen')
+                    ->select('kelas.id', 'kelas.kode', 'mata_kuliah.nama', 'users.name as dosen')
                     ->where('idDosen', Auth::id())
                     ->get();
     }
