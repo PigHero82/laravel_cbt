@@ -67,6 +67,13 @@ Route::name('admin.')->prefix('admin')->middleware('auth', 'role:admin')->group(
             Route::resource('mata-kuliah', 'MataKuliahController');
             Route::resource('kelas/detail', 'KelasMahasiswaController');
             Route::resource('prodi', 'ProdiController');
+
+            // Grup Peserta
+            Route::resource('grup-peserta', 'GrupPesertaController')->except(['show']);
+            Route::name('grup-peserta.')->prefix('grup-peserta')->group(function () {
+                Route::get('data/{grup_peserta}', 'GrupPesertaController@show')->name('show');
+                Route::resource('detail', 'AnggotaGrupPesertaController');
+            });
             Route::view('pengumuman', 'pengumuman')->name('pengumuman');
         });
         Route::view('laporan', 'admin.laporan.index')->name('laporan.index');

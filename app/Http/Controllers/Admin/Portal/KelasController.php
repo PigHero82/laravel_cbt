@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Admin\Portal;
 
 use App\Http\Controllers\Controller;
 use App\Kelas;
+use Illuminate\Http\Request;
+
 use App\MataKuliah;
 use App\User;
-use Illuminate\Http\Request;
+use App\GrupPeserta;
 
 class KelasController extends Controller
 {
@@ -31,8 +33,9 @@ class KelasController extends Controller
         $matakuliah = MataKuliah::getMataKuliah();
         $dosen = User::getUserRole(2);
         $peserta = User::getUserRole(3);
+        $grup = GrupPeserta::getGrupPeserta();
 
-        return view('admin.kelas.index', compact('data', 'matakuliah', 'dosen', 'peserta'));
+        return view('admin.kelas.index', compact('data', 'matakuliah', 'dosen', 'peserta', 'grup'));
     }
 
     /**

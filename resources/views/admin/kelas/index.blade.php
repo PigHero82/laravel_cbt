@@ -193,7 +193,7 @@
 
     <!-- Modal -->
     <div class="modal fade" id="modalKelasMahasiswa" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="judulKelasModal">Detail Kelas | </h5>
@@ -203,33 +203,54 @@
                 </div>
                 
                 <div class="modal-body">
-                    <div class="form-group">
-                        <label>Pengampu</label>
-                        <input readonly type="text" name="kode" id="dosen" class="form-control" placeholder="Dosen">
-                    </div>
-                    
-                    <form action="{{ route('admin.portal.detail.store') }}" method="post" class="mb-2">
-                        @csrf
-                        <input type="hidden" name="idKelas" id="idKelas">
+                    <div class="row">
+                        <div class="col-md-8 border-right">
+                            <p id="dosen">Pengampu :</p>
 
-                        <table class="table table-striped">
-                            <thead class="thead-light">
-                                <tr>
-                                    <th>NIM</th>
-                                    <th>Nama</th>
-                                </tr>
-                            </thead>
-                            <tbody id="mahasiswa">
-                            </tbody>
-                        </table>
-
-                        <div class="form-group">
-                            <label for="peserta">Tambah Peserta</label>
-                            <select class="js-data-example-ajax form-control" name="idMahasiswa"></select>
+                            <table class="table table-striped">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th>NIM</th>
+                                        <th>Nama</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="mahasiswa">
+                                </tbody>
+                            </table>
                         </div>
 
-                        <button type="submit" class="btn btn-success"><i class="feather icon-check"></i> Tambah</button>
-                    </form>
+                        <div class="col-md-4">
+                            <form action="{{ route('admin.portal.detail.store') }}" method="post" class="mb-2">
+                                @csrf
+                                <input type="hidden" name="idKelas" class="idKelas">
+                                
+                                <div class="form-group">
+                                    <label for="peserta">Tambah Peserta</label>
+                                    <select class="js-data-example-ajax form-control" name="idMahasiswa" required></select>
+                                </div>
+        
+                                <button type="submit" class="btn btn-success"><i class="feather icon-check"></i> Tambah</button>
+                            </form>
+
+                            @if (count($grup) > 0)
+                                <form action="{{ route('admin.portal.detail.store') }}" method="post">
+                                    @csrf
+                                    <input type="hidden" name="idKelas" class="idKelas">
+                                    
+                                    <div class="form-group">
+                                        <label>Tambah Peserta Berdasarkan Grup</label>
+                                        <select name="idGrup" class="select form-control" required>
+                                            @foreach ($grup as $item)
+                                                <option value="{{ $item->id }}">{{ $item->nama }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+            
+                                    <button type="submit" class="btn btn-success"><i class="feather icon-check"></i> Tambah Dengan Grup</button>
+                                </form>
+                            @endif
+                        </div>
+                    </div>
                 </div>
                 
                 <div class="modal-footer" id="button">
@@ -293,8 +314,8 @@
                 $.get( "kelas/" + id, function( data ) {
                     var d = JSON.parse(data);
                     $('#judulKelasModal').text("Detail Kelas | "+ d.kode +"-"+ d.nama);
-                    $('#dosen').val(d.dosen);
-                    $('#idKelas').val(id);
+                    $('#dosen').text('Pengampu : ' + d.dosen);
+                    $('.idKelas').val(id);
                     $('#button').html('<a href="kelas/detail/'+ d.id +'" class="btn btn-primary">Lihat Detail</a>');
                 });
                 $.get( "kelas/detail/" + id +"/edit", function( data ) {

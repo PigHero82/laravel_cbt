@@ -92,6 +92,14 @@ class KelasMahasiswa extends Model
         ]);
     }
 
+    static function storeKelasMahasiswaGrup($request)
+    {
+        KelasMahasiswa::create([
+            'idKelas'       => $request['idKelas'],
+            'idMahasiswa'   => $request['idMahasiswa']
+        ]);
+    }
+
     static function deleteKelasMahasiswa($id)
     {
         KelasMahasiswa::whereId($id)->delete();

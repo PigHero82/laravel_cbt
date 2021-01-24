@@ -100,7 +100,7 @@ class Kelas extends Model
     {
         return Kelas::join('mata_kuliah', 'kelas.idMataKuliah', 'mata_kuliah.id')
                     ->join('users', 'kelas.idDosen', 'users.id')
-                    ->select('kelas.id', 'idDosen', 'idMataKuliah', 'kode', 'mata_kuliah.nama', 'users.name as dosen')
+                    ->select('kelas.id', 'idDosen', 'idMataKuliah', 'kelas.kode', 'mata_kuliah.nama', 'users.name as dosen')
                     ->findOrFail($id);
     }
 

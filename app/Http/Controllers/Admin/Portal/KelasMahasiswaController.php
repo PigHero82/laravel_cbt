@@ -8,6 +8,8 @@ use App\Kelas;
 use App\User;
 use Illuminate\Http\Request;
 
+use App\AnggotaGrupPeserta;
+
 class KelasMahasiswaController extends Controller
 {
     /**
@@ -48,6 +50,23 @@ class KelasMahasiswaController extends Controller
      */
     public function store(Request $request)
     {
+        if (isset($request->idGrup)) {
+            $data = AnggotaGrupPeserta::getAnggotaGrupPeserta($request->idGrup);
+            if (count($data['peserta']) > 0) {
+                foreach ($data['peserta'] as $key => $value) {
+                    $mahasiswa = KelasMahasiswa::firstKelasMahasiswaidKelasidMahasiswa($request->idKelas, $value->id);
+                    if (!(isset($mahasiswa->id))) {
+                        $store['idKelas'] = $request->idKelas;
+                        $store['idMahasiswa'] = $value->id;
+        
+                        KelasMahasiswa::storeKelasMahasiswaGrup($store);
+                    }
+                }
+            }
+
+            return back()->with('success', 'Data Peserta berhasil ditambah');
+        }
+
         $data = KelasMahasiswa::firstKelasMahasiswaidKelasidMahasiswa($request->idKelas, $request->idMahasiswa);
         if (isset($data->id)) {
             return back()->with('danger', 'Data Peserta telah terdaftar');
