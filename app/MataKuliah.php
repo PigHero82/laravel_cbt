@@ -19,9 +19,13 @@ class MataKuliah extends Model
                         ->get();
     }
 
-    static function firstMataKuliahNama($nama)
+    static function firstMataKuliahNamaKode($id, $nama, $kode)
     {
-        return MataKuliah::firstWhere('nama', $nama);
+        return MataKuliah::where('id', '!=', $id)
+                        ->where('nama', $nama)
+                        ->orWhere('id', '!=', $id)
+                        ->where('kode', $kode)
+                        ->first();
     }
 
     static function firstMataKuliah($id)
@@ -29,6 +33,13 @@ class MataKuliah extends Model
         return MataKuliah::join('prodi', 'mata_kuliah.idProdi', 'prodi.id')
                         ->select('mata_kuliah.*', 'prodi.nama as nama_prodi')
                         ->findOrFail($id);
+    }
+
+    static function firstMataKuliahProdi($id)
+    {
+        $data['mata_kuliah'] = MataKuliah::select('mata_kuliah.id', 'mata_kuliah.nama')->where('idProdi', $id)->get();
+
+        return $data;
     }
     
     static function storeMataKuliah($request)

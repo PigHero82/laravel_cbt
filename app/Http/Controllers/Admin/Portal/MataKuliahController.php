@@ -51,13 +51,14 @@ class MataKuliahController extends Controller
      */
     public function store(Request $request)
     {
-        $data = MataKuliah::firstMataKuliahNama(strtolower($request->nama));
+        $data = MataKuliah::firstMataKuliahNamaKode(0, strtolower($request->nama), strtolower($request->kode));
         if (isset($data->nama)) {
-            return redirect()->back()->with('danger', 'Data '. $request->nama .' sudah ada');
+            return redirect()->back()->with('danger', 'Mata Kuliah '. $request->nama .' sudah ada');
         }
         else {
             MataKuliah::storeMataKuliah($request);
-            return redirect()->back()->with('success', 'Input Data Berhasil');
+
+            return redirect()->back()->with('success', 'Mata Kuliah Berhasil ditambah');
         }
     }
 
@@ -92,11 +93,12 @@ class MataKuliahController extends Controller
      */
     public function update(Request $request, MataKuliah $mataKuliah)
     {
-        $data = MataKuliah::firstMataKuliahNama(strtolower($request->nama));
-        if (isset($data->nama) && $mataKuliah->nama != $data->nama) {
+        $data = MataKuliah::firstMataKuliahNamaKode($mataKuliah->id, strtolower($request->nama), strtolower($request->kode));
+        if (isset($data->nama)) {
             return redirect()->back()->with('danger', 'Mata Kuliah '. $request->nama .' sudah ada');
         }
         MataKuliah::updateMataKuliah($request, $mataKuliah->id);
+
         return redirect()->back()->with('success', 'Mata Kuliah Berhasil diubah');
     }
 
@@ -110,5 +112,18 @@ class MataKuliahController extends Controller
     {
         MataKuliah::deleteMataKuliah($mataKuliah->id);
         return redirect()->back();
+    }
+
+    public function data($id)
+    {
+        $data = (MataKuliah::firstMataKuliahProdi($id));
+
+        if (count($data['mata_kuliah']) > 0) {
+            $data['status'] = 1;
+        } else {
+            $data['status'] = 0;
+        }
+
+        return json_encode($data);
     }
 }
