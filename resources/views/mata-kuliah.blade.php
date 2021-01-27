@@ -62,11 +62,11 @@
                                         <td>{{ $item->nama }}</td>
                                         <td>{{ $item->nama_prodi }}</td>
                                         <td>
-                                            <form action="{{ route('admin.portal.mata-kuliah.destroy', $item->id) }}" class="form" method="post">
+                                            <form action="{{ route('admin.portal.mata-kuliah.destroy', $item->id) }}" class="form" id="form-{{ $item->id }}" method="post">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="button" data-toggle="modal" data-target="#modalUbah" data-value="{{ $item->id }}" class="btn btn-warning px-1"><i class="feather icon-edit-1"></i></button>
-                                                <button type="button" class="btn btn-danger px-1 hapus"><i class="feather icon-trash-2"></i></button>
+                                                <button type="button" class="btn btn-danger px-1 hapus" data-value="{{ $item->id }}"><i class="feather icon-trash-2"></i></button>
                                             </form>
                                         </td>    
                                     </tr>
@@ -205,6 +205,7 @@
             $('table').DataTable();
             
             $(document).on('click', '.hapus', function () {
+                const id = $(this).attr('data-value');
                 Swal.fire({
                     title: 'Yakin ingin hapus?',
                     type: 'warning',
@@ -225,7 +226,7 @@
                             timer: 1000,
                             showConfirmButton: false
                         });
-                        $('.form').submit();
+                        $('#form-'+ id).submit();
                     }
                 })
             });
