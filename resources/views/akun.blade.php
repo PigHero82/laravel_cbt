@@ -97,7 +97,7 @@
                                                 <div class="form-group">
                                                     <div class="controls">
                                                         <label for="alamat">Alamat</label>
-                                                        <textarea class="form-control" name="alamat" cols="30" rows="3" placeholder="Alamat User">{{ $data->email }}</textarea>
+                                                        <textarea class="form-control" name="alamat" cols="30" rows="3" placeholder="Alamat User">{{ $data->alamat }}</textarea>
                                                     </div>
                                                 </div>
                                             </div>

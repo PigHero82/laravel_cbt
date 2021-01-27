@@ -38,7 +38,7 @@ class ProdiController extends Controller
      */
     public function store(Request $request)
     {
-        $data = Prodi::firstProdiNama(strtolower($request->nama, 0));
+        $data = Prodi::firstProdiNama(strtolower($request->nama), 0);
         if (isset($data->nama)) {
             return back()->with('danger', 'Data '. $request->nama .' sudah ada');
         }

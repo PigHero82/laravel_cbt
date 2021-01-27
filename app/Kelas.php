@@ -15,8 +15,9 @@ class Kelas extends Model
     {
         return Kelas::join('mata_kuliah', 'kelas.idMataKuliah', 'mata_kuliah.id')
                     ->join('users', 'kelas.idDosen', 'users.id')
+                    ->join('prodi', 'mata_kuliah.idProdi', 'prodi.id')
                     ->leftjoin('kelas_mahasiswa', 'kelas.id', 'kelas_mahasiswa.idKelas')
-                    ->select('kelas.id', 'kelas.kode', 'mata_kuliah.nama', 'users.name as dosen')
+                    ->select('kelas.id', 'kelas.kode', 'mata_kuliah.nama', 'users.name as dosen', 'prodi.nama as prodi')
                     ->selectRaw('count(kelas_mahasiswa.id) as jumlah')
                     ->groupBy('kode')
                     ->groupBy('mata_kuliah.nama')
@@ -82,6 +83,7 @@ class Kelas extends Model
     {
         Kelas::create([
             'kode'          => $request->kode,
+            'idProdi'       => $request->idProdi,
             'idMataKuliah'  => $request->idMataKuliah,
             'idDosen'       => $request->idDosen
         ]);

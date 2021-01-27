@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\MataKuliah;
 use App\User;
 use App\GrupPeserta;
+use App\Prodi;
 
 class KelasController extends Controller
 {
@@ -34,8 +35,9 @@ class KelasController extends Controller
         $dosen = User::getUserRole(2);
         $peserta = User::getUserRole(3);
         $grup = GrupPeserta::getGrupPeserta();
+        $prodi = Prodi::getProdi();
 
-        return view('admin.kelas.index', compact('data', 'matakuliah', 'dosen', 'peserta', 'grup'));
+        return view('admin.kelas.index', compact('data', 'matakuliah', 'dosen', 'peserta', 'grup', 'prodi'));
     }
 
     /**

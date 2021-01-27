@@ -53,6 +53,7 @@
                             <tr>
                                 <th>Kelas</th>
                                 <th>Dosen</th>
+                                <th>Prodi</th>
                                 <th>Jumlah Mahasiswa</th>
                                 <th></th>
                             </tr>
@@ -62,11 +63,13 @@
                                 <tr>
                                     <td><a href="#modalKelasMahasiswa" data-toggle="modal" data-kelas="{{ $item->id }}">{{ $item->kode }} | {{ $item->nama }}</a></td>
                                     <td>{{ $item->dosen }}</td>
+                                    <td>{{ $item->prodi }}</td>
                                     <td>{{ $item->jumlah }} Orang</td>
                                     <td>
                                         <form action="{{ route('admin.portal.kelas.destroy', $item->id) }}" class="form" method="post">
                                             @csrf
                                             @method('DELETE')
+                                            <button type="button" data-toggle="modal" data-target="#modalUbah" data-value="{{ $item->id }}" class="btn btn-warning px-1"><i class="feather icon-edit-1"></i></button>
                                             <button type="button" class="btn btn-danger px-1 hapus"><i class="feather icon-trash-2"></i></button>
                                         </form>
                                     </td>
@@ -109,6 +112,11 @@
                                 <h1><i class="feather icon-slash"></i></h1>
                                 <h2>Tidak Ada Pengampu</h2>
                             </div>
+                        @elseif(count($prodi) == 0)
+                            <div class="error-template text-center">
+                                <h1><i class="feather icon-slash"></i></h1>
+                                <h2>Tidak Ada Prodi</h2>
+                            </div>
                         @else
                             <div class="form-group">
                                 <label>Kode</label>
@@ -116,12 +124,18 @@
                             </div>
         
                             <div class="form-group">
-                                <label>Mata Kuliah</label>
-                                <select name="idMataKuliah" class="form-control select">
-                                    @foreach ($matakuliah as $item)
+                                <label>Program Studi</label>
+                                <select name="idProdi" class="form-control" id="idProdi">
+                                    <option value="" hidden>-- Pilih Prodi --</option>
+                                    @foreach ($prodi as $item)
                                         <option value="{{ $item->id }}">{{ $item->nama }}</option>
                                     @endforeach
                                 </select>
+                            </div>
+        
+                            <div class="form-group">
+                                <label>Mata Kuliah</label>
+                                <select name="idMataKuliah" class="form-control idMataKuliah"></select>
                             </div>
         
                             <div class="form-group">
@@ -161,23 +175,29 @@
                     <div class="modal-body">
                         <div class="form-group">
                             <label>Kode</label>
-                            <input type="text" name="kode" id="kode" maxlength="3" class="form-control" placeholder="Kode Kelas (Contoh : A, B, DB, dsb.)" required>
+                            <input type="text" name="kode" maxlength="3" class="form-control" placeholder="Kode Kelas (Contoh : A, B, DB, dsb.)" required>
                         </div>
     
                         <div class="form-group">
-                            <label>Mata Kuliah</label>
-                            <select name="idMataKuliah" class="form-control" id="idMataKuliah">
-                                @foreach ($matakuliah as $item)
+                            <label>Program Studi</label>
+                            <select name="idProdi" class="form-control" id="idProdi">
+                                <option value="" hidden>-- Pilih Prodi --</option>
+                                @foreach ($prodi as $item)
                                     <option value="{{ $item->id }}">{{ $item->nama }}</option>
                                 @endforeach
                             </select>
                         </div>
     
                         <div class="form-group">
+                            <label>Mata Kuliah</label>
+                            <select name="idMataKuliah" class="form-control idMataKuliah"></select>
+                        </div>
+    
+                        <div class="form-group">
                             <label>Pengampu</label>
-                            <select name="idDosen" class="form-control" id="idDosen">
+                            <select name="idDosen" class="form-control select">
                                 @foreach ($dosen as $item)
-                                    <option value="{{ $item->id }}">{{ $item->nama }}</option>
+                                    <option value="{{ $item->id }}">{{ $item->username }} | {{ $item->name }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -328,6 +348,20 @@
                                                     <td>`+ d[i].nim +`</td>
                                                     <td>`+ d[i].nama +`</td>
                                                 </tr>`);
+                        }
+                    }
+                });
+            });
+            
+            $(document).on('change', '#idProdi', function(e) {
+                var id = $(this).val();
+                console.log(id);
+                $.get("{{ url('admin/portal/data/mata-kuliah') }}/" + id, function( data ) {
+                    var d = JSON.parse(data);
+                    $('.idMataKuliah option').remove();
+                    if (d.status > 0) {
+                        for (let i = 0; i < d['mata_kuliah'].length; i++) {
+                            $('.idMataKuliah').append('<option value="'+ d['mata_kuliah'][i].id +'">'+ d['mata_kuliah'][i].nama +'</option>');
                         }
                     }
                 });
