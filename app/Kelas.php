@@ -83,7 +83,6 @@ class Kelas extends Model
     {
         Kelas::create([
             'kode'          => $request->kode,
-            'idProdi'       => $request->idProdi,
             'idMataKuliah'  => $request->idMataKuliah,
             'idDosen'       => $request->idDosen
         ]);
@@ -100,10 +99,18 @@ class Kelas extends Model
 
     static function firstKelas($id)
     {
-        return Kelas::join('mata_kuliah', 'kelas.idMataKuliah', 'mata_kuliah.id')
+        $data = Kelas::join('mata_kuliah', 'kelas.idMataKuliah', 'mata_kuliah.id')
                     ->join('users', 'kelas.idDosen', 'users.id')
-                    ->select('kelas.id', 'idDosen', 'idMataKuliah', 'kelas.kode', 'mata_kuliah.nama', 'users.name as dosen')
+                    ->select('kelas.id', 'idDosen', 'idMataKuliah', 'kelas.kode', 'mata_kuliah.nama', 'users.name as dosen', 'mata_kuliah.idProdi')
                     ->findOrFail($id);
+
+        foreach ($data as $key => $value) {
+            $data['mata_kuliah'] = MataKuliah::select('id', 'nama')
+                                            ->where('idProdi', $data->idProdi)
+                                            ->get();
+        }
+
+        return $data;
     }
 
     static function deleteKelas($id)

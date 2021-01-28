@@ -64,7 +64,7 @@ class KelasController extends Controller
         }
         else {
             Kelas::storeKelas($request);
-            return redirect()->back()->with('success', 'Input Data Kelas Berhasil');
+            return redirect()->back()->with('success', 'Kelas Berhasil Ditambah');
         }
     }
 
@@ -101,10 +101,10 @@ class KelasController extends Controller
     {
         $data = Kelas::firstKelasKodeMataKuliah($request->kode, $request->idMataKuliah, $request->id);
         if (isset($data->id)) {
-            return redirect()->back()->with('danger', 'Data kelas telah terdaftar');
+            return redirect()->back()->with('danger', 'Data Kelas telah terdaftar');
         }
         Kelas::updateKelas($request);
-        return redirect()->back()->with('success', 'Data Berhasil diubah');
+        return redirect()->back()->with('success', 'Kelas Berhasil Diubah');
     }
 
     /**

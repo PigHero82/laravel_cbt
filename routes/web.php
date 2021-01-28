@@ -62,10 +62,16 @@ Route::name('admin.')->prefix('admin')->middleware('auth', 'role:admin')->group(
                 Route::get('role/{id}', 'UserController@showRole');
                 Route::post('role/{id}', 'UserController@role')->name('role');
             });
+
+            // Kelas
             Route::resource('kelas', 'KelasController');
             Route::get('data/kelas', 'KelasController@data_peserta');
-            Route::resource('mata-kuliah', 'MataKuliahController');
             Route::resource('kelas/detail', 'KelasMahasiswaController');
+            
+            //Mata Kuliah
+            Route::resource('mata-kuliah', 'MataKuliahController');
+            Route::get('data/mata-kuliah/{id}', 'MataKuliahController@data');
+            
             Route::resource('prodi', 'ProdiController');
 
             // Grup Peserta

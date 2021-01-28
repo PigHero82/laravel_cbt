@@ -66,11 +66,11 @@
                                     <td>{{ $item->prodi }}</td>
                                     <td>{{ $item->jumlah }} Orang</td>
                                     <td>
-                                        <form action="{{ route('admin.portal.kelas.destroy', $item->id) }}" class="form" method="post">
+                                        <form action="{{ route('admin.portal.kelas.destroy', $item->id) }}" id="form-{{ $item->id }}" method="post">
                                             @csrf
                                             @method('DELETE')
                                             <button type="button" data-toggle="modal" data-target="#modalUbah" data-value="{{ $item->id }}" class="btn btn-warning px-1"><i class="feather icon-edit-1"></i></button>
-                                            <button type="button" class="btn btn-danger px-1 hapus"><i class="feather icon-trash-2"></i></button>
+                                            <button type="button" class="btn btn-danger px-1 hapus" data-value="{{ $item->id }}"><i class="feather icon-trash-2"></i></button>
                                         </form>
                                     </td>
                                 </tr>
@@ -125,7 +125,7 @@
         
                             <div class="form-group">
                                 <label>Program Studi</label>
-                                <select name="idProdi" class="form-control" id="idProdi">
+                                <select name="idProdi" class="form-control idProdi" id="idProdi">
                                     <option value="" hidden>-- Pilih Prodi --</option>
                                     @foreach ($prodi as $item)
                                         <option value="{{ $item->id }}">{{ $item->nama }}</option>
@@ -135,7 +135,7 @@
         
                             <div class="form-group">
                                 <label>Mata Kuliah</label>
-                                <select name="idMataKuliah" class="form-control idMataKuliah"></select>
+                                <select name="idMataKuliah" class="form-control idMataKuliah" required></select>
                             </div>
         
                             <div class="form-group">
@@ -175,12 +175,12 @@
                     <div class="modal-body">
                         <div class="form-group">
                             <label>Kode</label>
-                            <input type="text" name="kode" maxlength="3" class="form-control" placeholder="Kode Kelas (Contoh : A, B, DB, dsb.)" required>
+                            <input type="text" name="kode" id="kode" maxlength="3" class="form-control" placeholder="Kode Kelas (Contoh : A, B, DB, dsb.)" required>
                         </div>
     
                         <div class="form-group">
                             <label>Program Studi</label>
-                            <select name="idProdi" class="form-control" id="idProdi">
+                            <select name="idProdi" class="form-control idProdi">
                                 <option value="" hidden>-- Pilih Prodi --</option>
                                 @foreach ($prodi as $item)
                                     <option value="{{ $item->id }}">{{ $item->nama }}</option>
@@ -190,12 +190,12 @@
     
                         <div class="form-group">
                             <label>Mata Kuliah</label>
-                            <select name="idMataKuliah" class="form-control idMataKuliah"></select>
+                            <select name="idMataKuliah" id="idMataKuliah" class="form-control idMataKuliah" required></select>
                         </div>
     
                         <div class="form-group">
                             <label>Pengampu</label>
-                            <select name="idDosen" class="form-control select">
+                            <select name="idDosen" id="idDosen" class="form-control select">
                                 @foreach ($dosen as $item)
                                     <option value="{{ $item->id }}">{{ $item->username }} | {{ $item->name }}</option>
                                 @endforeach
@@ -317,14 +317,17 @@
             
             $(document).on('click', '#myTable tbody tr td button', function(e) {
                 var id = $(this).attr('data-value');
-                console.log(id);
                 $.get( "kelas/" + id, function( data ) {
-                    console.log(JSON.parse(data));
                     var d = JSON.parse(data);
                     $('#judulModal').text("Ubah Kelas | "+ d.kode +"-"+ d.nama);
                     $('#id').val(d.id);
                     $('#kode').val(d.kode);
-                    $('#idMataKuliah').select2().val(d.idMataKuliah).trigger('change');
+                    $('.idProdi').val(d.idProdi);
+                    $('#idMataKuliah option').remove();
+                    for (let i = 0; i < d['mata_kuliah'].length; i++) {                        
+                        $('#idMataKuliah').append('<option value="'+ d['mata_kuliah'][i].id +'">'+ d['mata_kuliah'][i].nama +'</option>');
+                    }
+                    $('#idMataKuliah').val(d.idMataKuliah);
                     $('#idDosen').select2().val(d.idDosen).trigger('change');
                 });
             });
@@ -353,9 +356,8 @@
                 });
             });
             
-            $(document).on('change', '#idProdi', function(e) {
+            $(document).on('change', '.idProdi', function(e) {
                 var id = $(this).val();
-                console.log(id);
                 $.get("{{ url('admin/portal/data/mata-kuliah') }}/" + id, function( data ) {
                     var d = JSON.parse(data);
                     $('.idMataKuliah option').remove();
@@ -368,6 +370,7 @@
             });
             
             $(document).on('click', '.hapus', function () {
+                const id = $(this).attr('data-value');
                 Swal.fire({
                     title: 'Yakin ingin hapus?',
                     type: 'warning',
@@ -388,7 +391,7 @@
                             timer: 1000,
                             showConfirmButton: false
                         });
-                        $('.form').submit();
+                        $('#form-' + id).submit();
                     }
                 })
             });
