@@ -150,7 +150,7 @@
                     </div>
 
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Ubah User</button>
+                        <button type="submit" class="btn btn-primary">Ubah Grup Peserta</button>
                     </div>
                 </form>
             </div>
@@ -159,66 +159,91 @@
 
     <!-- Modal -->
     <div class="modal fade" id="modalDetail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="judul">Ubah User</h5>
+                    <h5 class="modal-title" id="judul">Detail Grup</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
 
-                <div class="modal-body">
-                    <form action="{{ route('admin.portal.grup-peserta.detail.store') }}" method="POST">
-                        @csrf
-                        
-                        <input type="hidden" name="id" id="id">
+                <form action="{{ route('admin.portal.grup-peserta.detail.store') }}" method="POST">
+                    @csrf
+                    <input type="hidden" name="id" id="id">
 
-                        <div class="form-group">
-                            <label for="peserta">Tambah Peserta</label>
-                            <select class="js-data-example-ajax form-control" name="idPeserta"></select>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-8">       
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <div class="form-group">
+                                            <label for="peserta">Tambah Peserta</label>
+                                            <select class="js-data-example-ajax form-control" id="idPeserta"></select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <br>
+                                            <button type="button" id="tambah_peserta" class="btn btn-primary"><i class="feather icon-plus"></i> Tambah</button>
+                                        </div>
+                                    </div>
+                                    <table class="table" id="tabel_peserta">
+                                        <thead>
+                                            <tr>
+                                                <th>NIM</th>
+                                                <th>Nama</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-4">
+                                <div id="kosong" hidden>
+                                    <div class="error-template text-center">
+                                        <h1><i class="feather icon-slash"></i></h1>
+                                        <h2>Tidak Ada Data</h2>
+                                    </div> 
+                                </div>
+            
+                                <div id="isi" hidden>
+                                    <label>Daftar Peserta</label>
+                                    <div class="table-responsive">
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>NIM</th>
+                                                    <th>Nama</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="data">
+                                                <tr>
+                                                    <td>17101280</td>
+                                                    <td>Ida Bagus Kadek Darma Wiryatama</td>
+                                                    <td>
+                                                        <form action="{{ route('admin.portal.grup-peserta.destroy', $item->id) }}" class="form" method="post">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="btn btn-danger px-1"><i class="feather icon-trash-2"></i></button>
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-primary">Tambah Peserta</button>
-                        </div>
-                    </form>
-
-                    <div id="kosong" hidden>
-                        <div class="error-template text-center">
-                            <h1><i class="feather icon-slash"></i></h1>
-                            <h2>Tidak Ada Data</h2>
-                        </div> 
                     </div>
 
-                    <div id="isi" hidden>
-                        <label>Daftar Peserta</label>
-                        <div class="table-responsive">
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>NIM</th>
-                                        <th>Nama</th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody id="data">
-                                    <tr>
-                                        <td>17101280</td>
-                                        <td>Ida Bagus Kadek Darma Wiryatama</td>
-                                        <td>
-                                            <form action="{{ route('admin.portal.grup-peserta.destroy', $item->id) }}" class="form" method="post">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-danger px-1"><i class="feather icon-trash-2"></i></button>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success"><i class="feather icon-check"></i> Simpan</button>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
     </div>
@@ -287,6 +312,7 @@
                     $('#id').val(id);
                     $("#kosong").attr("hidden", true);
                     $("#isi").attr("hidden", true);
+                    $('#tabel_peserta tbody tr').remove();
                     
                     if (d.status == 1) {
                         $("#data tr").remove();
@@ -298,7 +324,7 @@
                                                     <form action="{{ url('admin/portal/grup-peserta/detail') }}/`+ d['peserta'][i].id +`" class="form" method="post">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button type="submit" class="btn btn-danger px-1"><i class="feather icon-trash-2"></i></button>
+                                                        <button type="button" class="btn btn-danger px-1 hapus"><i class="feather icon-trash-2"></i></button>
                                                     </form>
                                                 </td>
                                             </tr>`);                           
@@ -308,6 +334,25 @@
                         $("#kosong").attr("hidden", false);
                     }
                 });
+            });
+
+            $(document).on('click', '#tambah_peserta', function() {
+                const id = $('#idPeserta').val();
+                $.get( "{{ url('admin/portal/user/role') }}/" + id, function( data ) {
+                    var d = JSON.parse(data);
+                    if (d.roles.length > 0) {
+                        $('#tabel_peserta tbody').append(`<tr>
+                                                            <td>`+ d.username +`</td>
+                                                            <td>`+ d.name +`</td>
+                                                            <td><button type="button" class="btn btn-danger px-1 hapus_peserta"><i class="feather icon-trash-2"></i></button></td>
+                                                            <input type="hidden" name="data[`+ d.id +`]" value="`+ d.id +`">
+                                                        </tr>`)
+                    }
+                });
+            });
+
+            $(document).on('click', '.hapus_peserta', function() {
+                $(this).parent().parent().remove();
             });
 
             $('.js-data-example-ajax').select2({

@@ -29,11 +29,11 @@ class AnggotaGrupPeserta extends Model
                                 ->first();
     }
     
-    static function storeAnggotaGrupPeserta($request)
+    static function storeAnggotaGrupPeserta($value, $id)
     {
         AnggotaGrupPeserta::create([
-            'idPeserta'     => $request->idPeserta,
-            'idGrupPeserta' => $request->id
+            'idPeserta'     => $value,
+            'idGrupPeserta' => $id
         ]);
     }
     

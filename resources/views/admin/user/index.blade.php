@@ -392,7 +392,7 @@
             $(document).on('click', '#myTable tbody tr td button', function(e) {
                 var id = $(this).attr('data-value');
                 console.log(id);
-                $.get( "user/role/" + id, function( data ) {
+                $.get( "{{ url('admin/portal/user/role') }}/" + id, function( data ) {
                     console.log(JSON.parse(data));
                     var d = JSON.parse(data);
                     $('#judul').text("Ubah User | "+ d.name);

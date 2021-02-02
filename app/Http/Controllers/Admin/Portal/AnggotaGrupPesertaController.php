@@ -36,14 +36,20 @@ class AnggotaGrupPesertaController extends Controller
      */
     public function store(Request $request)
     {
-        $data = AnggotaGrupPeserta::firstAnggotaGrupPeserta($request->idPeserta, $request->id);
-        if (isset($data->idPeserta)) {
-            return back()->with('danger', 'Data telah terdaftar pada Grup');
+        $i = 0;
+        foreach ($request['data'] as $key => $value) {
+            $data = AnggotaGrupPeserta::firstAnggotaGrupPeserta($value, $request->id);
+            if (!(isset($data->idPeserta))) {
+                AnggotaGrupPeserta::storeAnggotaGrupPeserta($value, $request->id);
+                $i++;
+            }
         }
 
-        AnggotaGrupPeserta::storeAnggotaGrupPeserta($request);
-
-        return back()->with('success', 'Data Berhasil ditambah');
+        if ($i > 0) {
+            return back()->with('success', 'Peserta Berhasil ditambah');
+        } else {
+            return back()->with('danger', 'Semua Peserta telah ada pada Grup');
+        }
     }
 
     /**
