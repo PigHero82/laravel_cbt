@@ -10,6 +10,11 @@ class RoleUser extends Model
     protected $fillable = ['role_id', 'user_id'];
     public $timestamps = false;
 
+    static function storeRole($id, $roleId)
+    {
+        RoleUser::where('user_id', $id)->create(['role_id' => $roleId]);
+    }
+
     static function updateRole($id, $roleId)
     {
         RoleUser::where('user_id', $id)->update(['role_id' => $roleId]);

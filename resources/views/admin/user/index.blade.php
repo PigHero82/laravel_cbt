@@ -325,6 +325,9 @@
                                         <th>email</th>
                                         <th>hp</th>
                                         <th>alamat</th>
+                                        <th>admin</th>
+                                        <th>pengampu</th>
+                                        <th>peserta</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -333,6 +336,7 @@
                                         <td>Wajib diisi</td>
                                         <td>Wajib diisi | Laki-laki/Perempuan</td>
                                         <td colspan="3">Boleh Dikosongkan</td>
+                                        <td colspan="3">Minimal diisi 1 | Ya/Tidak</td>
                                     </tr>
                                 </tbody>
                             </table>

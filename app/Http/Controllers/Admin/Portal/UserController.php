@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\DataDiri;
 use App\ListRole;
 use App\Role;
+use App\RoleUser;
 use App\User;
 use DB;
 use Illuminate\Http\Request;
@@ -181,13 +182,15 @@ class UserController extends Controller
 		$nama_file = rand().$file->getClientOriginalName();
  
 		// upload ke folder file_siswa di dalam folder public
-		$file->move('assets/import/user/',$nama_file);
+        $file->move('assets/import/user/',$nama_file);
  
 		// import data
 		Excel::import(new UsersImport, public_path('/assets/import/user/'.$nama_file));
         
         $data = ImportUser::getImportUser();
+        $hasil = 0;
         foreach ($data as $key => $value) {
+            $a = 0;
             if ($value->no_induk != null) {
                 if (User::firstUsername($value->no_induk, 0) == null) {
                     if ($value->nama == null) {
@@ -196,22 +199,47 @@ class UserController extends Controller
 
                     $value->nim = $value->no_induk;
                     $user = User::storeUser($value);
-                    ListRole::create([
-                        'role_id' => 3,
-                        'user_id' => $user->id
-                    ]);
 
-                    if ($value->jenis_kelamin == null || $value->jenis_kelamin == "Laki-laki") {
-                        $value->jeniskelamin = 1;
-                    } else {
-                        $value->jeniskelamin = 2;
-                    }
+                    $value->jeniskelamin = $value->jenis_kelamin;
 
                     DataDiri::storeDataDiri($value, $user->id);
+
+                    $abc = [$value->admin, $value->pengampu, $value->peserta];
+                    for ($i=0; $i<3 ; $i++) {
+                        if ($abc[$i]) {
+                            ListRole::create([
+                                'role_id' => $i+1,
+                                'user_id' => $user->id
+                            ]);
+
+                            if ($a < 1) {
+                                RoleUser::storeRole($user->id, $i+1);
+                            }
+
+                            $a++;
+                        }
+                    }
+
+                    if ($a == 0) {
+                        ListRole::create([
+                            'role_id' => 3,
+                            'user_id' => $user->id
+                        ]);
+
+                        RoleUser::storeRole($user->id, 3);
+                    } else {
+                        $a = 0;
+                    }
+
+                    $hasil++;
                 }
             }
         }
 
-        return back()->with('success', 'User berhasil diupload');
+        if ($hasil > 0) {
+            return back()->with('success', 'User berhasil diupload');
+        } else {
+            return back()->with('danger', 'Semua Nomor Induk User telah terdaftar');
+        }
     }
 }

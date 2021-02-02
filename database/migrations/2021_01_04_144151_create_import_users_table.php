@@ -21,6 +21,9 @@ class CreateImportUsersTable extends Migration
             $table->string('email')->nullable();
             $table->char('hp', 13)->nullable();
             $table->text('alamat')->nullable();
+            $table->boolean('admin')->nullable();
+            $table->boolean('pengampu')->nullable();
+            $table->boolean('peserta')->nullable();
             $table->timestamps();
         });
     }
