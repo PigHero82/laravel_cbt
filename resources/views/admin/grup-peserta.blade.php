@@ -54,6 +54,7 @@
                                 <thead>
                                     <tr>
                                         <th>Nama</th>
+                                        <th>Status</th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -61,6 +62,11 @@
                                     @foreach ($data as $item)
                                         <tr>
                                             <td>{{ $item->nama }}</td>
+                                            @if ($item->status == 1)
+                                                <td><h5><span class="badge badge-success">Aktif</span></h5></td>
+                                            @else
+                                                <td><h5><span class="badge badge-danger">Tidak Aktif</span></h5></td>
+                                            @endif
                                             <td>
                                                 <form action="{{ route('admin.portal.grup-peserta.destroy', $item->id) }}" class="form" method="post">
                                                     @csrf
@@ -133,6 +139,13 @@
                         <div class="form-group">
                             <label for="name">Nama</label>
                             <input type="text" name="nama" id="nama" class="form-control" placeholder="Nama Grup Peserta" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Status</label>
+                            <select name="status" id="status" class="form-control" required>
+                                <option value="1">Aktif</option>
+                                <option value="0">Tidak Aktif</option>
+                            </select>
                         </div>
                     </div>
 
@@ -261,6 +274,7 @@
                     $('#judul').text("Ubah Grup Peserta | "+ d.nama);
                     $('#form').attr("action", "grup-peserta/"+ d.id);
                     $('#nama').val(d.nama);
+                    $('#status').val(d.status);
                 });
             });
 

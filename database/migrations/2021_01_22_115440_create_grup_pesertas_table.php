@@ -16,6 +16,7 @@ class CreateGrupPesertasTable extends Migration
         Schema::create('grup_peserta', function (Blueprint $table) {
             $table->id();
             $table->string('nama');
+            $table->boolean('status')->default(1);
             $table->timestamps();
         });
     }

@@ -19,11 +19,9 @@ class MataKuliah extends Model
                         ->get();
     }
 
-    static function firstMataKuliahNamaKode($id, $nama, $kode)
+    static function firstMataKuliahKode($id, $kode)
     {
         return MataKuliah::where('id', '!=', $id)
-                        ->where('nama', $nama)
-                        ->orWhere('id', '!=', $id)
                         ->where('kode', $kode)
                         ->first();
     }

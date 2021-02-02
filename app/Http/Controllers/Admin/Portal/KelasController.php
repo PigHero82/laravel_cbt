@@ -34,7 +34,7 @@ class KelasController extends Controller
         $matakuliah = MataKuliah::getMataKuliah();
         $dosen = User::getUserRole(2);
         $peserta = User::getUserRole(3);
-        $grup = GrupPeserta::getGrupPeserta();
+        $grup = GrupPeserta::getGrupPesertaAktif();
         $prodi = Prodi::getProdi();
 
         return view('admin.kelas.index', compact('data', 'matakuliah', 'dosen', 'peserta', 'grup', 'prodi'));

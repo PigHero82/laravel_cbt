@@ -8,11 +8,16 @@ class GrupPeserta extends Model
 {
     protected $table = 'grup_peserta';
 
-    protected $fillable = ['nama'];
+    protected $fillable = ['nama', 'status'];
 
     static function getGrupPeserta()
     {
         return GrupPeserta::all();
+    }
+
+    static function getGrupPesertaAktif()
+    {
+        return GrupPeserta::select('id', 'nama')->get();
     }
 
     static function storeGrupPeserta($request)
@@ -25,7 +30,8 @@ class GrupPeserta extends Model
     static function updateGrupPeserta($request, $id)
     {
         GrupPeserta::whereId($id)->update([
-            'nama' => $request->nama
+            'nama' => $request->nama,
+            'status' => $request->status
         ]);
     }
 
