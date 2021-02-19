@@ -255,6 +255,56 @@ class SoalController extends Controller
         return back()->with('success', 'Soal berhasil diupload');
     }
 
+    public function import_teks(Request $request)
+    {
+        $paket_data = explode(" | ", $request->paket_id);
+        $paket = Paket::singlePaket($paket_data[0]);
+
+        $grup_data = explode(" | ", $request->grup_id);
+        $grup = Grup::firstGrupId($grup_data[0]);
+
+        $data = explode("<p>*/soal</p>", str_replace(["\n", "\r", "\t"], "", $request->textarea));
+        foreach ($data as $key => $value) {
+            if ($value != null) {
+                $opsi = explode("<p>*/opsi</p>", $value);
+                $isi[$key]['soal'] = $opsi[0];
+                $pilihan = explode("</p>", $opsi[1]);
+                for ($i=0; $i < count($pilihan) ; $i++) { 
+                    if ($pilihan[$i] != null && $pilihan[$i] != "<p>" && $pilihan[$i] != "<p><br>") {
+                        $isi[$key]['jawab'][$i] = $pilihan[$i]."</p>";
+                    }
+                }
+            };
+        }
+
+        return view('dosen.soal.teks', compact('isi', 'paket', 'grup'));
+    }
+
+    public function store_teks(Request $request)
+    {
+        foreach ($request->soal as $key => $value) {
+            $soal = Soal::importSoal($request->grup, 1, $value['soal']);
+    
+            if (!(array_key_exists('benar', $value))) {
+                $benar = 0;
+            } else {
+                $benar = $value['benar'];
+            }
+    
+            foreach ($value['jawaban'] as $key => $jawaban) {
+                if ($jawaban != NULL) {
+                    $data = Pilihan::storePilihan($soal->id, $jawaban);
+        
+                    if ($key == $benar) {
+                        Soal::updateSoalJawaban($soal->id, $data->id);
+                    }
+                }
+            }
+        }
+
+        return redirect()->route('dosen.soal.show', [$request->paket])->with('success', 'Import Soal berhasil');
+    }
+
     public function laporan_index()
     {
         $data = Paket::getPaketAktif();

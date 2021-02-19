@@ -37,6 +37,8 @@ Route::namespace('Dosen')->name('dosen.')->prefix('pengampu')->middleware('auth'
             Route::delete('{id}/delete', 'SoalController@data_soal_delete')->name('edit-soal.destroy');
         });
         Route::post('import', 'SoalController@import')->name('import');
+        Route::post('teks', 'SoalController@import_teks')->name('teks');
+        Route::post('teks/store', 'SoalController@store_teks')->name('teks.store');
         Route::resource('paket', 'PaketController');
         Route::resource('pilihan', 'PilihanController');
         Route::name('laporan.')->prefix('laporan')->group(function () {

@@ -99,12 +99,23 @@
                     <div class="card-header">
                         <h3 class="d-inline">Daftar Soal</h3>
                         <div class="float-right d-inline">
+                            {{-- Button Tambah --}}
                             <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalTambahGrup"><i class="feather icon-plus"></i> Tambah Grup</button>
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalExcel"><i class="feather icon-upload"></i> Upload Excel</button>
+                            
+                            {{-- Button Upload --}}
+                            <div class="dropdown d-inline">
+                                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="feather icon-upload"></i> Upload
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" data-toggle="modal" href="#modalExcel"><i class="feather icon-file-plus"></i> Upload Excel</a>
+                                    <a class="dropdown-item" data-toggle="modal" href="#modalTeks"><i class="feather icon-file-text"></i> Upload Teks</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="card-body">
-                        @if (count($grup) > 0)
+                        @if (isset($grup))
                             <div class="accordion" id="accordionExample" data-toggle-hover="true">
                                 @foreach ($grup as $item)
                                     <div class="collapse-margin">
@@ -189,7 +200,7 @@
                                                         <h1><i class="feather icon-slash"></i></h1>
                                                         <h2>Tidak Ada Soal</h2>
                                                         <button type="button" class="btn btn-success modalSoal" data-toggle="modal" data-target="#modalTambah" data-value="{{ $item->id }}"><i class="feather icon-plus"></i> Tambah Soal</button>
-                                                    </div> 
+                                                    </div>
                                                 @endif
                                             </div>
                                         </div>
@@ -565,7 +576,7 @@
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Tambah Soal</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Upload Excel</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -620,6 +631,59 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="modalTeks" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Upload Teks</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <form action="{{ route('dosen.teks') }}" method="POST">
+                    @csrf
+                    <div class="modal-body">
+                        @if (isset($grup))
+                            <div class="form-group">
+                                <label>Paket</label>
+                                <input type="text" name="paket_id" class="form-control" value="{{ $data->id }} | {{ $data->nama }}" readonly>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Grup</label>
+                                <select name="grup_id" class="form-control">
+                                    @foreach ($grup as $item)
+                                        <option value="{{ $item->id }} | {{ $item->nama }}">{{ $item->nama }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <p>Salin(Copy) semua soal pada file word, kemudian Tempel(Paste) teks yang telah disalin sebelumnya ke kolom Teks dibawah. untuk contoh penulisan dapat diunduh pada tombol "Download Contoh"</p>
+
+                            <div class="form-group">
+                                <label>Teks</label>
+                                <textarea name="textarea" class="form-control teks" rows="10"></textarea>
+                            </div>
+                            
+                            <a href="{{ asset('assets/import/format/teks.rtf') }}" class="btn btn-success">Download Contoh</a>
+                        @else
+                            <div class="error-template text-center">
+                                <h1><i class="feather icon-slash"></i></h1>
+                                <h2>Tidak Ada Grup</h2>
+                            </div>
+                        @endif
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary button-teks">Tambah</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @section('js')
@@ -633,6 +697,28 @@
             $('.jawaban').summernote({
                 height: 100
             });
+            $('.teks').summernote({
+                height: 150,
+                callbacks: {
+                    onPaste: function (e) {
+                        var bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('Text');
+                        e.preventDefault();
+                        document.execCommand('insertText', false, bufferText);
+                    }
+                }
+                // toolbar: []
+            });
+            // $(document).on('click', '.button-teks', function() {
+            //     $(".teks").summernote({
+            //         callbacks: {
+            //             onPaste: function (e) {
+            //                 var bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('Text');
+            //                 e.preventDefault();
+            //                 document.execCommand('insertText', false, bufferText);
+            //             }
+            //         }
+            //     });
+            // });
 
             $('#benar-salah').hide();
             $('#sebab-akibat').hide();
