@@ -705,20 +705,9 @@
                         e.preventDefault();
                         document.execCommand('insertText', false, bufferText);
                     }
-                }
-                // toolbar: []
+                },
+                toolbar: []
             });
-            // $(document).on('click', '.button-teks', function() {
-            //     $(".teks").summernote({
-            //         callbacks: {
-            //             onPaste: function (e) {
-            //                 var bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('Text');
-            //                 e.preventDefault();
-            //                 document.execCommand('insertText', false, bufferText);
-            //             }
-            //         }
-            //     });
-            // });
 
             $('#benar-salah').hide();
             $('#sebab-akibat').hide();

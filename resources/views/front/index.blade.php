@@ -79,6 +79,7 @@
                                                 <div id="collapse{{ $item->id }}" class="collapse" data-parent="#accordion-soal">
                                                     <div class="card-body">
                                                         {!! $item->deskripsi !!}
+                                                        <br>
                                                         <label class="font-weight-bold">Kelas</label>
                                                         <p>{{ $item->kode }}</p>
 
@@ -142,6 +143,7 @@
                                                 <div id="collapse{{ $item->id }}" class="collapse" data-parent="#accordion-riwayat">
                                                     <div class="card-body">
                                                         {!! $item->deskripsi !!}
+                                                        <br>
                                                         <label class="font-weight-bold">Kelas</label>
                                                         <p>{{ $item->kode }}</p>
                                                         <label class="font-weight-bold">Nama Dosen</label>
